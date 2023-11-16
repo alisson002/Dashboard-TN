@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime # Para pegar a data atual
 from PIL import Image # Imagnes da tn e jpn
+from graficos.Tribuna_do_Norte import tnPortal
 
 # Cria um espaço reservado vazio onde vai receber as imagens
 image_placeholder = st.empty()
@@ -49,7 +50,7 @@ if selected_option1 == "Tribuna do norte":
     
     # Gráficos referentes a cada categoria
     if selected_option2 == "Site/Portal":
-        st.write("Gráficos do Site/Portal")
+        tnPortal.noticiasPorEditoria()
     elif selected_option2 == "Impresso":
         st.write("Gráficos do impresso")
     elif selected_option2 == "Instagram":

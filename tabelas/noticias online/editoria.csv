@@ -1,0 +1,313 @@
+"","edi_id","edi_descricao","edi_status","edi_id_pai","edi_template_name"
+"1",2017,"Notas e Comentários",1,2017,"index"
+"2",2016,"Negócios e Finanças",1,2016,"index"
+"3",2015,"Mercado Publicitário",1,2015,"index"
+"4",2014,"Meditando na Adega",1,2014,"index"
+"5",3013,"Descobrimento do Brasil",0,0,"index"
+"6",3014,"História dos Mártires",0,0,"index"
+"7",3015,"Redescobrindo o RN",0,0,"index"
+"8",3016,"Brasil 500 Anos 1",0,0,"index"
+"9",3017,"Brasil 500 Anos 2",0,0,"index"
+"10",3018,"Brasil 500 Anos 3",0,0,"index"
+"11",3019,"Brasil 500 Anos 4",0,0,"index"
+"12",3020,"Brasil 500 Anos 5",0,0,"index"
+"13",3021,"Brasil 500 Anos 6",0,0,"index"
+"14",3022,"Brasil 500 Anos 7",0,0,"index"
+"15",3023,"Brasil 500 Anos 8",0,0,"index"
+"16",3024,"Brasil 500 Anos 9",0,0,"index"
+"17",3025,"Brasil 500 Anos 10",0,0,"index"
+"18",3026,"Brasil 500 Anos 11",0,0,"index"
+"19",3027,"Brasil 500 Anos 12",0,0,"index"
+"20",3028,"Brasil 500 Anos 13",0,0,"index"
+"21",3029,"Brasil 500 Anos 14",0,0,"index"
+"22",3030,"Brasil 500 Anos 15",0,0,"index"
+"23",3031,"Brasil 500 Anos Bibliografia",0,0,"index"
+"24",3032,"História do RN 1",0,0,"index"
+"25",3033,"História do RN 2",0,0,"index"
+"26",3034,"História do RN 3",0,0,"index"
+"27",3035,"História do RN 4",0,0,"index"
+"28",3036,"História do RN 5",0,0,"index"
+"29",3037,"História do RN 6",0,0,"index"
+"30",3038,"História do RN 7",0,0,"index"
+"31",3039,"História do RN 8",0,0,"index"
+"32",3040,"História do RN 9",0,0,"index"
+"33",3041,"História do RN 10",0,0,"index"
+"34",3042,"História do RN 11",0,0,"index"
+"35",3043,"História do RN 12",0,0,"index"
+"36",3044,"História do RN 13",0,0,"index"
+"37",3045,"História do RN 14",0,0,"index"
+"38",3046,"História do RN 15",0,0,"index"
+"39",3047,"História do RN 16",0,0,"index"
+"40",2027,"Marcos Lopes",1,2027,"index"
+"41",2013,"Liege Barbalho",1,2013,"index"
+"42",2012,"Poder Judiciário",1,2012,"index"
+"43",2011,"Jota Oliveira",0,2011,"index"
+"44",2010,"Jornal de WM",1,2010,"index"
+"45",2009,"Hilneth Correia",1,2009,"index"
+"46",2007,"George Azevedo",1,2007,"index"
+"47",2026,"Coluna do Consumidor",1,2026,"index"
+"48",2028,"Eliana Lima",1,2028,"index"
+"49",2006,"Cláudio Humberto",1,2006,"index"
+"50",2005,"Canal Zap",1,2005,"index"
+"51",2004,"Artigos",1,2004,"index"
+"52",2002,"Anote",1,2002,"index"
+"53",2003,"Apito Final",1,2003,"index"
+"54",2001,"Abrindo a Porteira",1,2001,"index"
+"55",1006,"TN Família",1,1006,"index"
+"56",1005,"TN Escola",1,1005,"index"
+"57",1004,"Guia de Cinema",1,1004,"index"
+"58",1003,"Fim de Semana",1,1003,"index"
+"59",1002,"Clube do Assinante",1,1002,"index"
+"60",1001,"Autos e Motores",1,1001,"index"
+"61",996,"Carnaval - Nacional",1,996,"index"
+"62",995,"Carnaval - Interior",1,995,"index"
+"63",994,"Carnaval - Capital",1,994,"index"
+"64",993,"Carnaval - Antigos",1,993,"index"
+"65",99,"Hot Site",1,99,"index"
+"66",98,"VC Notícia",1,98,"index"
+"67",15,"Imóveis e Construção",1,15,"index"
+"68",14,"Mada",1,14,"index"
+"69",13,"Blog",1,13,"index"
+"70",12,"Vestibular RESULTADO",1,12,"index"
+"71",11,"Vestibular UFRN",1,11,"index"
+"72",10,"Tecnologia",1,10,"index"
+"73",9,"Carnatal",1,9,"index"
+"74",8,"Viver",1,8,"index"
+"75",7,"Política",1,7,"index"
+"76",6,"Natal",1,6,"index"
+"77",5,"Internacional",1,5,"index"
+"78",4,"Esportes",1,4,"index"
+"79",3,"Economia",1,3,"index"
+"80",1,"Brasil",1,1,"index"
+"81",2018,"Ondas Curtas",1,2018,"index"
+"82",2019,"Primeiro Plano",1,2019,"index"
+"83",2020,"Quadrantes",1,2020,"index"
+"84",2021,"TN nas ruas",1,2021,"index"
+"85",2022,"TN Online",1,2022,"index"
+"86",2023,"Toque - Livros e Cultura",1,2023,"index"
+"87",2024,"Trânsito Livre",1,2024,"index"
+"88",2025,"Fama",1,2025,"index"
+"89",2029,"Diário do Avoante",1,2029,"index"
+"90",2030,"e-turismo",1,2030,"index"
+"91",100,"Rascunho",1,100,"index"
+"92",2031,"IRPF",1,2031,"index"
+"93",3054,"Meia Maratona Natal 2011",1,4,"index"
+"94",3055,"Futebol",1,4,"index"
+"95",3056,"Fórmula 1",1,4,"index"
+"96",3057,"Tênis",1,4,"index"
+"97",3058,"Vôlei",1,4,"index"
+"98",3059,"Vôlei de Praia",1,4,"index"
+"99",3060,"Atletismo",1,4,"index"
+"100",3061,"Basquete",1,4,"index"
+"101",3062,"Futsal",1,4,"index"
+"102",3063,"Surfe",1,4,"index"
+"103",3064,"Ciclismo",1,4,"index"
+"104",3065,"Natação",1,4,"index"
+"105",3066,"Copa 2014",1,4,"index"
+"106",3067,"Judô",1,4,"index"
+"107",3068,"MMA",1,4,"index"
+"108",3069,"Obras da Copa",1,3066,"index"
+"109",3070,"Mercado do Futebol",1,4,"index"
+"110",3071,"Pedro Neto",1,3071,"index"
+"111",3072,"Eleições 2012",1,7,"index"
+"112",3073,"Pódio",1,4,"index"
+"113",3074,"Peão 4 Rei",1,3074,"index"
+"114",3075,"Enem",1,1,NA
+"115",3076,"Protestos",1,1,NA
+"116",3077,"Gaudêncio Torquato",1,7,NA
+"117",3078,"Especiais",1,0,NA
+"118",3079,"Especial",1,3,NA
+"119",3080,"Especial",1,4,NA
+"120",3081,"Especial",1,6,NA
+"121",3082,"Especial",1,7,NA
+"122",3083,"Especial",1,8,NA
+"123",3084,"TN Família - Especial",1,1006,NA
+"124",3085,"Especial",1,1006,NA
+"125",3086,"Motores e Ação",1,4,NA
+"126",2032,"Érika Nesi",1,2032,"index"
+"127",3087,"Município",1,0,NA
+"128",3088,"parnamirim",1,3087,NA
+"129",3090,"currais-novos",1,3087,NA
+"130",3091,"extremoz",1,3087,NA
+"131",3092,"pau-dos-ferros",1,3087,NA
+"132",3093,"sao-goncalo-do-amarante",1,3087,NA
+"133",3094,"macaiba",1,3087,NA
+"134",3095,"jucurutu",1,3087,NA
+"135",3096,"ceara-mirim",1,3087,NA
+"136",3097,"sao-miguel-do-gostoso",1,3087,NA
+"137",3098,"mossoro",1,3087,NA
+"138",3099,"acari",1,3087,NA
+"139",3100,"afonso-bezerra",1,3087,NA
+"140",3101,"agua-nova",1,3087,NA
+"141",3102,"alexandria",1,3087,NA
+"142",3103,"almino-afonso",1,3087,NA
+"143",3104,"alto-do-rodrigues",1,3087,NA
+"144",3105,"angicos",1,3087,NA
+"145",3106,"antonio-martins",1,3087,NA
+"146",3107,"apodi",1,3087,NA
+"147",3108,"areia-branca",1,3087,NA
+"148",3109,"arez",1,3087,NA
+"149",3110,"assu",1,3087,NA
+"150",3111,"baia-formosa",1,3087,NA
+"151",3112,"barauna",1,3087,NA
+"152",3113,"barcelona",1,3087,NA
+"153",3114,"bento-fernandes",1,3087,NA
+"154",3115,"boa-saude",1,3087,NA
+"155",3116,"bodo",1,3087,NA
+"156",3117,"bom-jesus",1,3087,NA
+"157",3118,"brejinho",1,3087,NA
+"158",3119,"caicara-do-norte",1,3087,NA
+"159",3120,"caicara-do-rio-do-vento",1,3087,NA
+"160",3121,"caico",1,3087,NA
+"161",3122,"campo-grande",1,3087,NA
+"162",3123,"campo-redondo",1,3087,NA
+"163",3124,"canguaretama",1,3087,NA
+"164",3125,"caraubas",1,3087,NA
+"165",3126,"carnaubas-dos-dantas",1,3087,NA
+"166",3127,"carnaubais",1,3087,NA
+"167",3128,"cerro-cora",1,3087,NA
+"168",3129,"coronel-ezequiel",1,3087,NA
+"169",3130,"coronel-joao-pessoa",1,3087,NA
+"170",3131,"cruzeta",1,3087,NA
+"171",3132,"doutor-severiano",1,3087,NA
+"172",3133,"encanto",1,3087,NA
+"173",3134,"equador",1,3087,NA
+"174",3135,"espirito-santo",1,3087,NA
+"175",3136,"felipe-guerra",1,3087,NA
+"176",3137,"fernando-pedroza",1,3087,NA
+"177",3138,"florania",1,3087,NA
+"178",3139,"francisco-dantas",1,3087,NA
+"179",3140,"frutuoso-gomes",1,3087,NA
+"180",3141,"galinhos",1,3087,NA
+"181",3142,"goianinha",1,3087,NA
+"182",3143,"governador-dix-sept-rosado",1,3087,NA
+"183",3144,"grossos",1,3087,NA
+"184",3145,"guamare",1,3087,NA
+"185",3146,"ielmo-marinho",1,3087,NA
+"186",3147,"ipanguacu",1,3087,NA
+"187",3148,"ipueira",1,3087,NA
+"188",3149,"itaja",1,3087,NA
+"189",3150,"itau",1,3087,NA
+"190",3151,"jacana",1,3087,NA
+"191",3152,"jandaira",1,3087,NA
+"192",3153,"janduis",1,3087,NA
+"193",3154,"japi",1,3087,NA
+"194",3155,"jardim-de-angicos",1,3087,NA
+"195",3156,"jardim-de-piranhas",1,3087,NA
+"196",3157,"jardim-do-serido",1,3087,NA
+"197",3158,"joao-camara",1,3087,NA
+"198",3159,"joao-dias",1,3087,NA
+"199",3160,"jose-da-penha",1,3087,NA
+"200",3161,"jucurutu",1,3087,NA
+"201",3162,"jundia",1,3087,NA
+"202",3163,"lagoa-danta",1,3087,NA
+"203",3164,"lagoa-de-pedras",1,3087,NA
+"204",3165,"lagoa-de-velhos",1,3087,NA
+"205",3166,"lagoa-nova",1,3087,NA
+"206",3167,"lagoa-salgada",1,3087,NA
+"207",3168,"lajes",1,3087,NA
+"208",3169,"lajes-pintadas",1,3087,NA
+"209",3170,"lucrecia",1,3087,NA
+"210",3171,"luis-gomes",1,3087,NA
+"211",3172,"macau",1,3087,NA
+"212",3173,"major-sales",1,3087,NA
+"213",3174,"marcelino-vieira",1,3087,NA
+"214",3175,"martins",1,3087,NA
+"215",3176,"maxaranguape",1,3087,NA
+"216",3177,"messias-targino",1,3087,NA
+"217",3178,"montanhas",1,3087,NA
+"218",3179,"monte-alegre",1,3087,NA
+"219",3180,"monte-das-gameleiras",1,3087,NA
+"220",3181,"nisia-floresta",1,3087,NA
+"221",3182,"nova-cruz",1,3087,NA
+"222",3183,"olho-dagua-do-borges",1,3087,NA
+"223",3184,"ouro-branco",1,3087,NA
+"224",3185,"parana",1,3087,NA
+"225",3186,"parau",1,3087,NA
+"226",3187,"parazinho",1,3087,NA
+"227",3188,"parelhas",1,3087,NA
+"228",3189,"passa-e-fica",1,3087,NA
+"229",3190,"patu",1,3087,NA
+"230",3191,"pedra-grande",1,3087,NA
+"231",3192,"pedra-preta",1,3087,NA
+"232",3193,"pedro-avelino",1,3087,NA
+"233",3194,"pedro-velho",1,3087,NA
+"234",3195,"pendencias",1,3087,NA
+"235",3196,"piloes",1,3087,NA
+"236",3197,"poco-branco",1,3087,NA
+"237",3198,"portalegre",1,3087,NA
+"238",3199,"porto-do-mangue",1,3087,NA
+"239",3200,"pureza",1,3087,NA
+"240",3201,"rafael-fernandes",1,3087,NA
+"241",3202,"rafael-godeiro",1,3087,NA
+"242",3203,"riacho-da-cruz",1,3087,NA
+"243",3204,"riacho-de-santana",1,3087,NA
+"244",3205,"riachuelo",1,3087,NA
+"245",3206,"rio-do-fogo",1,3087,NA
+"246",3207,"rodolfo-fernandes",1,3087,NA
+"247",3208,"ruy-barbosa",1,3087,NA
+"248",3209,"santa-cruz",1,3087,NA
+"249",3210,"santa-maria",1,3087,NA
+"250",3211,"santana-do-matos",1,3087,NA
+"251",3212,"santana-do-serido",1,3087,NA
+"252",3213,"santo-antonio",1,3087,NA
+"253",3214,"sao-bento-do-norte",1,3087,NA
+"254",3215,"sao-bento-do-trairi",1,3087,NA
+"255",3216,"sao-fernando",1,3087,NA
+"256",3217,"sao-francisco-do-oeste",1,3087,NA
+"257",3218,"sao-joao-do-sabugi",1,3087,NA
+"258",3219,"sao-jose-de-mipibu",1,3087,NA
+"259",3220,"sao-jose-do-campestre",1,3087,NA
+"260",3221,"sao-jose-do-serido",1,3087,NA
+"261",3222,"sao-miguel",1,3087,NA
+"262",3223,"sao-paulo-do-potengi",1,3087,NA
+"263",3224,"sao-pedro",1,3087,NA
+"264",3225,"sao-rafael",1,3087,NA
+"265",3226,"sao-tome",1,3087,NA
+"266",3227,"sao-vicente",1,3087,NA
+"267",3228,"senador-eloi-de-souza",1,3087,NA
+"268",3229,"senador-georgino-avelino",1,3087,NA
+"269",3230,"serra-caiada",1,3087,NA
+"270",3231,"serra-de-sao-bento",1,3087,NA
+"271",3232,"serra-do-mel",1,3087,NA
+"272",3233,"serra-negra-do-norte",1,3087,NA
+"273",3234,"serrinha",1,3087,NA
+"274",3235,"serrinha-dos-pintos",1,3087,NA
+"275",3236,"severiano-melo",1,3087,NA
+"276",3237,"sitio-novo",1,3087,NA
+"277",3238,"taboleiro-grande",1,3087,NA
+"278",3239,"taipu",1,3087,NA
+"279",3240,"tangara",1,3087,NA
+"280",3241,"tenente-ananias",1,3087,NA
+"281",3242,"tenente-laurentino",1,3087,NA
+"282",3243,"tibau",1,3087,NA
+"283",3244,"tibau-do-sul",1,3087,NA
+"284",3245,"timbauba-dos-batistas",1,3087,NA
+"285",3246,"touros",1,3087,NA
+"286",3247,"triunfo-potiguar",1,3087,NA
+"287",3248,"umarizal",1,3087,NA
+"288",3249,"upanema",1,3087,NA
+"289",3250,"varzea",1,3087,NA
+"290",3251,"venha-ver",1,3087,NA
+"291",3252,"vera-cruz",1,3087,NA
+"292",3253,"vicosa",1,3087,NA
+"293",3254,"vila-flor",1,3087,NA
+"294",2033,"Marcos Lopes",1,2033,"index"
+"295",3255,"Musa-2015",1,3255,NA
+"296",3256,"teste",1,0,NA
+"297",3257,"Informe Publicitário",1,3257,"index"
+"298",3258,"Policia",1,3258,NA
+"299",2034,"Thiago Cavalcanti",1,2034,"index"
+"300",2035,"Rosalie Arruda",1,2035,"index"
+"301",3262,"Campus Party",1,3262,NA
+"302",3263,"Alex Medeiros",1,3263,"index"
+"303",3264,"Cena Urbana - Vicente Serejo",1,3264,"index"
+"304",3265,"Roda Viva - Cassiano Arruda Câmara",1,3265,"index"
+"305",3266,"Rubens Lemos Filho",1,3266,"index"
+"306",3267,"Esportes  de Primeira - Itamar Ciríaco",1,3267,"index"
+"307",3268,"Direito & Desenvolvimento",1,3268,"index"
+"308",3269,"Top Natal",1,3269,"index"
+"309",3270,"Bora Veranear",1,3270,"index"
+"310",3271,"Transposição",1,3271,NA
+"311",3272,"Publicidade Legal",1,3272,NA
+"312",3273,"Eleições 2022",1,7,"index"

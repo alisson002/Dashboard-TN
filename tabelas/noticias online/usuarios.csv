@@ -1,0 +1,40 @@
+,usu_id,usu_login,usu_senha,usu_datacadastro,usu_datainativo,usu_email,usu_ativo,usu_nome,usu_cpf
+1,145,kayllani,21d4cdf246f6157742ab9634fcc00644,2022-06-10 00:00:00,0000-00-00 00:00:00,kayllanisilva0299@gmail.com,1,Kayllani Augusta Lima da Silva,1752166493
+2,146,liria,bbde56e439f2a2e3786ae7334b7e15ce,2022-07-12 00:00:00,0000-00-00 00:00:00,liriapaz6@gmail.com,1,Líria Candice Paz do Nascimento,71123635439
+3,147,jessyanne,948b63cc2f8e17859cf6f4638eba1e7c,2022-08-22 00:00:00,0000-00-00 00:00:00,jessyanne_larissa@hotmail.com,1,Jessyanne Larissa Analio Bezerra,13008502482
+4,4,admin,b8a542e91b72ea7716ff58477356e815,2016-11-04 10:48:27,0000-00-00 00:00:00,ti@tribunadonorte.com.br,1,Jonathas Rangel Berico,1050405412
+5,33,mariaemila,6e009c4edbe800815e006270ebcb32f4,2021-12-06 15:56:18,2021-12-06 00:00:00,mariaemilaa@gmail.com,0,Maria Emilia,5297715431
+6,43,margareth,bf4f4a38e1342532ef01ef0e519c0084,2022-08-29 15:31:33,0000-00-00 00:00:00,margareth@tribunadonorte.com.br,1,Margareth Grilo,59588020468
+7,148,Ilana,047d5e4acdf4203f5c538fd71af921d9,2023-03-15 11:39:25,0000-00-00 00:00:00,ilana@tribunadonorte.com.br,1,Ilana Albuquerque,342271730
+8,149,jerusa,bf4f4a38e1342532ef01ef0e519c0084,2022-09-19 00:00:00,0000-00-00 00:00:00,jerusa.jeehv@gmail.com,1,Jerusa Vieira do Nascimento,70316951471
+9,144,antonio,bbde56e439f2a2e3786ae7334b7e15ce,2022-02-17 00:00:00,0000-00-00 00:00:00,noticiario@tribunadonorte.com.br,1,Antônio Manoel,51263068472
+10,46,itamar,89a8704efeee470780d7fa162b8499eb,2017-08-01 17:28:32,0000-00-00 00:00:00,itamar@tribunadonorte.com.br,1,Itamar Ciríaco,
+11,47,afreire,89a8704efeee470780d7fa162b8499eb,2017-08-01 17:30:13,0000-00-00 00:00:00,afreire@tribunadonorte.com.br,1,Aldemar Freire,
+12,142,mclara,7932d244caff66e73369a00b5bc5b8b0,2021-10-13 00:00:00,0000-00-00 00:00:00,maria.pimentel.087@ufrn.edu.br,1,Maria Clara Nóbrega Pimentel,8773943428
+13,143,lara,463331dfc02f9c327097503d59679f13,2021-12-06 00:00:00,0000-00-00 00:00:00,laraagra@gmail.com,1,Lara Agra Nunes,5239329443
+14,131,nogueira,ef96e2ac99532e80457c01bcd81a06af,2019-08-20 09:16:08,0000-00-00 00:00:00,talesnl26@gmail.com,1,Nogueira Lobo,1809959101
+15,132,anthonymcf,8c4288f0d97f680d02ad23fa5b499a68,2019-10-01 12:45:30,0000-00-00 00:00:00,anthony.mattheus@gmail.com,1,Anthony Mattheus da Cunha Fernandes,11621220486
+16,150,danilo,42f6058cb3900a5ceb5ab5ce11733c8a,2022-09-22 00:00:00,0000-00-00 00:00:00,jornalistadanilo@hotmail.com,1,Danilo Sá,5763081455
+17,60,alexregis,16943f2f3feda56454297c54e7acf2b1,2017-02-23 15:54:28,0000-00-00 00:00:00,alexregis@tribunadonorte.com.br,1,Alex Régis,
+18,81,julio,2f3f296fda8459680fdcbe4626134fd2,2010-03-12 00:00:00,0000-00-00 00:00:00,juliopinheiro84@gmail.com,1,Julio Pinheiro,5723865404
+19,82,bernardo,ea57d9421aee6e8306e4ec749bde6183,2022-03-24 17:00:15,0000-00-00 00:00:00,bernardo@tribunadonorte.com.br,1,Bernardo França,6319640456
+20,136,maurilio,463331dfc02f9c327097503d59679f13,2021-12-06 15:56:22,2021-12-06 00:00:00,maurilio_mpmn@hotmail.com,0,Maurílio Medeiros,11944885447
+21,138,isaac,463331dfc02f9c327097503d59679f13,2021-07-02 00:00:00,0000-00-00 00:00:00,isaaclira@tribunadonorte.com.br,1,Isaac Lira,917792351
+22,139,jalmir,463331dfc02f9c327097503d59679f13,2021-07-14 00:00:00,0000-00-00 00:00:00,jalmir@tribunadonorte.com.br,1,Jalmir Oliveira,1025385497
+23,140,phdias,78b2edcb5af781977e012017490ed11d,2021-09-01 00:00:00,0000-00-00 00:00:00,ph337631@gmail.com,1,Pedro Henrique Andrade Dias,5115900327
+24,141,leticia,edca0d3c61612d73f9370e1e3949dce3,2021-10-13 13:14:02,2021-10-13 00:00:00,leticiasoaresm@gmail.com,0,Letícia Soares de Medeiros,8048605481
+25,133,everton,04f592f39a181de1f092b1b3e074ecd5,2020-12-02 14:47:26,0000-00-00 00:00:00,evertondantas@tribunadonorte.com.br,1,Everton,87629651074
+26,137,aura,463331dfc02f9c327097503d59679f13,2021-12-06 15:56:13,2021-12-06 00:00:00,auramazdadutra@gmail.com,0,Aura Mazda,7936829407
+27,135,malusgui,f733a90a5e2591f7cf8ebcc9434c920c,2020-09-08 00:00:00,0000-00-00 00:00:00,malusgui.19@gmail.com,1,Maria Luiza Silva Guimarães,11486004423
+28,97,ricardoaraujo,ef10a52d0bda3f33222c300f5faacc81,2021-12-06 15:56:31,2021-12-06 00:00:00,ricardoaraujo@tribunadonorte.com.br,0,Ricardo Araújo,1234567891
+29,123,icaro,39ec762c8f1a1bf34249c4d0a16c0e35,2017-11-08 14:34:11,0000-00-00 00:00:00,icarocesarcarvalho@gmail.com,1,Ícaro César Carvalho Batista de Medeiros,10137563477
+30,124,anthony,047d5e4acdf4203f5c538fd71af921d9,2023-03-15 11:40:20,0000-00-00 00:00:00,anthonymateus1@hotmail.com,1,Anthony Mateus Oliveira Medeiros,9231562401
+31,126,mylka,1e5c6b96a065d98a943a048a759de8b5,2021-12-06 15:56:26,2021-12-06 00:00:00,mylkamoura1@gmail.com,0,Milka Gomes de Moura,10359720420
+32,151,ivakareninna,22c9d061758afda9bbdb794c8c7de507,2022-10-27 00:00:00,0000-00-00 00:00:00,ivakaren@gmail.com,1,Iva Kareninna da Silva Câmara,5304116445
+33,152,wagner,22c9d061758afda9bbdb794c8c7de507,2022-10-27 00:00:00,0000-00-00 00:00:00,wagnerguerra@yahoo.com.br,1,Wagner Guerra,65530926487
+34,153,adenilson,22c9d061758afda9bbdb794c8c7de507,2022-10-27 00:00:00,0000-00-00 00:00:00,adenilson_costa@outlook.com.br,1,Adenilson Costa,9277885432
+35,154,flavio,22c9d061758afda9bbdb794c8c7de507,2022-10-28 00:00:00,0000-00-00 00:00:00,flaviopmonteiro@outlook.com,1,Flávio Pantoja Monteiro,3732500292
+36,155,vitoria,bbde56e439f2a2e3786ae7334b7e15ce,2022-12-27 00:00:00,0000-00-00 00:00:00,vitorianascimento640@gmail.com,1,Vitoria Caroline,73397845009
+37,156,larissa,bbde56e439f2a2e3786ae7334b7e15ce,2022-12-27 00:00:00,0000-00-00 00:00:00,larydfreire@gmail.com,1,Larissa Duarte Freire,30897659007
+38,157,douglas,bbde56e439f2a2e3786ae7334b7e15ce,2022-12-28 00:00:00,0000-00-00 00:00:00,douglaslopes703@gmail.com,1,Douglas Lopes,2544733772
+39,,,,,,,,,
