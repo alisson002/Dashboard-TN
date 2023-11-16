@@ -2,6 +2,8 @@ import pygal
 import pandas as pd
 import streamlit as st
 from io import BytesIO
+import base64  # Adicione esta linha
+
 
 def noticiasPorEditoria():
     dados_Noticias = pd.read_csv('tabelas/noticias online/noticiasOnline.csv', low_memory=False)
@@ -14,4 +16,13 @@ def noticiasPorEditoria():
     for item in editoriais_unicos:
         pie_chart.add(item, dados_Noticias['edi_descricao'].value_counts()[item])
 
-    pie_chart
+    svg = pie_chart.render()
+    render_svg(svg)
+    
+def render_svg(svg):
+    """Renders the given svg string."""
+    b64 = base64.b64encode(svg.encode('utf-8')).decode("utf-8")
+    html = r'<img src="data:image/svg+xml;base64,%s"/>' % b64
+    st.write(html, unsafe_allow_html=True)
+
+
