@@ -1,5 +1,7 @@
 import pygal
 import pandas as pd
+import streamlit as st
+from io import BytesIO
 
 def noticiasPorEditoria():
     dados_Noticias = pd.read_csv('tabelas/noticias online/noticiasOnline.csv', low_memory=False)
@@ -12,4 +14,4 @@ def noticiasPorEditoria():
     for item in editoriais_unicos:
         pie_chart.add(item, dados_Noticias['edi_descricao'].value_counts()[item])
 
-    pie_chart.render()
+    pie_chart
