@@ -16,8 +16,13 @@ def noticiasPorEditoria():
     for item in editoriais_unicos:
         pie_chart.add(item, dados_Noticias['edi_descricao'].value_counts()[item])
 
-    svg = pie_chart.render()
-    render_svg(svg)
+    # svg = pie_chart.render()
+    # render_svg(svg)
+    svg = pie_chart.render_data_uri()
+
+    # Exibindo o gráfico no Streamlit
+    
+    return svg
     
 def render_svg(svg):
     """Renders the given svg string."""
