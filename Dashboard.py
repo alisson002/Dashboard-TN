@@ -8,8 +8,8 @@ from graficos.Tribuna_do_Norte import tnPortal
 image_placeholder = st.empty()
 
 # Caminho das imagens
-TN_image_path = Image.open("C:/Users/Alisson Moreira/Desktop/Repositórios/Dashboard-TN/imagens/tribunaLogo.jpg") 
-JPN_image_path = Image.open("C:/Users/Alisson Moreira/Desktop/Repositórios/Dashboard-TN/imagens/jpnnatalLogo3.png") 
+TN_image_path = Image.open("imagens/tribunaLogo.jpg") 
+JPN_image_path = Image.open("imagens/jpnnatalLogo3.png") 
 
 # Criar seletor 1 na coluna à esquerda
 options1 = ["Escolha uma opção","Tribuna do norte", "JP News - Natal"]
@@ -50,8 +50,17 @@ if selected_option1 == "Tribuna do norte":
     
     # Gráficos referentes a cada categoria
     if selected_option2 == "Site/Portal":
-       svg_data =  tnPortal.noticiasPorEditoria()
-       st.markdown(f'<embed type="image/svg+xml" src="{svg_data}" />', unsafe_allow_html=True)
+        tab1, tab2, tab3, tab4= st.tabs(["Total de notícias jan/23-out/23", "Notícias por ditoria", "Nóticias por reporter", "Editoria por reporter"])
+        with tab1:
+            tnPortal.noticiasToTal()
+        with tab2:
+            # Recebe a o gráfico em svg
+            tnPortal.noticiasPorEditoria()
+        with tab3:
+            tnPortal.noticiasPorReporter()
+        with tab4:
+            tnPortal.reporterPorEditoria()
+
     elif selected_option2 == "Impresso":
         st.write("Gráficos do impresso")
     elif selected_option2 == "Instagram":
