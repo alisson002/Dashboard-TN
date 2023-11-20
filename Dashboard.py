@@ -54,12 +54,12 @@ if selected_option1 == "Tribuna do norte":
         with tab1:
             tnPortal.noticiasToTal()
         with tab2:
-            # Recebe a o gráfico em svg
             tnPortal.noticiasPorEditoria()
         with tab3:
             tnPortal.noticiasPorReporter()
         with tab4:
-            tnPortal.reporterPorEditoria()
+            print('test')
+            #tnPortal.reporterPorEditoria()
 
     elif selected_option2 == "Impresso":
         st.write("Gráficos do impresso")
