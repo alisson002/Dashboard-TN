@@ -50,7 +50,7 @@ if selected_option1 == "Tribuna do norte":
     
     # Gráficos referentes a cada categoria
     if selected_option2 == "Site/Portal":
-        tab1, tab2, tab3, tab4, tab5= st.tabs(["Total", "Notícias por ditoria", "Nóticias por reporter", "Editoria por reporter", "Notícias por fotógrafos"])
+        tab1, tab2, tab3, tab4, tab5= st.tabs(["Total", "Notícias por ditoria", "Nóticias por reporter", "Editoria por reporter", "Créditos/origem das fotos"])
         with tab1:
             tnPortal.noticiasToTal()
         with tab2:
@@ -60,7 +60,7 @@ if selected_option1 == "Tribuna do norte":
         with tab4:
             tnPortal.reporterPorEditoria()
         with tab5:
-            tnPortal.fotografos()
+            tnPortal.credfotografos()
 
     elif selected_option2 == "Impresso":
         st.write("Gráficos do impresso")

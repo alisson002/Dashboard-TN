@@ -1,6 +1,8 @@
 import pygal
 import pandas as pd
 import streamlit as st
+import streamlit.components.v1 as components
+
 
 raio_interno = 0.7
 raio_half = 0.2
@@ -29,21 +31,58 @@ editoria = editoria.rename(columns={'usu_id_fk': 'usu_id'})
 # O primeiro possui apenas a coluna dos ids com repetições para cada uma das notícias. 
 # O segundo tanto a coluna dos ids quanto a dos usuários, massem repetições.
 # A saída será um novo data frame contendo duas colunas, onde os nome dos usuários seram replicados para seus repesctivos ids.
-merge_ids_reporterNoticias = pd.merge(ids_noticias, ids_reporter, on='usu_id', how='left')
+merge_ids_noticias_reporters = pd.merge(ids_noticias, ids_reporter, on='usu_id', how='left')
 
 # Lista com os nomes dos reporters sem repetições
-reporter_unique = merge_ids_reporterNoticias['usu_nome'].unique()
+reporter_unique = merge_ids_noticias_reporters['usu_nome'].unique()
 
 # Da merge nos dataframes editoria e ids_reporter com base nos ids de usuários. 
 # O primeiro possui apenas a coluna dos ids e tipos de editoria com repetições para cada uma das notícias.
 # O segundo possui tanto a coluna dos ids quanto a dos usuários, massem repetições.
 # A saída será um novo data frame contendo três colunas, onde os nome dos usuários e as editorias seram replicados para seus repesctivos ids.
-merge2_ids_reporterNoticias_ediDescricao = pd.merge(editoria, ids_reporter, on='usu_id', how='left')
+merge_ids_rep_noticias_editoria = pd.merge(editoria, ids_reporter, on='usu_id', how='left')
 
+# Remove determinados caracteres
+def remover_caracteres(s):
+    caracteres_a_remover = [".", ",", "-", "_"]
+    for c in caracteres_a_remover:
+        s = s.replace(c, '')
+    return s
+
+'''
+MANIPULANDO O DF DOS FOTÓGRAFOS
+'''
+# Recebe uma cópia da coluna dos fotógrafos 
+# dropna(how='all') remove todas as linhas com NaN ou NA
+# .astype(str) transforma em string
+# .str.split('/') remove tudo que vier depois de uma barra. p.ex. /Agência Brasil
+# .str[0] Seleciona somente o texto de antes da barra, pois foram separados em duas partes
+# .str.lower() Deixa todas as primeiras letras maiúsculas
+# .replace('marcelo casal jr','marcello casal jr') substitui uma string
+fotografos = df_noticias.copy()['fot_credito'].dropna(how='all').astype(str).str.split('/').str[0].str.lower().replace('marcelo casal jr','marcello casal jr')
+
+# Remove determinados caracteres de acordo com a função remover_caracteres
+# .str.title() Deixa todas as primeiras letras maiúsculas
+fotografos = fotografos.apply(remover_caracteres).str.title()
+
+# Determina as informações que são 'imprimiveis'
+fotografos = fotografos.apply(lambda x: ''.join(filter(lambda char: char.isprintable(), x)))
+
+# Remove as repetições, deixa apenas inofrmações únicas, conta quantas vezes cada informação se repete e organiza da maior freqência para a menor
+fotografos = fotografos.value_counts().reset_index()
+
+# Renomeia a coluna com a contagem de cada string única
+fotografos.columns = ['fot_credito', 'Freq']
+
+'''
+MESMA LÓGICA, MAS PARA DUAS COLUNAS
+'''
+# Aplica a lógica para as duas colunas simultaneamente
+fotografos_edi = df_noticias[['fot_credito', 'edi_descricao']].copy().astype(str).applymap(lambda x: x.lower() if pd.notna(x) else x).applymap(lambda x: x.replace('marcelo casal jr', 'marcello casal jr') if pd.notna(x) else x).applymap(lambda x: x.split('/')[0] if pd.notna(x) else x).applymap(remover_caracteres).applymap(lambda x: ''.join(filter(lambda char: char.isprintable(), x)) if pd.notna(x) else x)
 
 def noticiasPorEditoria():
     # Recebe uma cópia de um dos merges, conta a freqeuncia de cada informação na coluna de editoria e organiza em ordem decrescente
-    editoria_freq = merge2_ids_reporterNoticias_ediDescricao.copy()['edi_descricao'].value_counts().reset_index()
+    editoria_freq = merge_ids_rep_noticias_editoria.copy()['edi_descricao'].value_counts().reset_index()
 
     editoria_freq.columns = ['edi_descricao', 'Freq']
 
@@ -110,7 +149,7 @@ def noticiasPorReporter():
     pie_chart_reporter = pygal.Pie(inner_radius=raio_interno)
     
     # # Recebe uma cópia de um dos merges, conta a freqeuncia de cada informação na coluna de nome dos usuários e organiza em ordem decrescente
-    reporter_freq = merge_ids_reporterNoticias.copy()['usu_nome'].value_counts().reset_index()
+    reporter_freq = merge_ids_noticias_reporters.copy()['usu_nome'].value_counts().reset_index()
 
     reporter_freq.columns = ['usu_nome', 'Freq']
     
@@ -127,13 +166,13 @@ def noticiasPorReporter():
 
 def reporterPorEditoria():
     # Recebe lista de reporters para o seletor
-    options3 = reporter_unique
-    selected_option3 = st.selectbox("Selecione um reporter:", options3)
+    options = reporter_unique
+    selected_option = st.selectbox("Selecione um reporter:", options)
     
     pie_chart_repEdi = pygal.Pie(inner_radius=raio_interno)
     
     # Recebe um dataframe com a editorias do reporter selecionado de acordo com o seletor selected_option3
-    df_loc_repEdi = merge2_ids_reporterNoticias_ediDescricao.loc[merge2_ids_reporterNoticias_ediDescricao.usu_nome == f'{selected_option3}']
+    df_loc_repEdi = merge_ids_rep_noticias_editoria.loc[merge_ids_rep_noticias_editoria.usu_nome == f'{selected_option}']
     
     df_repEdi =  df_loc_repEdi[['usu_nome', 'edi_descricao']]
     
@@ -152,16 +191,46 @@ def reporterPorEditoria():
     
     st.markdown(f'<embed type="image/svg+xml" src="{svg4}" />', unsafe_allow_html=True)
     
-def fotografos():
-    fotografos = df_noticias.copy()['fot_credito'].value_counts().reset_index()
-
-    fotografos.columns = ['fot_credito', 'Freq']
     
+def credfotografos():
+    # Cria o gráfico
     pie_chart_fot = pygal.Pie(inner_radius=raio_interno)
     
-    for fotografo, freq in zip(fotografos['fot_credito'],fotografos['Freq']):
-        pie_chart_fot.add(fotografo, freq)
+    # Slider para selecionar quais informações vão aparecer
+    values = st.slider(
+        'Selecione um intervalo:',
+        0, len(fotografos['fot_credito']), (0, 24))
     
+    # Inicio e fim do slider para serem usados no plot do gráfico
+    inicio = values[0]
+    fim = values[1]
+    
+    # Add as informações do df fotografos de acordo com o slider
+    for fotografo, freq in zip(fotografos['fot_credito'][inicio:fim],fotografos['Freq'][inicio:fim]):
+        pie_chart_fot.add(fotografo, freq)
+        
+    #st.write(fotografos)
+    
+    # recebe as informações do gráfico em svg
     svg6 = pie_chart_fot.render_data_uri()
     
+    # Renderiza o gráfico
     st.markdown(f'<embed type="image/svg+xml" src="{svg6}" />', unsafe_allow_html=True)
+
+def fotPorEditoria():
+    print('')
+    # Slider para selecionar quais informações vão aparecer
+    values = st.slider(
+        'Selecione um intervalo:',
+        0, len(fotografos['fot_credito']), (0, 24))
+    
+    # Inicio e fim do slider para serem usados no plot do gráfico
+    inicio = values[0]
+    fim = values[1]
+    
+    options = fotografos_edi['fot_credito'].unique()[inicio:fim]
+    selected_option = st.selectbox("Fotógrafo/Origem da foto", options)
+    
+    pie_chart_fotEdi = pygal.Pie(inner_radius=raio_interno)
+    
+    df_loc_fotEdi = fotografos_edi.loc[fotografos_edi.fot_credito == f'{selected_option}']
