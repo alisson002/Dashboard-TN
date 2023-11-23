@@ -50,17 +50,49 @@ if selected_option1 == "Tribuna do norte":
     
     # Gráficos referentes a cada categoria
     if selected_option2 == "Site/Portal":
-        tab1, tab2, tab3, tab4, tab5= st.tabs(["Total", "Notícias por ditoria", "Nóticias por reporter", "Editoria por reporter", "Créditos/origem das fotos"])
+        
+        exib_type = st.radio("Selecione o tipo de exibição:", ['Gráficos de rosca/pizza', 'Gráficos de barra', "Tabelas"], horizontal=True)
+        
+        tab1, tab2, tab3, tab4, tab5, tab6= st.tabs(["Total", "Notícias por editoria", "Nóticias por repórter", "Editoria por repórter", "Créditos/origem das fotos", "Editoria por foto"])
+        
         with tab1:
-            tnPortal.noticiasToTal()
+            if exib_type == 'Gráficos de rosca/pizza':
+                tnPortal.noticiasToTal()
+            elif exib_type == 'Tabelas':
+                
+                # Exibindo as tabelas com o width maximo
+                st.dataframe(tnPortal.table_noticias_on[['Status da notícia', 'Contagem']], use_container_width = True)
+                
+                st.dataframe(tnPortal.table_noticias_veiculo[['Veículo', 'Contagem']], use_container_width = True)
+                
         with tab2:
-            tnPortal.noticiasPorEditoria()
+            
+            if exib_type == 'Gráficos de rosca/pizza':
+                tnPortal.noticiasPorEditoria()
+            elif exib_type == 'Tabelas':
+                st.dataframe(tnPortal.table_noticias_edi, use_container_width = True)
+            
         with tab3:
-            tnPortal.noticiasPorReporter()
+            
+            if exib_type == 'Gráficos de rosca/pizza':
+                tnPortal.noticiasPorReporter()
+            elif exib_type == 'Tabelas':
+                st.dataframe(tnPortal.table_noticias_rep, use_container_width = True)
+                
         with tab4:
-            tnPortal.reporterPorEditoria()
+            
+            if exib_type == 'Gráficos de rosca/pizza':
+                tnPortal.editoriaPorReporter()
+            elif exib_type == 'Tabelas':
+                tnPortal.tableEditoriaPorReporter()
+            
         with tab5:
-            tnPortal.credfotografos()
+            if exib_type == 'Gráficos de rosca/pizza':
+                tnPortal.credfotografos()
+            elif exib_type == 'Tabelas':
+                st.dataframe(tnPortal.fotografos, use_container_width = True)
+        with tab6:
+            tnPortal.fotPorEditoria()
 
     elif selected_option2 == "Impresso":
         st.write("Gráficos do impresso")
