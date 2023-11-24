@@ -61,23 +61,23 @@ if selected_option1 == "Tribuna do norte":
             elif exib_type == 'Tabelas':
                 
                 # Exibindo as tabelas com o width maximo
-                st.dataframe(tnPortal.table_noticias_on[['Status da notícia', 'Contagem']], use_container_width = True)
+                st.dataframe(tnPortal.table_noticias_on[['Status da notícia', 'Contagem']], use_container_width = True, hide_index=True)
                 
-                st.dataframe(tnPortal.table_noticias_veiculo[['Veículo', 'Contagem']], use_container_width = True)
+                st.dataframe(tnPortal.table_noticias_veiculo[['Veículo', 'Contagem']], use_container_width = True, hide_index=True)
                 
         with tab2:
             
             if exib_type == 'Gráficos de rosca/pizza':
                 tnPortal.noticiasPorEditoria()
             elif exib_type == 'Tabelas':
-                st.dataframe(tnPortal.table_noticias_edi, use_container_width = True)
+                st.dataframe(tnPortal.table_noticias_edi, use_container_width = True, hide_index=True)
             
         with tab3:
             
             if exib_type == 'Gráficos de rosca/pizza':
                 tnPortal.noticiasPorReporter()
             elif exib_type == 'Tabelas':
-                st.dataframe(tnPortal.table_noticias_rep, use_container_width = True)
+                st.dataframe(tnPortal.table_noticias_rep, use_container_width = True, hide_index=True)
                 
         with tab4:
             
@@ -87,10 +87,11 @@ if selected_option1 == "Tribuna do norte":
                 tnPortal.tableEditoriaPorReporter()
             
         with tab5:
+            st.write("Obs: os números são referentes a quantidade de notícias associadas ao fotógrafo. É importante observar que várias fotos podem ter sido tiradas.")
             if exib_type == 'Gráficos de rosca/pizza':
                 tnPortal.credfotografos()
             elif exib_type == 'Tabelas':
-                st.dataframe(tnPortal.fotografos, use_container_width = True)
+                st.dataframe(tnPortal.fotografos, use_container_width = True, hide_index=True)
         with tab6:
             tnPortal.fotPorEditoria()
 
