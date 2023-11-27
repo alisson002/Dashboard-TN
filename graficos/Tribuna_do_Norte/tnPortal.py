@@ -398,14 +398,17 @@ table_noticias_rep.columns = ['Repórteres', 'Contagem']
 
 '''EDITORIA POR REPORTER: contagem de editoria por reporter (organizado do maior para o menor)'''
 def tableEditoriaPorReporter():
+    # Recebe o df já organizado e com os dados de acordo com o reporter selecionado
     df_repEdi_Organizado = reporterSelector()
     
+    # Recebe uma cópia de duas colunas do df
     table_edi_rep = df_repEdi_Organizado[['edi_descricao', 'Freq']].copy()
     
+    # Renomeia as colunas
     table_edi_rep.columns = ['Editorias do repórter selecionado', 'Contagem']
     
     #table_edi_rep = table_edi_rep['edi_descricao'].value_counts()
-    
+    # Exibe o df na dashboard
     st.dataframe(table_edi_rep.drop_duplicates(), use_container_width = True, hide_index=True)
     
     
