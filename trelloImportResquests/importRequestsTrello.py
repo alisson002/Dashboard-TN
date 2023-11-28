@@ -3,11 +3,11 @@ import json
 import csv
 
 
-# Substitua 'SUA_CHAVE' e 'SEU_TOKEN' pelos valores obtidos ao criar sua chave de API e token de acesso
+# Chave de API e Token de acesso fornecidos pelo Trello
 API_KEY = '14d771355a6d5e6844830a88f5af930f'
 TOKEN = 'ATTA58f75daa52546fed11141ce22e6ac3d978755aa1dba5b112f1e606bf668da1dcE6A7BB6A'
 
-# ID do quadro do Trello que você deseja extrair dados
+# ID do quadro/área de trabalho do Trello que você deseja extrair dados
 # TRELLO_BOARD_ID = 'bLA2Uwel'
 TRELLO_BOARD_ID = 'bLA2Uwel'
 LIST_ID = TRELLO_BOARD_ID
@@ -24,8 +24,7 @@ lists_data = response.json()
 
 pautas_feitas_list = None
 publicados_list = None
-
-# Guarda os dois quadros que eu vou precisar
+# Guarda os dois quadros que eu vou precisar de acordo com o nome do quadro
 for lista in lists_data:
     if lista['name'] == 'PAUTAS FEITAS':
         pautas_feitas_list = lista
@@ -47,18 +46,23 @@ response = requests.get(f'https://api.trello.com/1/lists/{publicados_list['id']}
 publicados_cards_data = response.json()
 
 
-ID_members_pautas_feitas =[]
-ID_members_publicados = []
 # Pega todos os 'idMembers' de cada quadro e coloca em sua respectiva lista
-def getIdMembers(pautas_feitas_cards_data, publicados_cards_data):
+# Recebe os dados de cada um dos cartões e a key para acessar determinada informação de um dict
+def getIds(pautas_feitas_cards_data, publicados_cards_data, key):
+    # Listas para receber os ids dos jornalistas e fotógrafos no trello
+    ID_members_pautas_feitas =[]
+    ID_members_publicados = []
+    
     for item_pf in pautas_feitas_cards_data:
-        ID_members_pautas_feitas.append(item_pf['idMembers'])
+        ID_members_pautas_feitas.append(item_pf[key])
     
     for item_pub in publicados_cards_data:
-        ID_members_publicados.append(item_pub['idMembers'])
+        ID_members_publicados.append(item_pub[key])
+    
+    return ID_members_pautas_feitas, ID_members_publicados
 
 
-# Recebe uma lista de listas, remove as listas dentro da lista e unifica todas as informações na lista de "fora" e junta as duas listas em uma só     
+# Recebe uma lista de listas, remove as listas dentro da lista e unifica todas as informações na lista de "fora", juntando as listas em uma só     
 def simplificar_listas(*args):
     lista_de_listas = args[0]+args[1]
     lista_simplificada = []
@@ -78,10 +82,14 @@ def removePalavrasRepetidas(lista_palavras):
     
     return lista_sem_repeticao
 
-# Variável para guardar os nomes com as IDs de cada reporter e fotógrafo
-membros_nomes = {}
+
 # Usa o 'idMembers' que cada um dos cartões possui e pega o nome dos usuários que criaram aquele cartão
-def membersName(id_members):   
+def membersName(id_members):
+    
+    # Variável para guardar os nomes com as IDs de cada reporter e fotógrafo
+    membros_nomes = {}
+    
+    # Com a lista de ids dos reporteres vai usar cada um deles para solicitar as informações de cada repórter, guardar em mamber_data, pegar o nome completo do repórter no dict recebido e depois criar um novo dict com id:nome completo
     for member_id in id_members:
         # Usa o id do usuário para pegar as informações de cada um
         response = requests.get(f'https://api.trello.com/1/members/{member_id}?key={API_KEY}&token={TOKEN}')
@@ -99,20 +107,18 @@ def membersName(id_members):
             membros_nomes[key] = membros_nomes[key]+"📷"
         elif value == 'adriano abreu':
             membros_nomes[key] = membros_nomes[key]+"📷"
+            
+    return membros_nomes
     
 # Chamada de função que pega todas as IDs
-getIdMembers(pautas_feitas_cards_data, publicados_cards_data)
+# Guarda os ids do membros de cada card em sua repectiva lisa
+ID_members_pautas_feitas, ID_members_publicados = getIds(pautas_feitas_cards_data, publicados_cards_data, 'idMembers')
 
 # Recebe a lista "limpa", ou seja, sem listas dentro da lista e sem ID repetidos
 id_members = removePalavrasRepetidas(simplificar_listas(ID_members_pautas_feitas, ID_members_publicados))
-    
-membersName(id_members)
-#dicionario_ordenado = dict(sorted(membros_nomes.items(), key=lambda item: item[1].lower()))
 
-print("'ID': 'name': \n",membros_nomes)
-print(type(membros_nomes))
-print(type(pautas_feitas_cards_data))
-
+# Recebe um dict com id : nome completo
+membros_nomes = membersName(id_members)
 
 # Junta todas as informações das duas listas em uma única lista para que tudo seja escrito em um único CSV
 todas_as_pautas = pautas_feitas_cards_data + publicados_cards_data
