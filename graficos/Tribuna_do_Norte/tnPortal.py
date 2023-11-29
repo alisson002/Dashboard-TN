@@ -16,7 +16,7 @@ import streamlit as st
 raio_interno = 0.7
 raio_half = 0.2
 
-# Recebe a tabela com as notícias
+# Recebe a tabela com as notícias do online
 # low_memory=False por a tabela ser grande
 df_noticias = pd.read_csv('tabelas/noticias online/noticiasOnline.csv', low_memory=False)
 
@@ -358,7 +358,7 @@ def fotPorEditoria():
     # df_loc_fotEdi = fotografos_edi.loc[fotografos_edi.fot_credito == f'{selected_option}']
 
 '''
-TABELAS
+DFs PARA O STREAMLIT
 '''
 '''TOTAL: contagem de notícias online e fora do ar e notícias do online e impresso.'''
 # Recebendo as colunas e contando os calores únicos de cada informação
