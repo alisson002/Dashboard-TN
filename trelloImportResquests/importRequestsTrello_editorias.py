@@ -190,7 +190,7 @@ with open(caminho, 'w', newline='', encoding='utf-8') as csvfile:
                     # card['shortUrl']: Link da notícia
                     # card['dateLastActivity']: Data da ultima vez que o card foi modificado
                     # '-' para o caso de não tem editoria adicionada no card
-                    csvwriter.writerow([membros, membros_nomes.get(membros), card['name'], card['shortUrl'], card['dateLastActivity'], '-', '-'])
+                    csvwriter.writerow([membros, membros_nomes.get(membros), card['name'], card['shortUrl'], card['dateLastActivity'], '-', 0])
                 
                 else:
                     

@@ -1,8 +1,9 @@
 import streamlit as st
 import pandas as pd
 from datetime import datetime # Para pegar a data atual
-from PIL import Image # Imagnes da tn e jpn
+from PIL import Image # Imagens da tn e jpn
 from graficos.Tribuna_do_Norte import tnPortal
+from graficos.Tribuna_do_Norte import tnImpresso
 
 # Cria um espaço reservado vazio onde vai receber as imagens
 image_placeholder = st.empty()
@@ -94,9 +95,23 @@ if selected_option1 == "Tribuna do norte":
                 st.dataframe(tnPortal.fotografos, use_container_width = True, hide_index=True)
         with tab6:
             tnPortal.fotPorEditoria()
+            
 
     elif selected_option2 == "Impresso":
-        st.write("Gráficos do impresso")
+        
+        exib_type = st.radio("Selecione o tipo de exibição:", ['Gráficos de rosca/pizza', 'Gráficos de barra', "Tabelas"], horizontal=True)
+        
+        tab1, tab2, tab3, tab4, tab5= st.tabs(["Notícias por editoria", "Nóticias por repórter", "Editoria por repórter", "Créditos/origem das fotos", "Editoria por foto"])
+        
+        with tab1:
+            if exib_type == 'Gráficos de rosca/pizza':
+                tnImpresso.noticiasPorEditoria()
+            elif exib_type == 'Tabelas':
+                print('')
+        with tab2:
+            st.write('')
+                
+        
     elif selected_option2 == "Instagram":
         st.write("Gráficos do instagram")
     elif selected_option2 == "Facebook":
