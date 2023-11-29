@@ -87,7 +87,7 @@ def removePalavrasRepetidas(lista_palavras):
 # Usa o 'idMembers' que cada um dos cartões possui e pega o nome dos usuários que criaram aquele cartão
 def membersName(id_members):
     
-    # Variável para guardar os nomes com as IDs de cada reporter e fotógrafo
+    # Dicionario para guardar os nomes com as IDs de cada reporter e fotógrafo
     membros_nomes = {}
     
     # Com a lista de ids dos reporteres vai usar cada um deles para solicitar as informações de cada repórter, guardar em mamber_data, pegar o nome completo do repórter no dict recebido e depois criar um novo dict com id:nome completo
@@ -126,21 +126,42 @@ membros_nomes = membersName(id_members)
 todas_as_pautas = pautas_feitas_cards_data + publicados_cards_data
 
 '''ESCREVENDO NO CSV'''
-# Escreve as informações selecionadas no arquivo CSV
-with open('dados_impresso.csv', 'w', newline='', encoding='utf-8') as csvfile:
+caminho = 'tabelas/impresso/dados_impresso.csv'
+# Escreve as informações selecionadas no arquivo dados_impresso.csv
+with open(caminho, 'w', newline='', encoding='utf-8') as csvfile:
+    
         csvwriter = csv.writer(csvfile)
+        
+        # Cria as colunas
         csvwriter.writerow(['IDmembers', 'Reporter ou fotografo', 'Pauta', 'link', 'data'])
+        
+        # Acessa cada um dos cards todas_as_pautas que possui todos os cards dos dois quadros
         for card in todas_as_pautas:
-            # Alguns idMembers possuem mais de um ID, transformando o seu value em uma lista
-            # Portanto, para esses casos, precisamos de um loop para escrevermos as noticias para todos os membros participantes da pauta
-            if len(card['idMembers']) == 1:
-                # idMembers com somente um ID são escritos no formato ['5f3d301a2c3e28123f5695f3']
-                # Para esses casos utilizamos o strip para remover [''] e manter tudo igual
-                membro = card['idMembers'][0].strip("[]'")
-                # membros_nomes.get(membro) é utilizado para pegar o o value referente a chave 'membro'
-                csvwriter.writerow([membro, membros_nomes.get(membro),card['name'], card['shortUrl'], card['dateLastActivity']])
-            else:
-                for membros in card['idMembers']: 
-                    csvwriter.writerow([membros, membros_nomes.get(membros), card['name'], card['shortUrl'], card['dateLastActivity']])
+            
+            '''
+            -> Esse trecho com o if só vale a pena quando a maioria card['idMembers'] tem mananho 1 e a escrita do arquivo fica ligeiramente mais rápida sem ele.
+            '''
+            
+            # # Alguns idMembers possuem mais de um ID, transformando o seu value em uma lista
+            # # Portanto, para esses casos, precisamos de um loop para escrevermos as noticias para todos os membros participantes da pauta
+            # if len(card['idMembers']) == 1:
+            #     # idMembers com somente um ID são escritos no formato ['5f3d301a2c3e28123f5695f3']
+            #     # Para esses casos utilizamos o strip para remover [''] e manter tudo igual
+            #     membro = card['idMembers'][0].strip("[]'")
+            #     # membros_nomes.get(membro) é utilizado para pegar o o value referente a chave 'membro'
+            #     csvwriter.writerow([membro, membros_nomes.get(membro),card['name'], card['shortUrl'], card['dateLastActivity']])
+            # else:
+            
+            # Cada card possui uma key contendo uma lista(value) com os ids dos jornalistas que estão envolvidos com aquela pauta
+            # Acessa cada elemento dessa lista
+            for membros in card['idMembers']:
+                
+                # Escreve as linhas em cada uma das colunas
+                # 'membros' pega o id do membro
+                # membros_nomes.get(membros) utiliza 'membros' para a cesar um dict onde cada id corresponde ao nome de um reporter id(key):reporter(value)
+                # card['name']: titulo da notícia
+                # card['shortUrl']: Link da notícia
+                # card['dateLastActivity']: Data da ultima vez que o card foi modificado
+                csvwriter.writerow([membros, membros_nomes.get(membros), card['name'], card['shortUrl'], card['dateLastActivity']])
 
-print('Aquivo CSV criado.')
+print('Arquivo dados_impresso.csv criado.')
