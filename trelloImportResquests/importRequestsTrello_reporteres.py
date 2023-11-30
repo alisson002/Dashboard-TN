@@ -133,7 +133,7 @@ with open(caminho, 'w', newline='', encoding='utf-8') as csvfile:
         csvwriter = csv.writer(csvfile)
         
         # Cria as colunas
-        csvwriter.writerow(['IDmembers', 'Reporter ou fotografo', 'Pauta', 'link', 'data'])
+        csvwriter.writerow(['IDmembers', 'reporter_fotografo', 'pauta', 'link', 'data'])
         
         # Acessa cada um dos cards todas_as_pautas que possui todos os cards dos dois quadros
         for card in todas_as_pautas:

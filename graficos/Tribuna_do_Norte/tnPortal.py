@@ -297,7 +297,7 @@ def editoriaPorReporter():
     # unsafe_allow_html=True: permite que o Streamlit interprete e exiba o conteúdo HTML fornecido como seguro. 
     st.markdown(f'<embed type="image/svg+xml" src="{svg4}" />', unsafe_allow_html=True)
     
-    
+'''FOTÓGRAFOS: contagem de noticias por fotógrafo (organizado do maior para o menor)'''
 def credfotografos():
     # Cria o gráfico
     pie_chart_fot = pygal.Pie(inner_radius=raio_interno)

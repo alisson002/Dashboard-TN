@@ -5,7 +5,7 @@ import csv
 '''CHAVES, TOKEN E REQUESTS INICIAIS'''
 # Chave de API e Token de acesso fornecidos pelo Trello
 API_KEY = '14d771355a6d5e6844830a88f5af930f'
-TOKEN = 'ATTA58f75daa52546fed11141ce22e6ac3d978755aa1dba5b112f1e606bf668da1dcE6A7BB6A'
+TOKEN = 'ATTAab028c2c6b819b9460e748a857a73df70181117328e15bea185f109dcbfeecd317CFD298'
 
 # ID do quadro/área de trabalho do Trello que você deseja extrair dados
 # TRELLO_BOARD_ID = 'bLA2Uwel'
@@ -172,14 +172,14 @@ with open(caminho, 'w', newline='', encoding='utf-8') as csvfile:
         csvwriter = csv.writer(csvfile)
         
         # Cria as colunas
-        csvwriter.writerow(['IDmembers', 'Reporter ou fotografo', 'Pauta', 'link', 'data', 'editoria', 'freq_edi'])
+        csvwriter.writerow(['pauta', 'link', 'data', 'editoria', 'freq_edi'])
         
         # Acessa cada um dos cards todas_as_pautas que possui todos os cards dos dois quadros
         for card in todas_as_pautas:
             
             # Cada card possui uma key contendo uma lista(value) com os ids dos jornalistas que estão envolvidos com aquela pauta
             # Acessa cada elemento dessa lista
-            for membros in card['idMembers']: 
+            # for membros in card['idMembers']: 
                 
                 if card['idLabels'] == []:
                     
@@ -189,8 +189,8 @@ with open(caminho, 'w', newline='', encoding='utf-8') as csvfile:
                     # card['name']: titulo da notícia
                     # card['shortUrl']: Link da notícia
                     # card['dateLastActivity']: Data da ultima vez que o card foi modificado
-                    # '-' para o caso de não tem editoria adicionada no card
-                    csvwriter.writerow([membros, membros_nomes.get(membros), card['name'], card['shortUrl'], card['dateLastActivity'], '-', 0])
+                    # 'Pauta sem editoria' para o caso de não tem editoria adicionada no card
+                    csvwriter.writerow([card['name'], card['shortUrl'], card['dateLastActivity'], 'Pauta sem editoria', 0])
                 
                 else:
                     
@@ -200,6 +200,6 @@ with open(caminho, 'w', newline='', encoding='utf-8') as csvfile:
                         
                         # editoria.get(lbl): editoria de acordo com o id da label
                         # freq_edi.get(lbl): frequencia de determinada editoria de acordo com o id da label
-                        csvwriter.writerow([membros, membros_nomes.get(membros), card['name'], card['shortUrl'], card['dateLastActivity'], editoria.get(lbl), freq_edi.get(lbl)])
+                        csvwriter.writerow([card['name'], card['shortUrl'], card['dateLastActivity'], editoria.get(lbl), int(freq_edi.get(lbl))])
 
 print('Arquivo EDI_impresso.csv criado.')

@@ -101,16 +101,28 @@ if selected_option1 == "Tribuna do norte":
         
         exib_type = st.radio("Selecione o tipo de exibição:", ['Gráficos de rosca/pizza', 'Gráficos de barra', "Tabelas"], horizontal=True)
         
+        st.write('Obs: dados importados do Trello do Tribuna do Norte. Portanto, podem divergir dos dados do impresso mostrado junto dos dados do Portal.')
+        
         tab1, tab2, tab3, tab4, tab5= st.tabs(["Notícias por editoria", "Nóticias por repórter", "Editoria por repórter", "Créditos/origem das fotos", "Editoria por foto"])
         
         with tab1:
             if exib_type == 'Gráficos de rosca/pizza':
                 tnImpresso.noticiasPorEditoria()
             elif exib_type == 'Tabelas':
-                print('')
+                st.write('Será?')
         with tab2:
+            if exib_type == 'Gráficos de rosca/pizza':
+                tnImpresso.noticiasPorReporter()
+            elif exib_type == 'Tabelas':
+                st.dataframe(tnImpresso.table_reporteres_impresso, use_container_width = True, hide_index=True)
+        with tab3:
             st.write('')
-                
+        with tab4:
+            st.write("Obs: os números são referentes a quantidade de notícias associadas ao fotógrafo. É importante observar que várias fotos podem ter sido tiradas.")
+            if exib_type == 'Gráficos de rosca/pizza':
+                tnImpresso.credfotografos()
+            elif exib_type == 'Tabelas':
+                st.dataframe(tnImpresso.table_fotografos, use_container_width = True, hide_index=True)
         
     elif selected_option2 == "Instagram":
         st.write("Gráficos do instagram")
