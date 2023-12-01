@@ -20,8 +20,12 @@ df_editorias_impresso = pd.read_csv('tabelas/impresso/EDI_impresso.csv', low_mem
 '''
 MANIPULANDO OS DFs
 '''
+# Recebe o Series df_noticias_impresso['reporter_fotografo'] do df
+# value_counts().reset_index() conta a freqeuncia de cada informação na coluna de reporter_fotografo e organiza em ordem decrescente de acordo com a coluna que conta a freqência de cada informação
+# .replace() renomea linhas da coluna reporter_fotografo
 reporteres_impresso = df_noticias_impresso['reporter_fotografo'].value_counts().reset_index().replace({'icarocesarcarvalho':'Icaro Cesar Carvalho', 'Fernandasouzajh': 'Fernanda Souza', 'adenilson_costa': 'Adenilson Costa'})
 
+# Renomeando as colunas por conta do .reset_index().replace que criou uma nova com as contagens de cada linha de reporter_fotografo
 reporteres_impresso.columns = ['reporter_fotografo', 'freq']
 
 # Recebe a coluna 'editoria' do df df_editorias_impresso
@@ -31,78 +35,123 @@ noticias_edi = df_editorias_impresso[['editoria', 'freq_edi']]
 noticias_edi_uniRow = noticias_edi.drop_duplicates()
 
 # Agrupa o DataFrame pelo valor da coluna 'editoria' e soma os valores em cada grupo
-noticias_edi_somado = noticias_edi.drop_duplicates().groupby('editoria')['freq_edi'].sum().sort_values(ascending=False).reset_index()
+noticias_edi_somado = noticias_edi.drop_duplicates().groupby('editoria')['freq_edi'].sum().reset_index()
 
-# # Conta a frequência da linha 'Pauta sem editoria'
-# freq_pauta_sem_editoria = df_editorias_impresso[df_editorias_impresso['editoria'] == 'Pauta sem editoria']['freq_edi'].sum()
+# Foi feita da forma acima por a API do Trello já tinha a contagem de cada editoria disponível e, nesse caso, o calor não estaria correto se fosse usado .value_counts()
 
-# # Adiciona a linha 'Pauta sem editoria' ao DataFrame noticias_edi_somado
-# noticias_edi_somado.loc[len(noticias_edi_somado)] = ['Pauta sem editoria', freq_pauta_sem_editoria]
+# conta as aparições da linha Pauta sem editoria em editoria
+freq_pauta_sem_editoria = df_editorias_impresso['editoria'].value_counts()['Pauta sem editoria']
 
+# Adiciona uma nova linha com com a contagem de Pauta sem editoria
+noticias_edi_somado.loc[len(noticias_edi_somado)] = ['Pautas sem editorias', freq_pauta_sem_editoria]
+
+# Organiza em ordem decrescente de acordo com a coluna freq_edi
+noticias_edi_somado = noticias_edi_somado.sort_values(by= 'freq_edi',ascending=False)
 
 '''
 GRÁFICOS DE ROSCA/PIZZA/MEIA PIZZA
 '''
-# NATAL ESTÁ DUPLICADO
-# RESOLVER O PROBLEMA E PEGAROS DOIS VALORES
-# REMOVER OS NOMES DOS REPORTERES QUE ESTÃO COMO EDITORIA
+
+'''NOTÍCIAS POR EDITORIA: contagem de noticias por editoria (organizado do maior para o menor)'''
 def noticiasPorEditoria():
     
+    # Cria o gráfico de rosca
     pie_chart = pygal.Pie(inner_radius = raio_interno)
     
+    # Adiciona as informações ao gráfico
     for edi, freq in zip(noticias_edi_somado['editoria'],noticias_edi_somado['freq_edi']):
-        pie_chart.add(edi, freq)
-    
+        
+        # Filtra as informações para que nomes de reporteres não sejam adicionados as editorias
+        if edi not in ['Bruno Vital', 'Líria Paz', 'Ícaro Carvalho', 'Felipe Salustino', 'Matteus Fernandes', 'Cláudio Oliveira']:
+            
+            pie_chart.add(edi, freq)
+    # Renderizaçãodo gráfico em formato SVG
+    # .render_data_uri() gera a representação do gráfico em formato SVG e retorna um URI de dados (data URI)
     svg = pie_chart.render_data_uri()
     
+    # Formatando uma string HTML usando f-strings
+    # A string resultante contém uma tag <embed> que está sendo usada para incorporar um conteúdo SVG na página.
+    # unsafe_allow_html=True: permite que o Streamlit interprete e exiba o conteúdo HTML fornecido como seguro. 
     st.markdown(f'<embed type="image/svg+xml" src="{svg}" />', unsafe_allow_html=True)
 
 '''NOTÍCIAS POR REPORTER: contagem de noticias por reporter (organizado do maior para o menor)'''
 def noticiasPorReporter():
+    # Cria o gráfico de rosca
     pie_chart = pygal.Pie(inner_radius = raio_interno)
     
+    # Adiciona as informações ao gráfico
     for rep_fot,freq in zip(reporteres_impresso['reporter_fotografo'], reporteres_impresso['freq']):
+        
+        # Filtra as informações para separar reporteres e fotógrafos
         if rep_fot in ['Magnus Nascimento📷', 'adriano abreu📷', 'Alex Regis📷']:
-            continue
+            continue # Vai para a próxima iteração do loop
         else:
             pie_chart.add(rep_fot.title(), freq)
     
+    # Renderizaçãodo gráfico em formato SVG
+    # .render_data_uri() gera a representação do gráfico em formato SVG e retorna um URI de dados (data URI)
     svg = pie_chart.render_data_uri()
     
+    # Formatando uma string HTML usando f-strings
+    # A string resultante contém uma tag <embed> que está sendo usada para incorporar um conteúdo SVG na página.
+    # unsafe_allow_html=True: permite que o Streamlit interprete e exiba o conteúdo HTML fornecido como seguro. 
     st.markdown(f'<embed type="image/svg+xml" src="{svg}" />', unsafe_allow_html=True)
 
 '''FOTÓGRAFOS: contagem de noticias por fotógrafo (organizado do maior para o menor)'''
 def credfotografos():
+    # Cria o gráfico de rosca
     pie_chart = pygal.Pie(inner_radius = raio_interno)
     
+    # Adiciona as informações ao gráfico
     for rep_fot,freq in zip(reporteres_impresso['reporter_fotografo'], reporteres_impresso['freq']):
+        
+        # Filtra as informações para deixar somente os fotógrafos
         if rep_fot in ['Magnus Nascimento📷', 'adriano abreu📷', 'Alex Regis📷']:
             pie_chart.add(rep_fot.title(), freq)
         else:
-            continue
+            continue # Vai para a próxima iteração do loop
     
+    # Renderizaçãodo gráfico em formato SVG
+    # .render_data_uri() gera a representação do gráfico em formato SVG e retorna um URI de dados (data URI)
     svg = pie_chart.render_data_uri()
     
+    # Formatando uma string HTML usando f-strings
+    # A string resultante contém uma tag <embed> que está sendo usada para incorporar um conteúdo SVG na página.
+    # unsafe_allow_html=True: permite que o Streamlit interprete e exiba o conteúdo HTML fornecido como seguro.
     st.markdown(f'<embed type="image/svg+xml" src="{svg}" />', unsafe_allow_html=True)
 '''
 DFs PARA O STREAMLIT
 '''
+'''NOTÍCIAS POR EDITORIA: contagem de noticias por editoria (organizado do maior para o menor)'''
+# Recebe um cópia de noticias_edi_somado
+teble_ediImpresso = noticias_edi_somado.copy()
+
+# Recebe um Series com volores booleanos de acordo com as informação que quero ou não no df
+# Filtra as informação para não tem nomes de reporteres nas editorias
+condicao_para_manter = ~teble_ediImpresso['editoria'].isin(['Bruno Vital', 'Líria Paz', 'Ícaro Carvalho', 'Felipe Salustino', 'Matteus Fernandes', 'Cláudio Oliveira'])
+
+# Df filtrado
+teble_ediImpresso = teble_ediImpresso[condicao_para_manter]
+
 
 '''NOTÍCIAS POR REPORTER: contagem de noticias por reporter (organizado do maior para o menor)'''
-
+# Recebe um cópia de reporteres_impresso
 table_reporteres_impresso = reporteres_impresso.copy()
 
+# Filtra as informações para receber apenas os nomes dos reporteres
+# ~ nega a condição, fazendo com que ela funcione da forma inversa
 table_reporteres_impresso = table_reporteres_impresso.loc[~table_reporteres_impresso['reporter_fotografo'].isin(['Magnus Nascimento📷', 'adriano abreu📷', 'Alex Regis📷'])]
 
+# deixa as primeiras letras maiusculas
 table_reporteres_impresso['reporter_fotografo'] = table_reporteres_impresso['reporter_fotografo'].str.title()
 
-# O método map substitui os valores que não estão no dicionário de mapeamento por None por padrão. Portanto, dessa forma fica comvários Nones no df
-
-# table_reporteres_impresso['reporter_fotografo'] = table_reporteres_impresso['reporter_fotografo'].map({'icarocesarcarvalho':'Icaro Cesar Carvalho', 'Fernandasouzajh': 'Fernanda Souza'})
-
 '''FOTÓGRAFOS: contagem de noticias por fotógrafo (organizado do maior para o menor)'''
+# Recebe um cópia de reporteres_impresso
 table_fotografos = reporteres_impresso.copy()
 
+# Filtra as informações para receber apenas os nomes dos fotógrafos
+# Mesma coisa do caso acima, mas sem ~
 table_fotografos = table_fotografos.loc[table_fotografos['reporter_fotografo'].isin(['Magnus Nascimento📷', 'adriano abreu📷', 'Alex Regis📷'])]
 
+# Deixa as primeiras letras maiusculas
 table_fotografos['reporter_fotografo'] = table_fotografos['reporter_fotografo'].str.title()

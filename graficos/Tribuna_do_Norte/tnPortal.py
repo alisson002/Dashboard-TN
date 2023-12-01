@@ -52,7 +52,8 @@ reporter_unique = merge_ids_noticias_reporters['usu_nome'].unique()
 # A saída será um novo data frame contendo três colunas, onde os nome dos usuários e as editorias seram replicados para seus repesctivos ids.
 merge_ids_rep_noticias_editoria = pd.merge(editoria, ids_reporter, on='usu_id', how='left')
 
-# Recebe uma cópia do merge de editoria e ids_reporter, conta a freqeuncia de cada informação na coluna de editoria e organiza em ordem decrescente de acordo com a coluna que conta a freqência de cada informação
+# Recebe uma cópia do merge de editoria e ids_reporter
+# value_counts().reset_index() conta a freqeuncia de cada informação na coluna de editoria e organiza em ordem decrescente de acordo com a coluna que conta a freqência de cada informação
 editoria_freq = merge_ids_rep_noticias_editoria.copy()['edi_descricao'].value_counts().reset_index()
 
 # Renomeia as colunas

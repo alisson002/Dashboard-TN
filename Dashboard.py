@@ -52,16 +52,20 @@ if selected_option1 == "Tribuna do norte":
     # Gráficos referentes a cada categoria
     if selected_option2 == "Site/Portal":
         
+        # Radio para selecionar a forma de visualização
         exib_type = st.radio("Selecione o tipo de exibição:", ['Gráficos de rosca/pizza', 'Gráficos de barra', "Tabelas"], horizontal=True)
         
+        # Tabs para separar as áreas analisadas
         tab1, tab2, tab3, tab4, tab5, tab6= st.tabs(["Total", "Notícias por editoria", "Nóticias por repórter", "Editoria por repórter", "Créditos/origem das fotos", "Editoria por foto"])
         
+        # Informações de cada tab
         with tab1:
             if exib_type == 'Gráficos de rosca/pizza':
+                # Gráfico de rosca
                 tnPortal.noticiasToTal()
             elif exib_type == 'Tabelas':
                 
-                # Exibindo as tabelas com o width maximo
+                # Exibindo os df com o width maximo
                 st.dataframe(tnPortal.table_noticias_on[['Status da notícia', 'Contagem']], use_container_width = True, hide_index=True)
                 
                 st.dataframe(tnPortal.table_noticias_veiculo[['Veículo', 'Contagem']], use_container_width = True, hide_index=True)
@@ -69,59 +73,76 @@ if selected_option1 == "Tribuna do norte":
         with tab2:
             
             if exib_type == 'Gráficos de rosca/pizza':
+                # Gráfico de rosca
                 tnPortal.noticiasPorEditoria()
             elif exib_type == 'Tabelas':
+                # Exibindo os df com o width maximo
                 st.dataframe(tnPortal.table_noticias_edi, use_container_width = True, hide_index=True)
             
         with tab3:
             
             if exib_type == 'Gráficos de rosca/pizza':
+                # Gráfico de rosca
                 tnPortal.noticiasPorReporter()
             elif exib_type == 'Tabelas':
+                # Exibindo df com o width maximo
                 st.dataframe(tnPortal.table_noticias_rep, use_container_width = True, hide_index=True)
                 
         with tab4:
             
             if exib_type == 'Gráficos de rosca/pizza':
+                # Gráfico de rosca
                 tnPortal.editoriaPorReporter()
             elif exib_type == 'Tabelas':
+                # Exibindo df com o width maximo
                 tnPortal.tableEditoriaPorReporter()
             
         with tab5:
             st.write("Obs: os números são referentes a quantidade de notícias associadas ao fotógrafo. É importante observar que várias fotos podem ter sido tiradas.")
             if exib_type == 'Gráficos de rosca/pizza':
+                # Gráfico de rosca
                 tnPortal.credfotografos()
             elif exib_type == 'Tabelas':
+                # Exibindo df com o width maximo
                 st.dataframe(tnPortal.fotografos, use_container_width = True, hide_index=True)
         with tab6:
+            # INCOMPLETO
             tnPortal.fotPorEditoria()
             
 
     elif selected_option2 == "Impresso":
-        
+        # Radio para selecionar a forma de visualização
         exib_type = st.radio("Selecione o tipo de exibição:", ['Gráficos de rosca/pizza', 'Gráficos de barra', "Tabelas"], horizontal=True)
         
+        # Tabs para separar as áreas analisadas
         st.write('Obs: dados importados do Trello do Tribuna do Norte. Portanto, podem divergir dos dados do impresso mostrado junto dos dados do Portal.')
         
+        # Informações de cada tab
         tab1, tab2, tab3, tab4, tab5= st.tabs(["Notícias por editoria", "Nóticias por repórter", "Editoria por repórter", "Créditos/origem das fotos", "Editoria por foto"])
         
         with tab1:
             if exib_type == 'Gráficos de rosca/pizza':
+                # Gráfico de rosca
                 tnImpresso.noticiasPorEditoria()
             elif exib_type == 'Tabelas':
-                st.write('Será?')
+                # Exibindo df com o width maximo
+                st.dataframe(tnImpresso.teble_ediImpresso, use_container_width = True, hide_index=True)
         with tab2:
             if exib_type == 'Gráficos de rosca/pizza':
+                # Gráfico de rosca
                 tnImpresso.noticiasPorReporter()
             elif exib_type == 'Tabelas':
+                # Exibindo df com o width maximo
                 st.dataframe(tnImpresso.table_reporteres_impresso, use_container_width = True, hide_index=True)
         with tab3:
             st.write('')
         with tab4:
             st.write("Obs: os números são referentes a quantidade de notícias associadas ao fotógrafo. É importante observar que várias fotos podem ter sido tiradas.")
             if exib_type == 'Gráficos de rosca/pizza':
+                # Gráfico de rosca
                 tnImpresso.credfotografos()
             elif exib_type == 'Tabelas':
+                # Exibindo df com o width maximo
                 st.dataframe(tnImpresso.table_fotografos, use_container_width = True, hide_index=True)
         
     elif selected_option2 == "Instagram":
