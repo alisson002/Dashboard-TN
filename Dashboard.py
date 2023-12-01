@@ -9,7 +9,7 @@ from graficos.Tribuna_do_Norte import tnImpresso
 image_placeholder = st.empty()
 
 # Caminho das imagens
-TN_image_path = Image.open("imagens/tribunaLogo.jpg") 
+TN_image_path = Image.open("imagens/tribunaLogo.png") 
 JPN_image_path = Image.open("imagens/jpnnatalLogo3.png") 
 
 # Criar seletor 1 na coluna à esquerda
