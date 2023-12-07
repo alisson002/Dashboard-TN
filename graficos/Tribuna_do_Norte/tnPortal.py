@@ -236,7 +236,10 @@ def noticiasPorReporter():
     
     # Adiciona cada reporter no gráfico e seu respectivo valor referente ao número de notícias
     for nome, freq in zip(reporter_freq['usu_nome'],reporter_freq['Freq']):
-        pie_chart_reporter.add(nome, freq)
+        if nome in ['Flávio Pantoja Monteiro', 'Wagner Guerra', 'Iva Kareninna da Silva Câmara', 'Jerusa Vieira do Nascimento']:
+            continue
+        else:
+            pie_chart_reporter.add(nome, freq)
     
     # Renderizaçãodo gráfico em formato SVG
     # .render_data_uri() gera a representação do gráfico em formato SVG e retorna um URI de dados (data URI)
@@ -251,6 +254,9 @@ def noticiasPorReporter():
 def reporterSelector():
     # Recebe series de reporteres para o seletor
     options = reporter_unique
+    
+    #.isin(['Flávio Pantoja Monteiro', 'Wagner Guerra', 'Iva Kareninna da Silva Câmara', 'Jerusa Vieira do Nascimento'])
+    
     # Seletor que vai ser utilizado para filtrar os dados da tabela de acordo com o reporter selecionado
     selected_option = st.selectbox("Selecione um reporter:", options)
     

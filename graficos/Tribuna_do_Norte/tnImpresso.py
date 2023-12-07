@@ -65,6 +65,9 @@ def noticiasPorEditoria():
         if edi not in ['Bruno Vital', 'Líria Paz', 'Ícaro Carvalho', 'Felipe Salustino', 'Matteus Fernandes', 'Cláudio Oliveira']:
             
             pie_chart.add(edi, freq)
+            
+    pie_chart.add(f'Total: {df_noticias_impresso['pauta'].drop_duplicates().count()}', 0)
+        
     # Renderizaçãodo gráfico em formato SVG
     # .render_data_uri() gera a representação do gráfico em formato SVG e retorna um URI de dados (data URI)
     svg = pie_chart.render_data_uri()
@@ -83,7 +86,7 @@ def noticiasPorReporter():
     for rep_fot,freq in zip(reporteres_impresso['reporter_fotografo'], reporteres_impresso['freq']):
         
         # Filtra as informações para separar reporteres e fotógrafos
-        if rep_fot in ['Magnus Nascimento📷', 'adriano abreu📷', 'Alex Regis📷']:
+        if rep_fot in ['Magnus Nascimento📷', 'adriano abreu📷', 'Alex Regis📷', 'Líria Paz', 'Margareth Grilo', 'Isaac Lira', 'Fernanda Souza']:
             continue # Vai para a próxima iteração do loop
         else:
             pie_chart.add(rep_fot.title(), freq)
@@ -140,7 +143,7 @@ table_reporteres_impresso = reporteres_impresso.copy()
 
 # Filtra as informações para receber apenas os nomes dos reporteres
 # ~ nega a condição, fazendo com que ela funcione da forma inversa
-table_reporteres_impresso = table_reporteres_impresso.loc[~table_reporteres_impresso['reporter_fotografo'].isin(['Magnus Nascimento📷', 'adriano abreu📷', 'Alex Regis📷'])]
+table_reporteres_impresso = table_reporteres_impresso.loc[~table_reporteres_impresso['reporter_fotografo'].isin(['Magnus Nascimento📷', 'adriano abreu📷', 'Alex Regis📷', 'Líria Paz', 'Margareth Grilo', 'Isaac Lira', 'Fernanda Souza'])]
 
 # deixa as primeiras letras maiusculas
 table_reporteres_impresso['reporter_fotografo'] = table_reporteres_impresso['reporter_fotografo'].str.title()
