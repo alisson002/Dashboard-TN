@@ -44,7 +44,10 @@ editoria = editoria.rename(columns={'usu_id_fk': 'usu_id'})
 merge_ids_noticias_reporters = pd.merge(ids_noticias, ids_reporter, on='usu_id', how='left')
 
 # Series com os nomes dos reporters sem repetições
-reporter_unique = merge_ids_noticias_reporters['usu_nome'].unique()
+filtred_merge_reporteres = merge_ids_noticias_reporters.copy()
+filtred_merge_reporteres = filtred_merge_reporteres.loc[~filtred_merge_reporteres['usu_nome'].isin(['Flávio Pantoja Monteiro', 'Wagner Guerra', 'Iva Kareninna da Silva Câmara', 'Jerusa Vieira do Nascimento'])]
+reporter_unique = filtred_merge_reporteres['usu_nome'].unique()
+#.isin(['Flávio Pantoja Monteiro', 'Wagner Guerra', 'Iva Kareninna da Silva Câmara', 'Jerusa Vieira do Nascimento'])
 
 # Da merge nos dataframes editoria e ids_reporter com base nos ids de usuários. 
 # O primeiro possui as colunas dos ids e tipos de editoria com repetições para cada uma das notícias.
