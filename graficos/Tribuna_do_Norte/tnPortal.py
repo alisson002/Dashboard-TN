@@ -2,6 +2,8 @@ import pygal
 import pandas as pd
 import streamlit as st
 
+
+
 """
     Descrição da função.
     
@@ -19,6 +21,24 @@ raio_half = 0.2
 # Recebe a tabela com as notícias do online
 # low_memory=False por a tabela ser grande
 df_noticias = pd.read_csv('tabelas/noticias online/noticiasOnline.csv', low_memory=False)
+
+"""TESTANDO DADOS POR PERIODO SELECIONADO"""
+# df_noticias_datas = df_noticias.copy()
+
+# df_noticias_datas['not_datapub'] = pd.to_datetime(df_noticias_datas['not_datapub']).dt.strftime('%d-%m-%Y')
+
+# def recebeDatas():
+#     from Dashboard import start_date, end_date
+#     return start_date, end_date
+
+# inicio, fim = recebeDatas()
+
+# def selectData(df_noticias_datas, data_inicio = inicio, data_final = fim):
+#     df_noticias_datas = df_noticias_datas.loc[df_noticias_datas.not_datapub > data_inicio and df_noticias_datas.not_datapub < data_final]
+    
+#     return df_noticias_datas
+
+# df_noticias_datas_filtradas = selectData(df_noticias_datas, data_inicio = inicio, data_final = fim)
 
 # Recebe a tabela com os usuários e os respectivos ids
 df_reporter = pd.read_csv('tabelas/noticias online/usuarios.csv')
@@ -88,6 +108,7 @@ MANIPULANDO O DF DOS FOTÓGRAFOS
 # .str[0] Seleciona somente o texto de antes da barra, pois foram separados em duas partes
 # .str.lower() Deixa todas as primeiras letras minúsculas
 # .replace('marcelo casal jr','marcello casal jr') substitui uma string
+
 fotografos = df_noticias.copy()['fot_credito']\
     .dropna(how='all')\
     .astype(str).str\

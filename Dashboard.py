@@ -34,13 +34,16 @@ else:
     selected_option2 = st.sidebar.selectbox("Selecione a opção 2:", options2)
     
 # Definindo a data mínima e máxima
+
 data_minima = pd.to_datetime('2023-01-01')
-data_maxima = pd.to_datetime(datetime.now())
+data_maxima = pd.to_datetime(tnPortal.df_noticias.iloc[-1]['not_datapub'])
     
 # Adicionar seletor de períodos na coluna à esquerda
-start_date = st.sidebar.date_input("Data de início", data_minima, format="DD-MM-YYYY")
-end_date = st.sidebar.date_input("Data de término", data_maxima, format="DD-MM-YYYY")
+start_date = st.sidebar.date_input("Data de início", data_minima, min_value = data_minima, max_value = data_maxima, format="DD-MM-YYYY")
 
+end_date = st.sidebar.date_input("Data de término", data_maxima, min_value = data_minima, max_value = data_maxima, format="DD-MM-YYYY")
+
+#tnPortal.selectData(start_date, end_date)
 # Indica o período selecionado
 #st.write(f"Período selecionado: de {start_date.strftime('%d-%m-%y')} a {end_date.strftime('%d-%m-%y')}")
 

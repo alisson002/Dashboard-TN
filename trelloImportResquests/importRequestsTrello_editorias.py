@@ -154,6 +154,8 @@ membros_nomes = membersName(id_members)
 # Junta todas as informações das duas listas em uma única lista para que tudo seja escrito em um único CSV
 todas_as_pautas = pautas_feitas_cards_data + publicados_cards_data
 
+print(todas_as_pautas[0])
+
 # Chamada de função que pega todas as IDs de labels
 # Guarda os ids das labels de cada card em sua repectiva lisa
 ID_labels_pautas_feitas, ID_labels_publicados = getIds(pautas_feitas_cards_data, publicados_cards_data, 'idLabels')
