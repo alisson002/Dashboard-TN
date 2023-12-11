@@ -2,8 +2,6 @@ import pygal
 import pandas as pd
 import streamlit as st
 
-
-
 """
     Descrição da função.
     
@@ -23,22 +21,37 @@ raio_half = 0.2
 df_noticias = pd.read_csv('tabelas/noticias online/noticiasOnline.csv', low_memory=False)
 
 """TESTANDO DADOS POR PERIODO SELECIONADO"""
-# df_noticias_datas = df_noticias.copy()
+df_noticias_FILTRADAS_POR_DATAS = df_noticias.copy()
 
-# df_noticias_datas['not_datapub'] = pd.to_datetime(df_noticias_datas['not_datapub']).dt.strftime('%d-%m-%Y')
+df_noticias_FILTRADAS_POR_DATAS['not_datapub'] = pd.to_datetime(df_noticias_FILTRADAS_POR_DATAS['not_datapub']).dt.strftime('%m-%d-%y')
 
-# def recebeDatas():
-#     from Dashboard import start_date, end_date
-#     return start_date, end_date
+inicio = None
+fim = None
 
-# inicio, fim = recebeDatas()
+def datas(inicio, fim):
+    with open("datas.txt", "r") as arquivo:
+        # Ler todas as linhas do arquivo
+        linhas = arquivo.readlines()
 
-# def selectData(df_noticias_datas, data_inicio = inicio, data_final = fim):
-#     df_noticias_datas = df_noticias_datas.loc[df_noticias_datas.not_datapub > data_inicio and df_noticias_datas.not_datapub < data_final]
-    
-#     return df_noticias_datas
+        # Processar cada linha
+        for linha in linhas:
+            # Dividir a linha pelo caractere de dois pontos e extrair o valor
+            chave, valor = linha.strip().split(": ")
 
-# df_noticias_datas_filtradas = selectData(df_noticias_datas, data_inicio = inicio, data_final = fim)
+            # Atribuir o valor à variável apropriada
+            if chave == "inicio":
+                inicio = valor
+            elif chave == "fim":
+                fim = valor
+    return inicio, fim
+
+inicio, fim = datas(inicio, fim)
+
+df_NOTICIAS_filtrado = df_noticias_FILTRADAS_POR_DATAS.loc[(df_noticias_FILTRADAS_POR_DATAS['not_datapub'] > inicio) & (df_noticias_FILTRADAS_POR_DATAS['not_datapub'] < fim)]
+
+df_NOTICIAS_filtrado['not_datapub'] = pd.to_datetime(df_NOTICIAS_filtrado['not_datapub']).dt.strftime('%d-%m-%y')
+
+'''FIM NOTICIAS FILTRADAS'''
 
 # Recebe a tabela com os usuários e os respectivos ids
 df_reporter = pd.read_csv('tabelas/noticias online/usuarios.csv')
@@ -155,7 +168,13 @@ Tb é necessário resolver o problema das linhas com strings repetidas, mas com 
 GRÁFICOS DE ROSCA/PIZZA/MEIA PIZZA
 '''
 '''TOTAL: contagem de notícias online e fora do ar e notícias do online e impresso.'''
-def noticiasToTal():
+def noticiasToTal(start_date, end_date):
+    
+    df_noticias_FILTRADAS_POR_DATAS['not_datapub'] = pd.to_datetime(df_noticias_FILTRADAS_POR_DATAS['not_datapub']).dt.strftime('%m-%d-%y')
+    
+    df_NOTICIAS_filtrado = df_noticias_FILTRADAS_POR_DATAS.loc[(df_noticias_FILTRADAS_POR_DATAS['not_datapub'] > start_date) & (df_noticias_FILTRADAS_POR_DATAS['not_datapub'] < end_date)]
+
+    df_NOTICIAS_filtrado['not_datapub'] = pd.to_datetime(df_NOTICIAS_filtrado['not_datapub']).dt.strftime('%d-%m-%y')
     # Seletor para alternar entre os gráficos de Online (notícias do portal) e Por veículo, esse último que também inclui as notícias do impresso
     # Todas as notícias do impresso estão no online
     options4 = ["Online (notícias do portal)", "Por veículo"]
@@ -163,14 +182,14 @@ def noticiasToTal():
     
     # Contagem de notícias ainda acessíveis no site
     # Na coluna not_status do df de notícias informação é representada pelo número 1
-    ativas = df_noticias['not_status'].value_counts()[1]
+    ativas = df_NOTICIAS_filtrado['not_status'].value_counts()[1]
     
     # Contagem de notícias fora do "ar" no site
     # Na coluna not_status do df de notícias informação é representada pelo número 0
-    desonline = df_noticias['not_status'].value_counts()[0]
+    desonline = df_NOTICIAS_filtrado['not_status'].value_counts()[0]
     
     # Contagem total de notícias no site dentro do período disponívem no df
-    total = df_noticias['not_status'].count()
+    total = df_NOTICIAS_filtrado['not_status'].count()
     
     # Condicional para selecionar o gráfico exibido
     if selected_option4 == "Online (notícias do portal)":
@@ -218,7 +237,7 @@ def noticiasToTal():
         
         # Recebe a contagem de notícias do impresso
         # Essa informação é representada pelo 0 na coluna not_veiculo do df de notícias
-        impresso = df_noticias['not_veiculo'].value_counts()[0]
+        impresso = df_NOTICIAS_filtrado['not_veiculo'].value_counts()[0]
         
         # Adiciona os dados do impresso ao gráfico
         pie_chart_total.add('Impresso', impresso)

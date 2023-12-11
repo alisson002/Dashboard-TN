@@ -4,6 +4,7 @@ from datetime import datetime # Para pegar a data atual
 from PIL import Image # Imagens da tn e jpn
 from graficos.Tribuna_do_Norte import tnPortal
 from graficos.Tribuna_do_Norte import tnImpresso
+import importlib
 
 # Cria um espaço reservado vazio onde vai receber as imagens
 image_placeholder = st.empty()
@@ -34,18 +35,16 @@ else:
     selected_option2 = st.sidebar.selectbox("Selecione a opção 2:", options2)
     
 # Definindo a data mínima e máxima
-
 data_minima = pd.to_datetime('2023-01-01')
 data_maxima = pd.to_datetime(tnPortal.df_noticias.iloc[-1]['not_datapub'])
     
 # Adicionar seletor de períodos na coluna à esquerda
 start_date = st.sidebar.date_input("Data de início", data_minima, min_value = data_minima, max_value = data_maxima, format="DD-MM-YYYY")
 
-end_date = st.sidebar.date_input("Data de término", data_maxima, min_value = data_minima, max_value = data_maxima, format="DD-MM-YYYY")
+end_date = st.sidebar.date_input("Data de término", data_maxima, min_value = data_minima, max_value = data_maxima, format="DD-MM-YYYY") + pd.DateOffset(days=1)
 
-#tnPortal.selectData(start_date, end_date)
-# Indica o período selecionado
-#st.write(f"Período selecionado: de {start_date.strftime('%d-%m-%y')} a {end_date.strftime('%d-%m-%y')}")
+start_date = start_date.strftime('%m-%d-%y') #'%d-%m-%Y'
+end_date = end_date.strftime('%m-%d-%y')
 
 # Adicione seus gráficos de acordo com as opções selecionadas
 if selected_option1 == "Tribuna do norte":
@@ -65,7 +64,7 @@ if selected_option1 == "Tribuna do norte":
         with tab1:
             if exib_type == 'Gráficos de rosca/pizza':
                 # Gráfico de rosca
-                tnPortal.noticiasToTal()
+                tnPortal.noticiasToTal(start_date, end_date)
             elif exib_type == 'Tabelas':
                 
                 # Exibindo os df com o width maximo
