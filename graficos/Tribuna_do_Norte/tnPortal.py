@@ -20,161 +20,148 @@ raio_half = 0.2
 # low_memory=False por a tabela ser grande
 df_noticias = pd.read_csv('tabelas/noticias online/noticiasOnline.csv', low_memory=False)
 
-"""TESTANDO DADOS POR PERIODO SELECIONADO"""
-df_noticias_FILTRADAS_POR_DATAS = df_noticias.copy()
 
-df_noticias_FILTRADAS_POR_DATAS['not_datapub'] = pd.to_datetime(df_noticias_FILTRADAS_POR_DATAS['not_datapub']).dt.strftime('%m-%d-%y')
-
-inicio = None
-fim = None
-
-def datas(inicio, fim):
-    with open("datas.txt", "r") as arquivo:
-        # Ler todas as linhas do arquivo
-        linhas = arquivo.readlines()
-
-        # Processar cada linha
-        for linha in linhas:
-            # Dividir a linha pelo caractere de dois pontos e extrair o valor
-            chave, valor = linha.strip().split(": ")
-
-            # Atribuir o valor à variável apropriada
-            if chave == "inicio":
-                inicio = valor
-            elif chave == "fim":
-                fim = valor
-    return inicio, fim
-
-inicio, fim = datas(inicio, fim)
-
-df_NOTICIAS_filtrado = df_noticias_FILTRADAS_POR_DATAS.loc[(df_noticias_FILTRADAS_POR_DATAS['not_datapub'] > inicio) & (df_noticias_FILTRADAS_POR_DATAS['not_datapub'] < fim)]
-
-df_NOTICIAS_filtrado['not_datapub'] = pd.to_datetime(df_NOTICIAS_filtrado['not_datapub']).dt.strftime('%d-%m-%y')
-
-'''FIM NOTICIAS FILTRADAS'''
-
-# Recebe a tabela com os usuários e os respectivos ids
-df_reporter = pd.read_csv('tabelas/noticias online/usuarios.csv')
-
-# Manipulando dfs para os gráficos
-# Recebe apenas a coluna de id de usuários do df de notícias
-ids_noticias = df_noticias['usu_id_fk']
-
-# Recebe as colunas de ids e nomes de usuários do df de reporteres
-ids_reporter = df_reporter[['usu_id', 'usu_nome']]
-
-# Recebe as colunas de ids e os tipos de editoria do df de noticias
-editoria = df_noticias[['usu_id_fk', 'edi_descricao']]
-
-# Renomeia a coluna usu_id_fk -> usu_id para ser usada no merge, já que devem ser iguais para a mesclagem e uma coluna com os nomes de usuários ser criada possuindo o mesmo tamanho do restante das colunas do df de notícias
-ids_noticias = ids_noticias.rename('usu_id')
-editoria = editoria.rename(columns={'usu_id_fk': 'usu_id'})
-
-# Da merge nos dataframes ids_noticias e ids_reporter com base nos ids de usuários. 
-# O primeiro possui apenas a coluna dos ids com repetições para cada uma das notícias. 
-# O segundo tanto a coluna dos ids quanto a dos usuários, mas sem repetições.
-# A saída será um novo data frame contendo duas colunas, onde os nome dos usuários serão replicados para seus repesctivos ids.
-merge_ids_noticias_reporters = pd.merge(ids_noticias, ids_reporter, on='usu_id', how='left')
-
-# Series com os nomes dos reporters sem repetições
-filtred_merge_reporteres = merge_ids_noticias_reporters.copy()
-filtred_merge_reporteres = filtred_merge_reporteres.loc[~filtred_merge_reporteres['usu_nome'].isin(['Flávio Pantoja Monteiro', 'Wagner Guerra', 'Iva Kareninna da Silva Câmara', 'Jerusa Vieira do Nascimento'])]
-reporter_unique = filtred_merge_reporteres['usu_nome'].unique()
-#.isin(['Flávio Pantoja Monteiro', 'Wagner Guerra', 'Iva Kareninna da Silva Câmara', 'Jerusa Vieira do Nascimento'])
-
-# Da merge nos dataframes editoria e ids_reporter com base nos ids de usuários. 
-# O primeiro possui as colunas dos ids e tipos de editoria com repetições para cada uma das notícias.
-# O segundo possui tanto a coluna dos ids quanto a dos usuários, mas sem repetições.
-# A saída será um novo data frame contendo três colunas, onde os nome dos usuários e as editorias seram replicados para seus repesctivos ids.
-merge_ids_rep_noticias_editoria = pd.merge(editoria, ids_reporter, on='usu_id', how='left')
-
-# Recebe uma cópia do merge de editoria e ids_reporter
-# value_counts().reset_index() conta a freqeuncia de cada informação na coluna de editoria e organiza em ordem decrescente de acordo com a coluna que conta a freqência de cada informação
-editoria_freq = merge_ids_rep_noticias_editoria.copy()['edi_descricao'].value_counts().reset_index()
-
-# Renomeia as colunas
-# 'Freq' é para a coluna criada com a contagem das informações que é criada como 'count'
-editoria_freq.columns = ['edi_descricao', 'Freq']
-
-# Recebe uma cópia do merge de ids_noticias e ids_reporter, conta a freqeuncia de cada informação na coluna de nome dos usuários e organiza em ordem decrescente de acordo com a coluna que conta a freqência de cada informação
-reporter_freq = merge_ids_noticias_reporters.copy()['usu_nome'].value_counts().reset_index()
-
-# Renomeia as colunas
-# 'Freq' é para a coluna criada com a contagem das informações que é criada como 'count'
-reporter_freq.columns = ['usu_nome', 'Freq']
-
-# Remove determinados caracteres
-def remover_caracteres(s):
-    caracteres_a_remover = [".", ",", "-", "_"]
-    for c in caracteres_a_remover:
-        s = s.replace(c, '')
-    return s
-
-
-'''
-MANIPULANDO O DF DOS FOTÓGRAFOS
-'''
-# Recebe uma cópia da coluna dos fotógrafos do df de notícias
-# dropna(how='all') remove todas as linhas com NaN ou NA
-# .astype(str) transforma em string
-# .str.split('/') remove tudo que vier depois de uma barra. p.ex. /Agência Brasil
-# .str[0] Seleciona somente o texto de antes da barra, pois foram separados em duas partes
-# .str.lower() Deixa todas as primeiras letras minúsculas
-# .replace('marcelo casal jr','marcello casal jr') substitui uma string
-
-fotografos = df_noticias.copy()['fot_credito']\
-    .dropna(how='all')\
-    .astype(str).str\
-    .split('/')\
-    .str[0]\
-    .str.lower()\
-    .replace('marcelo casal jr','marcello casal jr')
-
-# Remove determinados caracteres de acordo com a função remover_caracteres
-# .str.title() Deixa todas as primeiras letras maiúsculas
-# .str.replace(r'(?<=/)\s+', '', regex=True) remove o espaço dps da barra
-fotografos = fotografos.apply(remover_caracteres).str.title()
-#.str.replace(r'(?<=/)\s+', '', regex=True)
-
-# Determina as informações que são 'imprimiveis'
-fotografos = fotografos.apply(lambda x: ''.join(filter(lambda char: char.isprintable(), x)))
-
-# Remove as repetições, deixa apenas informações únicas, conta quantas vezes cada informação se repete e organiza da maior freqência para a menor
-fotografos = fotografos.value_counts().reset_index()
-
-# Renomeia a coluna com a contagem de cada string única
-# 'Freq' é para a coluna criada com a contagem das informações que é criada como 'count'
-fotografos.columns = ['fot_credito', 'Freq']
-
-'''
-MESMA LÓGICA, MAS PARA DUAS COLUNAS
-
-Será usada para a criação da tab com o gráfico interativo de editorias por fotógrafo, que seria parecido com o criado para editoria por repórter.
-
-Tb é necessário resolver o problema das linhas com strings repetidas, mas com pequenas diferenças que fazem com que sejam contabilizadas separadamente.
-'''
-# Aplica a lógica para as duas colunas simultaneamente
-# TESTAR COM .MAP()
-# fotografos_edi = df_noticias[['fot_credito', 'edi_descricao']].copy()\
-# .astype(str)\
-# .applymap(lambda x: x.lower() if pd.notna(x) else x)\
-# .applymap(lambda x: x.replace('marcelo casal jr', 'marcello casal jr') if pd.notna(x) else x)\
-# .applymap(remover_caracteres)\
-# .applymap(lambda x: ''.join(filter(lambda char: char.isprintable(), x)) if pd.notna(x) else x)
-
-#.applymap(lambda x: x.split('/')[0] if pd.notna(x) else x)\
+def filtroDeDatas(start_date, end_date):
     
+    """DADOS POR PERIODO SELECIONADO"""
+    
+    # Recebe uma cópia do df das notícias
+    df_noticias_FILTRADAS_POR_DATAS = df_noticias.copy()
+
+    # Manipulação da coluna com data e horário de publicação
+    # Remove o horário e mantem somente a data
+    # data inicialmente no formato '%m-%d-%y' para que em seguida seja feita a comparação de datas, no formato '%d-%m-%y' a comparação não ocorria corretamente
+    df_noticias_FILTRADAS_POR_DATAS['not_datapub'] = pd.to_datetime(df_noticias_FILTRADAS_POR_DATAS['not_datapub']).dt.strftime('%m-%d-%y')
+
+    # Agrupa todos os dados do df de acordo com o periodo selecionado e as datas na coluna de datas
+    df_NOTICIAS_filtrado = df_noticias_FILTRADAS_POR_DATAS.loc[(df_noticias_FILTRADAS_POR_DATAS['not_datapub'] > start_date) & (df_noticias_FILTRADAS_POR_DATAS['not_datapub'] < end_date)]
+
+    # Altera o formato da data para '%d-%m-%y' após o filtro
+    df_NOTICIAS_filtrado['not_datapub'] = pd.to_datetime(df_NOTICIAS_filtrado['not_datapub']).dt.strftime('%d-%m-%y')
+    
+    '''FIM NOTICIAS FILTRADAS'''
+
+    # Recebe a tabela com os usuários e os respectivos ids
+    df_reporter = pd.read_csv('tabelas/noticias online/usuarios.csv')
+
+    # Manipulando dfs para os gráficos
+    # Recebe apenas a coluna de id de usuários do df de notícias
+    ids_noticias = df_NOTICIAS_filtrado['usu_id_fk']
+
+    # Recebe as colunas de ids e nomes de usuários do df de reporteres
+    ids_reporter = df_reporter[['usu_id', 'usu_nome']]
+
+    # Recebe as colunas de ids e os tipos de editoria do df de noticias
+    editoria = df_NOTICIAS_filtrado[['usu_id_fk', 'edi_descricao']]
+
+    # Renomeia a coluna usu_id_fk -> usu_id para ser usada no merge, já que devem ser iguais para a mesclagem e uma coluna com os nomes de usuários ser criada possuindo o mesmo tamanho do restante das colunas do df de notícias
+    ids_noticias = ids_noticias.rename('usu_id')
+    editoria = editoria.rename(columns={'usu_id_fk': 'usu_id'})
+
+    # Da merge nos dataframes ids_noticias e ids_reporter com base nos ids de usuários. 
+    # O primeiro possui apenas a coluna dos ids com repetições para cada uma das notícias. 
+    # O segundo tanto a coluna dos ids quanto a dos usuários, mas sem repetições.
+    # A saída será um novo data frame contendo duas colunas, onde os nome dos usuários serão replicados para seus repesctivos ids.
+    merge_ids_noticias_reporters = pd.merge(ids_noticias, ids_reporter, on='usu_id', how='left')
+
+    # Series com os nomes dos reporters sem repetições
+    filtred_merge_reporteres = merge_ids_noticias_reporters.copy()
+    filtred_merge_reporteres = filtred_merge_reporteres.loc[~filtred_merge_reporteres['usu_nome'].isin(['Flávio Pantoja Monteiro', 'Wagner Guerra', 'Iva Kareninna da Silva Câmara', 'Jerusa Vieira do Nascimento'])]
+    reporter_unique = filtred_merge_reporteres['usu_nome'].unique()
+    #.isin(['Flávio Pantoja Monteiro', 'Wagner Guerra', 'Iva Kareninna da Silva Câmara', 'Jerusa Vieira do Nascimento'])
+
+    # Da merge nos dataframes editoria e ids_reporter com base nos ids de usuários. 
+    # O primeiro possui as colunas dos ids e tipos de editoria com repetições para cada uma das notícias.
+    # O segundo possui tanto a coluna dos ids quanto a dos usuários, mas sem repetições.
+    # A saída será um novo data frame contendo três colunas, onde os nome dos usuários e as editorias seram replicados para seus repesctivos ids.
+    merge_ids_rep_noticias_editoria = pd.merge(editoria, ids_reporter, on='usu_id', how='left')
+
+    # Recebe uma cópia do merge de editoria e ids_reporter
+    # value_counts().reset_index() conta a freqeuncia de cada informação na coluna de editoria e organiza em ordem decrescente de acordo com a coluna que conta a freqência de cada informação
+    editoria_freq = merge_ids_rep_noticias_editoria.copy()['edi_descricao'].value_counts().reset_index()
+
+    # Renomeia as colunas
+    # 'Freq' é para a coluna criada com a contagem das informações que é criada como 'count'
+    editoria_freq.columns = ['edi_descricao', 'Freq']
+
+    # Recebe uma cópia do merge de ids_noticias e ids_reporter, conta a freqeuncia de cada informação na coluna de nome dos usuários e organiza em ordem decrescente de acordo com a coluna que conta a freqência de cada informação
+    reporter_freq = merge_ids_noticias_reporters.copy()['usu_nome'].value_counts().reset_index()
+
+    # Renomeia as colunas
+    # 'Freq' é para a coluna criada com a contagem das informações que é criada como 'count'
+    reporter_freq.columns = ['usu_nome', 'Freq']
+
+    # Remove determinados caracteres
+    def remover_caracteres(s):
+        caracteres_a_remover = [".", ",", "-", "_"]
+        for c in caracteres_a_remover:
+            s = s.replace(c, '')
+        return s
+
+
+    '''
+    MANIPULANDO O DF DOS FOTÓGRAFOS
+    '''
+    # Recebe uma cópia da coluna dos fotógrafos do df de notícias
+    # dropna(how='all') remove todas as linhas com NaN ou NA
+    # .astype(str) transforma em string
+    # .str.split('/') remove tudo que vier depois de uma barra. p.ex. /Agência Brasil
+    # .str[0] Seleciona somente o texto de antes da barra, pois foram separados em duas partes
+    # .str.lower() Deixa todas as primeiras letras minúsculas
+    # .replace('marcelo casal jr','marcello casal jr') substitui uma string
+
+    fotografos = df_NOTICIAS_filtrado.copy()['fot_credito']\
+        .dropna(how='all')\
+        .astype(str).str\
+        .split('/')\
+        .str[0]\
+        .str.lower()\
+        .replace('marcelo casal jr','marcello casal jr')
+
+    # Remove determinados caracteres de acordo com a função remover_caracteres
+    # .str.title() Deixa todas as primeiras letras maiúsculas
+    # .str.replace(r'(?<=/)\s+', '', regex=True) remove o espaço dps da barra
+    fotografos = fotografos.apply(remover_caracteres).str.title()
+    #.str.replace(r'(?<=/)\s+', '', regex=True)
+
+    # Determina as informações que são 'imprimiveis'
+    fotografos = fotografos.apply(lambda x: ''.join(filter(lambda char: char.isprintable(), x)))
+
+    # Remove as repetições, deixa apenas informações únicas, conta quantas vezes cada informação se repete e organiza da maior freqência para a menor
+    fotografos = fotografos.value_counts().reset_index()
+
+    # Renomeia a coluna com a contagem de cada string única
+    # 'Freq' é para a coluna criada com a contagem das informações que é criada como 'count'
+    fotografos.columns = ['fot_credito', 'Freq']
+
+    '''
+    MESMA LÓGICA, MAS PARA DUAS COLUNAS
+
+    Será usada para a criação da tab com o gráfico interativo de editorias por fotógrafo, que seria parecido com o criado para editoria por repórter.
+
+    Tb é necessário resolver o problema das linhas com strings repetidas, mas com pequenas diferenças que fazem com que sejam contabilizadas separadamente.
+    '''
+    # Aplica a lógica para as duas colunas simultaneamente
+    # TESTAR COM .MAP()
+    # fotografos_edi = df_noticias[['fot_credito', 'edi_descricao']].copy()\
+    # .astype(str)\
+    # .applymap(lambda x: x.lower() if pd.notna(x) else x)\
+    # .applymap(lambda x: x.replace('marcelo casal jr', 'marcello casal jr') if pd.notna(x) else x)\
+    # .applymap(remover_caracteres)\
+    # .applymap(lambda x: ''.join(filter(lambda char: char.isprintable(), x)) if pd.notna(x) else x)
+
+    #.applymap(lambda x: x.split('/')[0] if pd.notna(x) else x)\
+    
+    return df_NOTICIAS_filtrado, editoria_freq, reporter_freq, reporter_unique, merge_ids_rep_noticias_editoria, fotografos
+
 '''
 GRÁFICOS DE ROSCA/PIZZA/MEIA PIZZA
 '''
 '''TOTAL: contagem de notícias online e fora do ar e notícias do online e impresso.'''
-def noticiasToTal(start_date, end_date):
+def noticiasToTal(df_NOTICIAS_filtrado):
     
-    df_noticias_FILTRADAS_POR_DATAS['not_datapub'] = pd.to_datetime(df_noticias_FILTRADAS_POR_DATAS['not_datapub']).dt.strftime('%m-%d-%y')
-    
-    df_NOTICIAS_filtrado = df_noticias_FILTRADAS_POR_DATAS.loc[(df_noticias_FILTRADAS_POR_DATAS['not_datapub'] > start_date) & (df_noticias_FILTRADAS_POR_DATAS['not_datapub'] < end_date)]
-
     df_NOTICIAS_filtrado['not_datapub'] = pd.to_datetime(df_NOTICIAS_filtrado['not_datapub']).dt.strftime('%d-%m-%y')
+    
     # Seletor para alternar entre os gráficos de Online (notícias do portal) e Por veículo, esse último que também inclui as notícias do impresso
     # Todas as notícias do impresso estão no online
     options4 = ["Online (notícias do portal)", "Por veículo"]
@@ -255,7 +242,7 @@ def noticiasToTal(start_date, end_date):
         st.markdown(f'<embed type="image/svg+xml" src="{svg5}" />', unsafe_allow_html=True)
 
 '''NOTÍCIAS POR EDITORIA: contagem de noticias por editoria (organizado do maior para o menor)'''
-def noticiasPorEditoria():
+def noticiasPorEditoria(editoria_freq):
     # Cria o gráfico de rosca
     pie_chart = pygal.Pie(inner_radius = raio_interno)
     
@@ -273,7 +260,7 @@ def noticiasPorEditoria():
     st.markdown(f'<embed type="image/svg+xml" src="{svg}" />', unsafe_allow_html=True)
 
 '''NOTÍCIAS POR REPORTER: contagem de noticias por editoria (organizado do maior para o menor)'''
-def noticiasPorReporter():
+def noticiasPorReporter(reporter_freq):
     # Cria o gráfico de rosca
     pie_chart_reporter = pygal.Pie(inner_radius=raio_interno)
     
@@ -294,7 +281,7 @@ def noticiasPorReporter():
     st.markdown(f'<embed type="image/svg+xml" src="{svg3}" />', unsafe_allow_html=True)
 
 '''função para selecionar os reporters'''
-def reporterSelector():
+def reporterSelector(reporter_unique, merge_ids_rep_noticias_editoria):
     # Recebe series de reporteres para o seletor
     options = reporter_unique
     
@@ -323,9 +310,9 @@ def reporterSelector():
     return df_repEdi_Organizado
 
 '''EDITORIA POR REPORTER: contagem de editoria por reporter (organizado do maior para o menor)'''
-def editoriaPorReporter():
+def editoriaPorReporter(reporter_unique, merge_ids_rep_noticias_editoria):
     # Recebe o df já organizado e somente com os dados do reporter selecionado
-    df_repEdi_Organizado = reporterSelector()
+    df_repEdi_Organizado = reporterSelector(reporter_unique, merge_ids_rep_noticias_editoria)
     
     # Cria o gráfico de rosca
     pie_chart_repEdi = pygal.Pie(inner_radius=raio_interno)
@@ -348,7 +335,7 @@ def editoriaPorReporter():
     st.markdown(f'<embed type="image/svg+xml" src="{svg4}" />', unsafe_allow_html=True)
     
 '''FOTÓGRAFOS: contagem de noticias por fotógrafo (organizado do maior para o menor)'''
-def credfotografos():
+def credfotografos(fotografos):
     # Cria o gráfico
     pie_chart_fot = pygal.Pie(inner_radius=raio_interno)
     
@@ -377,7 +364,7 @@ def credfotografos():
     st.markdown(f'<embed type="image/svg+xml" src="{svg6}" />', unsafe_allow_html=True)
 
 '''estudar uma forma de corrigir os dados no df para fazer essa parte'''
-def fotPorEditoria():
+def fotPorEditoria(fotografos):
     
     input_text = st.text_input("Digite um nome:")
     
@@ -411,45 +398,59 @@ def fotPorEditoria():
 DFs PARA O STREAMLIT
 '''
 '''TOTAL: contagem de notícias online e fora do ar e notícias do online e impresso.'''
-# Recebendo as colunas e contando os calores únicos de cada informação
-table_noticias_on = df_noticias['not_status'].value_counts().reset_index()
+def tabelaNoticiasOnline(df_NOTICIAS_filtrado):
+    # Recebendo as colunas e contando os calores únicos de cada informação
+    table_noticias_on = df_NOTICIAS_filtrado['not_status'].value_counts().reset_index()
 
-table_noticias_veiculo = df_noticias['not_veiculo'].value_counts().reset_index()
+    # Renomeando as colunas
+    table_noticias_on.columns = ['Status da notícia', 'Contagem']
 
-# Renomeando as colunas
-table_noticias_on.columns = ['Status da notícia', 'Contagem']
+    # Alterando as linhas pois estavam como 0 e 1
+    table_noticias_on['Status da notícia'] = table_noticias_on['Status da notícia'].map({1: "online", 0: "fora do 'ar'"})
+    
+    return table_noticias_on
 
-table_noticias_veiculo.columns = ['Veículo', 'Contagem']
 
-# Alterando as linhas pois estavam como 0 e 1
-table_noticias_on['Status da notícia'] = table_noticias_on['Status da notícia'].map({1: "online", 0: "fora do 'ar'"})
+def tabelaNoticiasVeiculo(df_NOTICIAS_filtrado):
+    
+    table_noticias_veiculo = df_NOTICIAS_filtrado['not_veiculo'].value_counts().reset_index()  
+    
+    table_noticias_veiculo.columns = ['Veículo', 'Contagem']
+    
+    table_noticias_veiculo['Veículo'] = table_noticias_veiculo['Veículo'].map({1: "online", 0: "impresso"})
 
-table_noticias_veiculo['Veículo'] = table_noticias_veiculo['Veículo'].map({1: "online", 0: "impresso"})
-
-# Alterando o valor das notícias online para o valor total, que é o correto
-table_noticias_veiculo['Contagem'][0] = df_noticias['not_status'].count()
-
+    # Alterando o valor das notícias online para o valor total, que é o correto
+    table_noticias_veiculo['Contagem'][0] = df_NOTICIAS_filtrado['not_status'].count()
+    
+    return table_noticias_veiculo
 
 '''NOTÍCIAS POR EDITORIA: contagem de noticias por editoria (organizado do maior para o menor)'''
-# Recebe um cópia do df utilizado
-table_noticias_edi = editoria_freq.copy()
 
-# Renomeia as colunas
-table_noticias_edi.columns = ['Editorias', 'Contagem']
+def tabelaNoticiasEditoria(editoria_freq):
+    # Recebe um cópia do df utilizado
+    table_noticias_edi = editoria_freq.copy()
+
+    # Renomeia as colunas
+    table_noticias_edi.columns = ['Editorias', 'Contagem']
+    
+    return table_noticias_edi
 
 
 '''NOTÍCIAS POR REPORTER: contagem de noticias por reporter (organizado do maior para o menor)'''
-# Recebe um cópia do df utilizado
-table_noticias_rep = reporter_freq.copy()
+def tabelaNoticiasReporter(reporter_freq):
+    # Recebe um cópia do df utilizado
+    table_noticias_rep = reporter_freq.copy()
 
-# Renomeia as colunas
-table_noticias_rep.columns = ['Repórteres', 'Contagem']
+    # Renomeia as colunas
+    table_noticias_rep.columns = ['Repórteres', 'Contagem']
+    
+    return table_noticias_rep
 
 
 '''EDITORIA POR REPORTER: contagem de editoria por reporter (organizado do maior para o menor)'''
-def tableEditoriaPorReporter():
+def tableEditoriaPorReporter(reporter_unique, merge_ids_rep_noticias_editoria):
     # Recebe o df já organizado e com os dados de acordo com o reporter selecionado
-    df_repEdi_Organizado = reporterSelector()
+    df_repEdi_Organizado = reporterSelector(reporter_unique, merge_ids_rep_noticias_editoria)
     
     # Recebe uma cópia de duas colunas do df
     table_edi_rep = df_repEdi_Organizado[['edi_descricao', 'Freq']].copy()
@@ -458,7 +459,6 @@ def tableEditoriaPorReporter():
     table_edi_rep.columns = ['Editorias do repórter selecionado', 'Contagem']
     
     #table_edi_rep = table_edi_rep['edi_descricao'].value_counts()
-    # Exibe o df na dashboard
-    st.dataframe(table_edi_rep.drop_duplicates(), use_container_width = True, hide_index=True)
+    return table_edi_rep
     
     

@@ -46,6 +46,10 @@ end_date = st.sidebar.date_input("Data de término", data_maxima, min_value = da
 start_date = start_date.strftime('%m-%d-%y') #'%d-%m-%Y'
 end_date = end_date.strftime('%m-%d-%y')
 
+# tnPortal.filtroDeDatas(start_date, end_date) é a função que recebe as datas de inicio e fim do período selecionado e atualiza os dfs
+# retorna multiplos dfs que seram utilizados nas funções dos gráficos do portal
+df_NOTICIAS_filtrado, editoria_freq, reporter_freq, reporter_unique, merge_ids_rep_noticias_editoria, fotografos = tnPortal.filtroDeDatas(start_date, end_date)
+
 # Adicione seus gráficos de acordo com as opções selecionadas
 if selected_option1 == "Tribuna do norte":
     # Adiciona a respectiva imagem ao topo da página
@@ -64,52 +68,78 @@ if selected_option1 == "Tribuna do norte":
         with tab1:
             if exib_type == 'Gráficos de rosca/pizza':
                 # Gráfico de rosca
-                tnPortal.noticiasToTal(start_date, end_date)
+                # recebe o df df_NOTICIAS_filtrado com o período atualizado e exibe o gráfico na dashboard
+                tnPortal.noticiasToTal(df_NOTICIAS_filtrado)
             elif exib_type == 'Tabelas':
                 
+                # retorna o df das noticias online
+                table_noticias_on = tnPortal.tabelaNoticiasOnline(df_NOTICIAS_filtrado)
                 # Exibindo os df com o width maximo
-                st.dataframe(tnPortal.table_noticias_on[['Status da notícia', 'Contagem']], use_container_width = True, hide_index=True)
+                st.dataframe(table_noticias_on[['Status da notícia', 'Contagem']], use_container_width = True, hide_index=True)
                 
-                st.dataframe(tnPortal.table_noticias_veiculo[['Veículo', 'Contagem']], use_container_width = True, hide_index=True)
+                # retorna o df das noticias por veiculo
+                table_noticias_veiculo = tnPortal.tabelaNoticiasVeiculo(df_NOTICIAS_filtrado)
+                st.dataframe(table_noticias_veiculo[['Veículo', 'Contagem']], use_container_width = True, hide_index=True)
                 
         with tab2:
             
             if exib_type == 'Gráficos de rosca/pizza':
                 # Gráfico de rosca
-                tnPortal.noticiasPorEditoria()
+                # recebe o df editoria_freq com o período atualizado e exibe o gráfico na dashboard
+                tnPortal.noticiasPorEditoria(editoria_freq)
             elif exib_type == 'Tabelas':
+                
+                # retorna o df das noticias por editoria
+                table_noticias_edi = tnPortal.tabelaNoticiasEditoria(editoria_freq)
+                
                 # Exibindo os df com o width maximo
-                st.dataframe(tnPortal.table_noticias_edi, use_container_width = True, hide_index=True)
+                st.dataframe(table_noticias_edi, use_container_width = True, hide_index=True)
             
         with tab3:
             
             if exib_type == 'Gráficos de rosca/pizza':
                 # Gráfico de rosca
-                tnPortal.noticiasPorReporter()
+                # recebe o df reporter_freq com o período atualizado e exibe o gráfico na dashboard
+                tnPortal.noticiasPorReporter(reporter_freq)
             elif exib_type == 'Tabelas':
+                
+                # retorna o df das noticias por reporter
+                table_noticias_rep = tnPortal.tabelaNoticiasReporter(reporter_freq)
+                
                 # Exibindo df com o width maximo
-                st.dataframe(tnPortal.table_noticias_rep, use_container_width = True, hide_index=True)
+                st.dataframe(table_noticias_rep, use_container_width = True, hide_index=True)
                 
         with tab4:
             
             if exib_type == 'Gráficos de rosca/pizza':
                 # Gráfico de rosca
-                tnPortal.editoriaPorReporter()
+                # recebe o df reporter_unique e merge_ids_rep_noticias_editoria com o período atualizado e exibe o gráfico na dashboard
+                tnPortal.editoriaPorReporter(reporter_unique, merge_ids_rep_noticias_editoria)
             elif exib_type == 'Tabelas':
+                
+                # retorna o df das editorias por reporter
+                table_edi_rep = tnPortal.tableEditoriaPorReporter(reporter_unique, merge_ids_rep_noticias_editoria)
+                
                 # Exibindo df com o width maximo
-                tnPortal.tableEditoriaPorReporter()
+                st.dataframe(table_edi_rep.drop_duplicates(), use_container_width = True, hide_index=True)
+                
             
         with tab5:
             st.write("Obs: os números são referentes a quantidade de notícias associadas ao fotógrafo. É importante observar que várias fotos podem ter sido tiradas.")
             if exib_type == 'Gráficos de rosca/pizza':
+                
                 # Gráfico de rosca
-                tnPortal.credfotografos()
+                # recebe o df fotografos com o período atualizado e exibe o gráfico na dashboard
+                tnPortal.credfotografos(fotografos)
+                
             elif exib_type == 'Tabelas':
+                
                 # Exibindo df com o width maximo
-                st.dataframe(tnPortal.fotografos, use_container_width = True, hide_index=True)
+                # retorna o df dos fotografos
+                st.dataframe(fotografos, use_container_width = True, hide_index=True)
         with tab6:
             # INCOMPLETO
-            tnPortal.fotPorEditoria()
+            tnPortal.fotPorEditoria(fotografos)
             
 
     elif selected_option2 == "Impresso":
