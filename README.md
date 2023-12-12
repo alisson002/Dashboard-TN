@@ -21,3 +21,8 @@ Instale as bibliotecas
 ```bash
   pip install -r requirements.txt
 ```
+
+Vá até a pasta /Dashboard-TN e execute
+```bash
+  streamlit run Dashboard.py
+```
