@@ -444,6 +444,10 @@ def tabelaNoticiasReporter(reporter_freq):
     # Renomeia as colunas
     table_noticias_rep.columns = ['Repórteres', 'Contagem']
     
+    cond = ~table_noticias_rep['Repórteres'].isin(['Flávio Pantoja Monteiro', 'Wagner Guerra', 'Iva Kareninna da Silva Câmara', 'Jerusa Vieira do Nascimento'])
+    
+    table_noticias_rep = table_noticias_rep[cond]
+    
     return table_noticias_rep
 
 
