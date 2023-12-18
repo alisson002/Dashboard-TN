@@ -20,40 +20,67 @@ df_editorias_impresso = pd.read_csv('tabelas/impresso/EDI_impresso.csv', low_mem
 '''
 MANIPULANDO OS DFs
 '''
-# Recebe o Series df_noticias_impresso['reporter_fotografo'] do df
-# value_counts().reset_index() conta a freqeuncia de cada informação na coluna de reporter_fotografo e organiza em ordem decrescente de acordo com a coluna que conta a freqência de cada informação
-# .replace() renomea linhas da coluna reporter_fotografo
-reporteres_impresso = df_noticias_impresso['reporter_fotografo'].value_counts().reset_index().replace({'icarocesarcarvalho':'Icaro Cesar Carvalho', 'Fernandasouzajh': 'Fernanda Souza', 'adenilson_costa': 'Adenilson Costa'})
+def filtroDeDatasImpresso(start_date, end_date):
+    
+    df_noticias_impresso_FILTRADAS = df_noticias_impresso.copy()
 
-# Renomeando as colunas por conta do .reset_index().replace que criou uma nova com as contagens de cada linha de reporter_fotografo
-reporteres_impresso.columns = ['reporter_fotografo', 'freq']
+    df_noticias_impresso_FILTRADAS['data'] = pd.to_datetime(df_noticias_impresso_FILTRADAS['data']).dt.strftime('%m-%d-%y')
 
-# Recebe a coluna 'editoria' do df df_editorias_impresso
-noticias_edi = df_editorias_impresso[['editoria', 'freq_edi']]
+    df_NOTICIAS_impresso_filtrado = df_noticias_impresso_FILTRADAS.loc[(df_noticias_impresso_FILTRADAS['data'] > start_date) & (df_noticias_impresso_FILTRADAS['data'] < end_date)]
 
-# Nesse caso vai sem ['editoria'] por ser um tipo Series e só ter aquela coluna
-noticias_edi_uniRow = noticias_edi.drop_duplicates()
+    # Altera o formato da data para '%d-%m-%y' após o filtro
+    df_NOTICIAS_impresso_filtrado['data'] = pd.to_datetime(df_NOTICIAS_impresso_filtrado['data']).dt.strftime('%d-%m-%y')
+    
+    
+    
+    df_editorias_impresso_FILTRADAS = df_editorias_impresso.copy()
 
-# Agrupa o DataFrame pelo valor da coluna 'editoria' e soma os valores em cada grupo
-noticias_edi_somado = noticias_edi.drop_duplicates().groupby('editoria')['freq_edi'].sum().reset_index()
+    df_editorias_impresso_FILTRADAS['data'] = pd.to_datetime(df_editorias_impresso_FILTRADAS['data']).dt.strftime('%m-%d-%y')
 
-# Foi feita da forma acima por a API do Trello já tinha a contagem de cada editoria disponível e, nesse caso, o calor não estaria correto se fosse usado .value_counts()
+    df_editorias_impresso_filtrado = df_editorias_impresso_FILTRADAS.loc[(df_editorias_impresso_FILTRADAS['data'] > start_date) & (df_editorias_impresso_FILTRADAS['data'] < end_date)]
 
-# conta as aparições da linha Pauta sem editoria em editoria
-freq_pauta_sem_editoria = df_editorias_impresso['editoria'].value_counts()['Pauta sem editoria']
+    # Altera o formato da data para '%d-%m-%y' após o filtro
+    df_editorias_impresso_filtrado['data'] = pd.to_datetime(df_editorias_impresso_filtrado['data']).dt.strftime('%d-%m-%y')
+    
+    
+    
+    
+    # Recebe o Series df_noticias_impresso['reporter_fotografo'] do df
+    # value_counts().reset_index() conta a freqeuncia de cada informação na coluna de reporter_fotografo e organiza em ordem decrescente de acordo com a coluna que conta a freqência de cada informação
+    # .replace() renomea linhas da coluna reporter_fotografo
+    reporteres_impresso = df_NOTICIAS_impresso_filtrado['reporter_fotografo'].value_counts().reset_index().replace({'icarocesarcarvalho':'Icaro Cesar Carvalho', 'Fernandasouzajh': 'Fernanda Souza', 'adenilson_costa': 'Adenilson Costa'})
 
-# Adiciona uma nova linha com com a contagem de Pauta sem editoria
-noticias_edi_somado.loc[len(noticias_edi_somado)] = ['Pautas sem editorias', freq_pauta_sem_editoria]
+    # Renomeando as colunas por conta do .reset_index().replace que criou uma nova com as contagens de cada linha de reporter_fotografo
+    reporteres_impresso.columns = ['reporter_fotografo', 'freq']
 
-# Organiza em ordem decrescente de acordo com a coluna freq_edi
-noticias_edi_somado = noticias_edi_somado.sort_values(by= 'freq_edi',ascending=False)
+    # Recebe a coluna 'editoria' do df df_editorias_impresso
+    noticias_edi = df_editorias_impresso_filtrado[['editoria', 'freq_edi']]
+
+    # Nesse caso vai sem ['editoria'] por ser um tipo Series e só ter aquela coluna
+    noticias_edi_uniRow = noticias_edi.drop_duplicates()
+
+    # Agrupa o DataFrame pelo valor da coluna 'editoria' e soma os valores em cada grupo
+    noticias_edi_somado = noticias_edi.drop_duplicates().groupby('editoria')['freq_edi'].sum().reset_index()
+
+    # Foi feita da forma acima por a API do Trello já tinha a contagem de cada editoria disponível e, nesse caso, o calor não estaria correto se fosse usado .value_counts()
+
+    # conta as aparições da linha Pauta sem editoria em editoria
+    freq_pauta_sem_editoria = df_editorias_impresso_filtrado['editoria'].value_counts()['Pauta sem editoria']
+
+    # Adiciona uma nova linha com com a contagem de Pauta sem editoria
+    noticias_edi_somado.loc[len(noticias_edi_somado)] = ['Pautas sem editorias', freq_pauta_sem_editoria]
+
+    # Organiza em ordem decrescente de acordo com a coluna freq_edi
+    noticias_edi_somado = noticias_edi_somado.sort_values(by= 'freq_edi',ascending=False)
+    
+    return noticias_edi_somado, df_NOTICIAS_impresso_filtrado, reporteres_impresso, noticias_edi_somado
 
 '''
 GRÁFICOS DE ROSCA/PIZZA/MEIA PIZZA
 '''
 
 '''NOTÍCIAS POR EDITORIA: contagem de noticias por editoria (organizado do maior para o menor)'''
-def noticiasPorEditoria():
+def noticiasPorEditoria(noticias_edi_somado,df_NOTICIAS_impresso_filtrado):
     
     # Cria o gráfico de rosca
     pie_chart = pygal.Pie(inner_radius = raio_interno)
@@ -66,7 +93,7 @@ def noticiasPorEditoria():
             
             pie_chart.add(edi, freq)
             
-    pie_chart.add(f'Total: {df_noticias_impresso['pauta'].drop_duplicates().count()}', 0)
+    pie_chart.add(f'Total: {df_NOTICIAS_impresso_filtrado['pauta'].drop_duplicates().count()}', 0)
         
     # Renderizaçãodo gráfico em formato SVG
     # .render_data_uri() gera a representação do gráfico em formato SVG e retorna um URI de dados (data URI)
@@ -78,7 +105,7 @@ def noticiasPorEditoria():
     st.markdown(f'<embed type="image/svg+xml" src="{svg}" />', unsafe_allow_html=True)
 
 '''NOTÍCIAS POR REPORTER: contagem de noticias por reporter (organizado do maior para o menor)'''
-def noticiasPorReporter():
+def noticiasPorReporter(reporteres_impresso):
     # Cria o gráfico de rosca
     pie_chart = pygal.Pie(inner_radius = raio_interno)
     
@@ -101,7 +128,7 @@ def noticiasPorReporter():
     st.markdown(f'<embed type="image/svg+xml" src="{svg}" />', unsafe_allow_html=True)
 
 '''FOTÓGRAFOS: contagem de noticias por fotógrafo (organizado do maior para o menor)'''
-def credfotografos():
+def credfotografos(reporteres_impresso):
     # Cria o gráfico de rosca
     pie_chart = pygal.Pie(inner_radius = raio_interno)
     
@@ -127,34 +154,42 @@ DFs PARA O STREAMLIT
 '''
 '''NOTÍCIAS POR EDITORIA: contagem de noticias por editoria (organizado do maior para o menor)'''
 # Recebe um cópia de noticias_edi_somado
-teble_ediImpresso = noticias_edi_somado.copy()
+def tableEdiImpresso(noticias_edi_somado):
+    teble_ediImpresso = noticias_edi_somado.copy()
 
-# Recebe um Series com volores booleanos de acordo com as informação que quero ou não no df
-# Filtra as informação para não tem nomes de reporteres nas editorias
-condicao_para_manter = ~teble_ediImpresso['editoria'].isin(['Bruno Vital', 'Líria Paz', 'Ícaro Carvalho', 'Felipe Salustino', 'Matteus Fernandes', 'Cláudio Oliveira'])
+    # Recebe um Series com volores booleanos de acordo com as informação que quero ou não no df
+    # Filtra as informação para não tem nomes de reporteres nas editorias
+    condicao_para_manter = ~teble_ediImpresso['editoria'].isin(['Bruno Vital', 'Líria Paz', 'Ícaro Carvalho', 'Felipe Salustino', 'Matteus Fernandes', 'Cláudio Oliveira'])
 
-# Df filtrado
-teble_ediImpresso = teble_ediImpresso[condicao_para_manter]
+    # Df filtrado
+    teble_ediImpresso = teble_ediImpresso[condicao_para_manter]
+    
+    return teble_ediImpresso
 
+def tableRepImpresso(reporteres_impresso):
+    '''NOTÍCIAS POR REPORTER: contagem de noticias por reporter (organizado do maior para o menor)'''
+    # Recebe um cópia de reporteres_impresso
+    table_reporteres_impresso = reporteres_impresso.copy()
 
-'''NOTÍCIAS POR REPORTER: contagem de noticias por reporter (organizado do maior para o menor)'''
-# Recebe um cópia de reporteres_impresso
-table_reporteres_impresso = reporteres_impresso.copy()
+    # Filtra as informações para receber apenas os nomes dos reporteres
+    # ~ nega a condição, fazendo com que ela funcione da forma inversa
+    table_reporteres_impresso = table_reporteres_impresso.loc[~table_reporteres_impresso['reporter_fotografo'].isin(['Magnus Nascimento📷', 'adriano abreu📷', 'Alex Regis📷', 'Líria Paz', 'Margareth Grilo', 'Isaac Lira', 'Fernanda Souza'])]
 
-# Filtra as informações para receber apenas os nomes dos reporteres
-# ~ nega a condição, fazendo com que ela funcione da forma inversa
-table_reporteres_impresso = table_reporteres_impresso.loc[~table_reporteres_impresso['reporter_fotografo'].isin(['Magnus Nascimento📷', 'adriano abreu📷', 'Alex Regis📷', 'Líria Paz', 'Margareth Grilo', 'Isaac Lira', 'Fernanda Souza'])]
+    # deixa as primeiras letras maiusculas
+    table_reporteres_impresso['reporter_fotografo'] = table_reporteres_impresso['reporter_fotografo'].str.title()
+    
+    return table_reporteres_impresso
 
-# deixa as primeiras letras maiusculas
-table_reporteres_impresso['reporter_fotografo'] = table_reporteres_impresso['reporter_fotografo'].str.title()
+def tableFotografosImpresso(reporteres_impresso):
+    '''FOTÓGRAFOS: contagem de noticias por fotógrafo (organizado do maior para o menor)'''
+    # Recebe um cópia de reporteres_impresso
+    table_fotografos = reporteres_impresso.copy()
 
-'''FOTÓGRAFOS: contagem de noticias por fotógrafo (organizado do maior para o menor)'''
-# Recebe um cópia de reporteres_impresso
-table_fotografos = reporteres_impresso.copy()
+    # Filtra as informações para receber apenas os nomes dos fotógrafos
+    # Mesma coisa do caso acima, mas sem ~
+    table_fotografos = table_fotografos.loc[table_fotografos['reporter_fotografo'].isin(['Magnus Nascimento📷', 'adriano abreu📷', 'Alex Regis📷'])]
 
-# Filtra as informações para receber apenas os nomes dos fotógrafos
-# Mesma coisa do caso acima, mas sem ~
-table_fotografos = table_fotografos.loc[table_fotografos['reporter_fotografo'].isin(['Magnus Nascimento📷', 'adriano abreu📷', 'Alex Regis📷'])]
-
-# Deixa as primeiras letras maiusculas
-table_fotografos['reporter_fotografo'] = table_fotografos['reporter_fotografo'].str.title()
+    # Deixa as primeiras letras maiusculas
+    table_fotografos['reporter_fotografo'] = table_fotografos['reporter_fotografo'].str.title()
+    
+    return table_fotografos

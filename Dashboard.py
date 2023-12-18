@@ -36,7 +36,8 @@ else:
     
 # Definindo a data mínima e máxima
 data_minima = pd.to_datetime('2023-01-01')
-data_maxima = pd.to_datetime(tnPortal.df_noticias.iloc[-1]['not_datapub'])
+data_maxima = pd.to_datetime('2023-11-30')
+#data_maxima = pd.to_datetime(tnPortal.df_noticias.iloc[-1]['not_datapub'])
     
 # Adicionar seletor de períodos na coluna à esquerda
 start_date = st.sidebar.date_input("Data de início", data_minima, min_value = data_minima, max_value = data_maxima, format="DD-MM-YYYY")
@@ -49,6 +50,8 @@ end_date = end_date.strftime('%m-%d-%y')
 # tnPortal.filtroDeDatas(start_date, end_date) é a função que recebe as datas de inicio e fim do período selecionado e atualiza os dfs
 # retorna multiplos dfs que seram utilizados nas funções dos gráficos do portal
 df_NOTICIAS_filtrado, editoria_freq, reporter_freq, reporter_unique, merge_ids_rep_noticias_editoria, fotografos = tnPortal.filtroDeDatas(start_date, end_date)
+
+noticias_edi_somado, df_NOTICIAS_impresso_filtrado, reporteres_impresso, noticias_edi_somado = tnImpresso.filtroDeDatasImpresso(start_date, end_date)
 
 # Adicione seus gráficos de acordo com as opções selecionadas
 if selected_option1 == "Tribuna do norte":
@@ -155,27 +158,27 @@ if selected_option1 == "Tribuna do norte":
         with tab1:
             if exib_type == 'Gráficos de rosca/pizza':
                 # Gráfico de rosca
-                tnImpresso.noticiasPorEditoria()
+                tnImpresso.noticiasPorEditoria(noticias_edi_somado,df_NOTICIAS_impresso_filtrado)
             elif exib_type == 'Tabelas':
                 # Exibindo df com o width maximo
-                st.dataframe(tnImpresso.teble_ediImpresso, use_container_width = True, hide_index=True)
+                st.dataframe(tnImpresso.tableEdiImpresso(noticias_edi_somado), use_container_width = True, hide_index=True)
         with tab2:
             if exib_type == 'Gráficos de rosca/pizza':
                 # Gráfico de rosca
-                tnImpresso.noticiasPorReporter()
+                tnImpresso.noticiasPorReporter(reporteres_impresso)
             elif exib_type == 'Tabelas':
                 # Exibindo df com o width maximo
-                st.dataframe(tnImpresso.table_reporteres_impresso, use_container_width = True, hide_index=True)
+                st.dataframe(tnImpresso.tableRepImpresso(reporteres_impresso), use_container_width = True, hide_index=True)
         with tab3:
             st.write('')
         with tab4:
             st.write("Obs: os números são referentes a quantidade de notícias associadas ao fotógrafo. É importante observar que várias fotos podem ter sido tiradas.")
             if exib_type == 'Gráficos de rosca/pizza':
                 # Gráfico de rosca
-                tnImpresso.credfotografos()
+                tnImpresso.credfotografos(reporteres_impresso)
             elif exib_type == 'Tabelas':
                 # Exibindo df com o width maximo
-                st.dataframe(tnImpresso.table_fotografos, use_container_width = True, hide_index=True)
+                st.dataframe(tnImpresso.tableFotografosImpresso(reporteres_impresso), use_container_width = True, hide_index=True)
         
     elif selected_option2 == "Instagram":
         st.write("Gráficos do instagram")
