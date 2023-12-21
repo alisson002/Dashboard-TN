@@ -24,7 +24,7 @@ selected_option1 = st.sidebar.selectbox("Selecione a opção 1:", options1)
 
 # Criar seletor 2 na coluna à esquerda
 if selected_option1 == "Tribuna do norte":
-    options2 = ["Site/Portal", "Impresso","Instagram", "Facebook", "Twitter", "YouTube"]
+    options2 = ["Site/Portal", "Google Analytics (portal)","Impresso","Instagram", "Facebook", "Twitter", "YouTube"]
     selected_option2 = st.sidebar.selectbox("Selecione a opção 2:", options2)
 # Criar seletor 2 na coluna à esquerda
 elif selected_option1 == "JP News - Natal":
@@ -84,6 +84,9 @@ if selected_option1 == "Tribuna do norte":
                 table_noticias_veiculo = tnPortal.tabelaNoticiasVeiculo(df_NOTICIAS_filtrado)
                 st.dataframe(table_noticias_veiculo[['Veículo', 'Contagem']], use_container_width = True, hide_index=True)
                 
+            elif exib_type == 'Gráficos de barra':
+                tnPortal.noticiasToTal_bc(df_NOTICIAS_filtrado)
+                
         with tab2:
             
             if exib_type == 'Gráficos de rosca/pizza':
@@ -97,6 +100,10 @@ if selected_option1 == "Tribuna do norte":
                 
                 # Exibindo os df com o width maximo
                 st.dataframe(table_noticias_edi, use_container_width = True, hide_index=True)
+            
+            elif exib_type == 'Gráficos de barra':
+                tnPortal.noticiasPorEditoria_bc(editoria_freq)
+                
             
         with tab3:
             
@@ -112,6 +119,9 @@ if selected_option1 == "Tribuna do norte":
                 # Exibindo df com o width maximo
                 st.dataframe(table_noticias_rep, use_container_width = True, hide_index=True)
                 
+            elif exib_type == 'Gráficos de barra':
+                tnPortal.noticiasPorReporter_bc(reporter_freq)
+                
         with tab4:
             
             if exib_type == 'Gráficos de rosca/pizza':
@@ -125,6 +135,9 @@ if selected_option1 == "Tribuna do norte":
                 
                 # Exibindo df com o width maximo
                 st.dataframe(table_edi_rep.drop_duplicates(), use_container_width = True, hide_index=True)
+                
+            elif exib_type == 'Gráficos de barra':
+                tnPortal.editoriaPorReporter_bc(reporter_unique, merge_ids_rep_noticias_editoria)
                 
             
         with tab5:
@@ -140,6 +153,10 @@ if selected_option1 == "Tribuna do norte":
                 # Exibindo df com o width maximo
                 # retorna o df dos fotografos
                 st.dataframe(fotografos, use_container_width = True, hide_index=True)
+            
+            elif exib_type == 'Gráficos de barra':
+                tnPortal.credfotografos_bc(fotografos)
+                
         with tab6:
             # INCOMPLETO
             tnPortal.fotPorEditoria(fotografos)
@@ -162,6 +179,8 @@ if selected_option1 == "Tribuna do norte":
             elif exib_type == 'Tabelas':
                 # Exibindo df com o width maximo
                 st.dataframe(tnImpresso.tableEdiImpresso(noticias_edi_somado), use_container_width = True, hide_index=True)
+            elif exib_type == 'Gráficos de barra':
+                tnImpresso.noticiasPorEditoria_bc(noticias_edi_somado,df_NOTICIAS_impresso_filtrado)
         with tab2:
             if exib_type == 'Gráficos de rosca/pizza':
                 # Gráfico de rosca
@@ -169,6 +188,8 @@ if selected_option1 == "Tribuna do norte":
             elif exib_type == 'Tabelas':
                 # Exibindo df com o width maximo
                 st.dataframe(tnImpresso.tableRepImpresso(reporteres_impresso), use_container_width = True, hide_index=True)
+            elif exib_type == 'Gráficos de barra':
+                tnImpresso.noticiasPorReporter_bc(reporteres_impresso)
         with tab3:
             st.write('')
         with tab4:
@@ -179,6 +200,8 @@ if selected_option1 == "Tribuna do norte":
             elif exib_type == 'Tabelas':
                 # Exibindo df com o width maximo
                 st.dataframe(tnImpresso.tableFotografosImpresso(reporteres_impresso), use_container_width = True, hide_index=True)
+            elif exib_type == 'Gráficos de barra':
+                tnImpresso.credfotografos_bc(reporteres_impresso)
         
     elif selected_option2 == "Instagram":
         st.write("Gráficos do instagram")

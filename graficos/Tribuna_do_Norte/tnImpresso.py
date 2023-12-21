@@ -149,6 +149,7 @@ def credfotografos(reporteres_impresso):
     # A string resultante contém uma tag <embed> que está sendo usada para incorporar um conteúdo SVG na página.
     # unsafe_allow_html=True: permite que o Streamlit interprete e exiba o conteúdo HTML fornecido como seguro.
     st.markdown(f'<embed type="image/svg+xml" src="{svg}" />', unsafe_allow_html=True)
+
 '''
 DFs PARA O STREAMLIT
 '''
@@ -193,3 +194,76 @@ def tableFotografosImpresso(reporteres_impresso):
     table_fotografos['reporter_fotografo'] = table_fotografos['reporter_fotografo'].str.title()
     
     return table_fotografos
+
+'''GRÁFICOS DE BARRA'''
+
+'''NOTÍCIAS POR EDITORIA: contagem de noticias por editoria (organizado do maior para o menor)'''
+def noticiasPorEditoria_bc(noticias_edi_somado,df_NOTICIAS_impresso_filtrado):
+    
+    # Cria o gráfico de rosca
+    bar_chart = pygal.HorizontalBar()
+    
+    # Adiciona as informações ao gráfico
+    for edi, freq in zip(noticias_edi_somado['editoria'],noticias_edi_somado['freq_edi']):
+        
+        # Filtra as informações para que nomes de reporteres não sejam adicionados as editorias
+        if edi not in ['Bruno Vital', 'Líria Paz', 'Ícaro Carvalho', 'Felipe Salustino', 'Matteus Fernandes', 'Cláudio Oliveira']:
+            
+            bar_chart.add(edi, freq)
+            
+    bar_chart.add(f'Total: {df_NOTICIAS_impresso_filtrado['pauta'].drop_duplicates().count()}', 0)
+        
+    # Renderizaçãodo gráfico em formato SVG
+    # .render_data_uri() gera a representação do gráfico em formato SVG e retorna um URI de dados (data URI)
+    svg = bar_chart.render_data_uri()
+    
+    # Formatando uma string HTML usando f-strings
+    # A string resultante contém uma tag <embed> que está sendo usada para incorporar um conteúdo SVG na página.
+    # unsafe_allow_html=True: permite que o Streamlit interprete e exiba o conteúdo HTML fornecido como seguro. 
+    st.markdown(f'<embed type="image/svg+xml" src="{svg}" />', unsafe_allow_html=True)
+
+'''NOTÍCIAS POR REPORTER: contagem de noticias por reporter (organizado do maior para o menor)'''
+def noticiasPorReporter_bc(reporteres_impresso):
+    # Cria o gráfico de rosca
+    bar_chart = pygal.HorizontalBar()
+    
+    # Adiciona as informações ao gráfico
+    for rep_fot,freq in zip(reporteres_impresso['reporter_fotografo'], reporteres_impresso['freq']):
+        
+        # Filtra as informações para separar reporteres e fotógrafos
+        if rep_fot in ['Magnus Nascimento📷', 'adriano abreu📷', 'Alex Regis📷', 'Líria Paz', 'Margareth Grilo', 'Isaac Lira', 'Fernanda Souza']:
+            continue # Vai para a próxima iteração do loop
+        else:
+            bar_chart.add(rep_fot.title(), freq)
+    
+    # Renderizaçãodo gráfico em formato SVG
+    # .render_data_uri() gera a representação do gráfico em formato SVG e retorna um URI de dados (data URI)
+    svg = bar_chart.render_data_uri()
+    
+    # Formatando uma string HTML usando f-strings
+    # A string resultante contém uma tag <embed> que está sendo usada para incorporar um conteúdo SVG na página.
+    # unsafe_allow_html=True: permite que o Streamlit interprete e exiba o conteúdo HTML fornecido como seguro. 
+    st.markdown(f'<embed type="image/svg+xml" src="{svg}" />', unsafe_allow_html=True)
+
+'''FOTÓGRAFOS: contagem de noticias por fotógrafo (organizado do maior para o menor)'''
+def credfotografos_bc(reporteres_impresso):
+    # Cria o gráfico de rosca
+    bar_chart = pygal.HorizontalBar()
+    
+    # Adiciona as informações ao gráfico
+    for rep_fot,freq in zip(reporteres_impresso['reporter_fotografo'], reporteres_impresso['freq']):
+        
+        # Filtra as informações para deixar somente os fotógrafos
+        if rep_fot in ['Magnus Nascimento📷', 'adriano abreu📷', 'Alex Regis📷']:
+            bar_chart.add(rep_fot.title(), freq)
+        else:
+            continue # Vai para a próxima iteração do loop
+    
+    # Renderizaçãodo gráfico em formato SVG
+    # .render_data_uri() gera a representação do gráfico em formato SVG e retorna um URI de dados (data URI)
+    svg = bar_chart.render_data_uri()
+    
+    # Formatando uma string HTML usando f-strings
+    # A string resultante contém uma tag <embed> que está sendo usada para incorporar um conteúdo SVG na página.
+    # unsafe_allow_html=True: permite que o Streamlit interprete e exiba o conteúdo HTML fornecido como seguro.
+    st.markdown(f'<embed type="image/svg+xml" src="{svg}" />', unsafe_allow_html=True)
