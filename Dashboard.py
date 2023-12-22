@@ -49,7 +49,7 @@ end_date = end_date.strftime('%m-%d-%y')
 
 # tnPortal.filtroDeDatas(start_date, end_date) é a função que recebe as datas de inicio e fim do período selecionado e atualiza os dfs
 # retorna multiplos dfs que seram utilizados nas funções dos gráficos do portal
-df_NOTICIAS_filtrado, editoria_freq, reporter_freq, reporter_unique, merge_ids_rep_noticias_editoria, fotografos = tnPortal.filtroDeDatas(start_date, end_date)
+df_NOTICIAS_filtrado, editoria_freq, reporter_freq, reporter_unique, merge_ids_rep_noticias_editoria, fotografos, fotografos_teste = tnPortal.filtroDeDatas(start_date, end_date)
 
 noticias_edi_somado, df_NOTICIAS_impresso_filtrado, reporteres_impresso, noticias_edi_somado = tnImpresso.filtroDeDatasImpresso(start_date, end_date)
 
@@ -152,7 +152,7 @@ if selected_option1 == "Tribuna do norte":
                 
                 # Exibindo df com o width maximo
                 # retorna o df dos fotografos
-                st.dataframe(fotografos, use_container_width = True, hide_index=True)
+                st.dataframe(fotografos,use_container_width = True, hide_index=True)
             
             elif exib_type == 'Gráficos de barra':
                 tnPortal.credfotografos_bc(fotografos)
@@ -173,6 +173,7 @@ if selected_option1 == "Tribuna do norte":
         tab1, tab2, tab3, tab4, tab5= st.tabs(["Notícias por editoria", "Nóticias por repórter", "Editoria por repórter", "Créditos/origem das fotos", "Editoria por foto"])
         
         with tab1:
+            st.write('Obs2: A maioria das notícias possuem duas editorias cadastradas, portanto, a soma total é referente as notícias sem levar em consideração as editorias. Editorias com nomes de reporteres foram removidas da contagem')
             if exib_type == 'Gráficos de rosca/pizza':
                 # Gráfico de rosca
                 tnImpresso.noticiasPorEditoria(noticias_edi_somado,df_NOTICIAS_impresso_filtrado)

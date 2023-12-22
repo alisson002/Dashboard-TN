@@ -44,7 +44,6 @@ def filtroDeDatasImpresso(start_date, end_date):
     
     
     
-    
     # Recebe o Series df_noticias_impresso['reporter_fotografo'] do df
     # value_counts().reset_index() conta a freqeuncia de cada informação na coluna de reporter_fotografo e organiza em ordem decrescente de acordo com a coluna que conta a freqência de cada informação
     # .replace() renomea linhas da coluna reporter_fotografo
@@ -73,6 +72,9 @@ def filtroDeDatasImpresso(start_date, end_date):
     # Organiza em ordem decrescente de acordo com a coluna freq_edi
     noticias_edi_somado = noticias_edi_somado.sort_values(by= 'freq_edi',ascending=False)
     
+    #remove a ultima linha
+    noticias_edi_somado = noticias_edi_somado[:len(noticias_edi_somado)-1]
+    
     return noticias_edi_somado, df_NOTICIAS_impresso_filtrado, reporteres_impresso, noticias_edi_somado
 
 '''
@@ -89,7 +91,7 @@ def noticiasPorEditoria(noticias_edi_somado,df_NOTICIAS_impresso_filtrado):
     for edi, freq in zip(noticias_edi_somado['editoria'],noticias_edi_somado['freq_edi']):
         
         # Filtra as informações para que nomes de reporteres não sejam adicionados as editorias
-        if edi not in ['Bruno Vital', 'Líria Paz', 'Ícaro Carvalho', 'Felipe Salustino', 'Matteus Fernandes', 'Cláudio Oliveira']:
+        if edi not in ['Bruno Vital', 'Líria Paz', 'Ícaro Carvalho', 'Felipe Salustino', 'Matteus Fernandes', 'Cláudio Oliveira', 'P.H.']:
             
             pie_chart.add(edi, freq)
             
@@ -160,7 +162,7 @@ def tableEdiImpresso(noticias_edi_somado):
 
     # Recebe um Series com volores booleanos de acordo com as informação que quero ou não no df
     # Filtra as informação para não tem nomes de reporteres nas editorias
-    condicao_para_manter = ~teble_ediImpresso['editoria'].isin(['Bruno Vital', 'Líria Paz', 'Ícaro Carvalho', 'Felipe Salustino', 'Matteus Fernandes', 'Cláudio Oliveira'])
+    condicao_para_manter = ~teble_ediImpresso['editoria'].isin(['Bruno Vital', 'Líria Paz', 'Ícaro Carvalho', 'Felipe Salustino', 'Matteus Fernandes', 'Cláudio Oliveira', 'P.H.'])
 
     # Df filtrado
     teble_ediImpresso = teble_ediImpresso[condicao_para_manter]
@@ -207,7 +209,7 @@ def noticiasPorEditoria_bc(noticias_edi_somado,df_NOTICIAS_impresso_filtrado):
     for edi, freq in zip(noticias_edi_somado['editoria'],noticias_edi_somado['freq_edi']):
         
         # Filtra as informações para que nomes de reporteres não sejam adicionados as editorias
-        if edi not in ['Bruno Vital', 'Líria Paz', 'Ícaro Carvalho', 'Felipe Salustino', 'Matteus Fernandes', 'Cláudio Oliveira']:
+        if edi not in ['Bruno Vital', 'Líria Paz', 'Ícaro Carvalho', 'Felipe Salustino', 'Matteus Fernandes', 'Cláudio Oliveira', 'P.H.']:
             
             bar_chart.add(edi, freq)
             

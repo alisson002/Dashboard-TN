@@ -109,6 +109,7 @@ def filtroDeDatas(start_date, end_date):
     # .str[0] Seleciona somente o texto de antes da barra, pois foram separados em duas partes
     # .str.lower() Deixa todas as primeiras letras minúsculas
     # .replace('marcelo casal jr','marcello casal jr') substitui uma string
+    fotografos_teste = df_NOTICIAS_filtrado.copy()['fot_credito']
 
     fotografos = df_NOTICIAS_filtrado.copy()['fot_credito']\
         .dropna(how='all')\
@@ -121,7 +122,30 @@ def filtroDeDatas(start_date, end_date):
     # Remove determinados caracteres de acordo com a função remover_caracteres
     # .str.title() Deixa todas as primeiras letras maiúsculas
     # .str.replace(r'(?<=/)\s+', '', regex=True) remove o espaço dps da barra
-    fotografos = fotografos.apply(remover_caracteres).str.title()
+    fotografos = fotografos.apply(remover_caracteres).str.title()\
+        .replace('Marcello Casal','Marcello Casal Jr')\
+        .replace('Marcelllo Casal Jr','Marcello Casal Jr')\
+        .replace('Marcello Casal Jragência Brasil','Marcello Casal Jr')\
+        .replace('Marcelo Casal Jr','Marcello Casal Jr')\
+        .replace('Marcello Casal Jr ','Marcello Casal Jr')\
+        .replace('Marcelo Casal','Marcello Casal Jr')\
+        .replace('Marcelo Carmargo','Marcelo Camargo')\
+        .replace('Marcello Camargo','Marcelo Camargo')\
+        .replace('Marcelo Camargoagência Brasil','Marcelo Camargo')\
+        .replace('Marcelo Carmargo Agência Brasil','Marcelo Camargo')\
+        .replace('','Marcelo Cortes')\
+        .replace('Marcelo Gonçalves ','Marcelo Gonçalves')\
+        .replace('Marcelo Goncalves','Marcelo Gonçalves')\
+        .replace('Marcelo Cortes ','Marcelo Cortes')\
+        .replace('Foto: Magnus Nascimento','Magnus Nascimento')\
+        .replace('Marcelo Maragni ','Marcelo Maragni')\
+        .replace('Marcelo Zambrana','Marcello Zambrana')\
+        .replace('Marcelo Diaz ','Marcelo Diaz')\
+        .replace('Tania Rego','Tânia Rêgo')\
+        .replace('Tânia Rego','Tânia Rêgo')\
+        .replace('Tânia Rêgo Agência Brasil','Tânia Rêgo')\
+        .replace('Alex Regis','Alex Régis')\
+        
     #.str.replace(r'(?<=/)\s+', '', regex=True)
 
     # Determina as informações que são 'imprimiveis'
@@ -152,7 +176,7 @@ def filtroDeDatas(start_date, end_date):
 
     #.applymap(lambda x: x.split('/')[0] if pd.notna(x) else x)\
     
-    return df_NOTICIAS_filtrado, editoria_freq, reporter_freq, reporter_unique, merge_ids_rep_noticias_editoria, fotografos
+    return df_NOTICIAS_filtrado, editoria_freq, reporter_freq, reporter_unique, merge_ids_rep_noticias_editoria, fotografos, fotografos_teste
 
 '''
 GRÁFICOS DE ROSCA/PIZZA/MEIA PIZZA
@@ -619,6 +643,8 @@ def editoriaPorReporter_bc(reporter_unique, merge_ids_rep_noticias_editoria):
 def credfotografos_bc(fotografos):
     # Cria o gráfico
     bar_chart_fot = pygal.HorizontalBar()
+    
+    selected_option = st.selectbox("Selecione um reporter:", fotografos['fot_credito'])
     
     # Slider para selecionar quais informações vão aparecer, já que as fotos vem de muitas origens diferentes
     # Values vai receber o intervalo selecionado e vai armazena-lo em um vetor de tamanho 2
