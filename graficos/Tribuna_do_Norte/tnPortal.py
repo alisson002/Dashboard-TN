@@ -37,7 +37,7 @@ def filtroDeDatas(start_date, end_date):
     df_NOTICIAS_filtrado = df_noticias_FILTRADAS_POR_DATAS.loc[(df_noticias_FILTRADAS_POR_DATAS['not_datapub'] > start_date) & (df_noticias_FILTRADAS_POR_DATAS['not_datapub'] < end_date)]
 
     # Altera o formato da data para '%d-%m-%y' após o filtro
-    df_NOTICIAS_filtrado['not_datapub'] = pd.to_datetime(df_NOTICIAS_filtrado['not_datapub']).dt.strftime('%d-%m-%y')
+    df_NOTICIAS_filtrado['not_datapub'] = pd.to_datetime(df_NOTICIAS_filtrado['not_datapub'], format='mixed').dt.strftime('%d-%m-%y')
     
     '''FIM NOTICIAS FILTRADAS'''
 
@@ -184,7 +184,7 @@ GRÁFICOS DE ROSCA/PIZZA/MEIA PIZZA
 '''TOTAL: contagem de notícias online e fora do ar e notícias do online e impresso.'''
 def noticiasToTal(df_NOTICIAS_filtrado):
     
-    df_NOTICIAS_filtrado['not_datapub'] = pd.to_datetime(df_NOTICIAS_filtrado['not_datapub']).dt.strftime('%d-%m-%y')
+    df_NOTICIAS_filtrado['not_datapub'] = pd.to_datetime(df_NOTICIAS_filtrado['not_datapub'], format='mixed').dt.strftime('%d-%m-%y')
     
     # Seletor para alternar entre os gráficos de Online (notícias do portal) e Por veículo, esse último que também inclui as notícias do impresso
     # Todas as notícias do impresso estão no online

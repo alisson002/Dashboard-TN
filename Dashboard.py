@@ -36,13 +36,16 @@ else:
     
 # Definindo a data mínima e máxima
 data_minima = pd.to_datetime('2023-01-01')
-data_maxima = pd.to_datetime('2023-11-30')
+data_maxima = pd.to_datetime('2024-01-19')
 #data_maxima = pd.to_datetime(tnPortal.df_noticias.iloc[-1]['not_datapub'])
     
 # Adicionar seletor de períodos na coluna à esquerda
 start_date = st.sidebar.date_input("Data de início", data_minima, min_value = data_minima, max_value = data_maxima, format="DD-MM-YYYY")
 
 end_date = st.sidebar.date_input("Data de término", data_maxima, min_value = data_minima, max_value = data_maxima, format="DD-MM-YYYY") + pd.DateOffset(days=1)
+
+st.sidebar.write("AVISO (impresso): O dia 31/12/2023 não está sendo reconhecido corretamente. Não o selecionem, por favor.")
+st.sidebar.write("AVISO (online): No momento, por conta da mudança para o novo site, os dados disponíveis vão somente até 16/10/2023. Em breve os novos dados estarão disponíveis.")
 
 start_date = start_date.strftime('%m-%d-%y') #'%d-%m-%Y'
 end_date = end_date.strftime('%m-%d-%y')

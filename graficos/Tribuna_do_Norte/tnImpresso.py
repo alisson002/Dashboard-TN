@@ -29,7 +29,7 @@ def filtroDeDatasImpresso(start_date, end_date):
     df_NOTICIAS_impresso_filtrado = df_noticias_impresso_FILTRADAS.loc[(df_noticias_impresso_FILTRADAS['data'] > start_date) & (df_noticias_impresso_FILTRADAS['data'] < end_date)]
 
     # Altera o formato da data para '%d-%m-%y' após o filtro
-    df_NOTICIAS_impresso_filtrado['data'] = pd.to_datetime(df_NOTICIAS_impresso_filtrado['data']).dt.strftime('%d-%m-%y')
+    df_NOTICIAS_impresso_filtrado['data'] = pd.to_datetime(df_NOTICIAS_impresso_filtrado['data'], format='mixed').dt.strftime('%d-%m-%y')
     
     
     
@@ -40,7 +40,7 @@ def filtroDeDatasImpresso(start_date, end_date):
     df_editorias_impresso_filtrado = df_editorias_impresso_FILTRADAS.loc[(df_editorias_impresso_FILTRADAS['data'] > start_date) & (df_editorias_impresso_FILTRADAS['data'] < end_date)]
 
     # Altera o formato da data para '%d-%m-%y' após o filtro
-    df_editorias_impresso_filtrado['data'] = pd.to_datetime(df_editorias_impresso_filtrado['data']).dt.strftime('%d-%m-%y')
+    df_editorias_impresso_filtrado['data'] = pd.to_datetime(df_editorias_impresso_filtrado['data'], format='mixed').dt.strftime('%d-%m-%y')
     
     
     
@@ -64,7 +64,12 @@ def filtroDeDatasImpresso(start_date, end_date):
     # Foi feita da forma acima por a API do Trello já tinha a contagem de cada editoria disponível e, nesse caso, o calor não estaria correto se fosse usado .value_counts()
 
     # conta as aparições da linha Pauta sem editoria em editoria
-    freq_pauta_sem_editoria = df_editorias_impresso_filtrado['editoria'].value_counts()['Pauta sem editoria']
+    if 'Pauta sem editoria' in df_editorias_impresso_filtrado['editoria'].values:
+        freq_pauta_sem_editoria = df_editorias_impresso_filtrado['editoria'].value_counts()['Pauta sem editoria']
+    else:
+        freq_pauta_sem_editoria = 0  # Ou qualquer valor padrão desejado
+
+    #freq_pauta_sem_editoria = df_editorias_impresso_filtrado['editoria'].value_counts()['Pauta sem editoria']
 
     # Adiciona uma nova linha com com a contagem de Pauta sem editoria
     noticias_edi_somado.loc[len(noticias_edi_somado)] = ['Pautas sem editorias', freq_pauta_sem_editoria]
