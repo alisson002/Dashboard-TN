@@ -45,7 +45,7 @@ start_date = st.sidebar.date_input("Data de início", data_minima, min_value = d
 end_date = st.sidebar.date_input("Data de término", data_maxima, min_value = data_minima, max_value = data_maxima, format="DD-MM-YYYY") + pd.DateOffset(days=1)
 
 st.sidebar.write("AVISO (impresso): O dia 31/12/2023 não está sendo reconhecido corretamente. Não o selecionem, por favor.")
-st.sidebar.write("AVISO (online): No momento, por conta da mudança para o novo site, os dados disponíveis vão somente até 16/10/2023. Em breve os novos dados estarão disponíveis.")
+st.sidebar.write("AVISO (online): No momento, por conta da mudança para o novo site, os dados disponíveis vão somente até 16/10/2023. Em breve os dados serão atualizados.")
 
 start_date = start_date.strftime('%m-%d-%y') #'%d-%m-%Y'
 end_date = end_date.strftime('%m-%d-%y')
