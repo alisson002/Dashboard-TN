@@ -218,7 +218,7 @@ def noticiasPorEditoria_bc(noticias_edi_somado,df_NOTICIAS_impresso_filtrado):
             
             bar_chart.add(edi, freq)
             
-    bar_chart.add(f'Total: {df_NOTICIAS_impresso_filtrado['pauta'].drop_duplicates().count()}', 0)
+    bar_chart.add(f"Total: {df_NOTICIAS_impresso_filtrado['pauta'].drop_duplicates().count()}", 0)
         
     # Renderizaçãodo gráfico em formato SVG
     # .render_data_uri() gera a representação do gráfico em formato SVG e retorna um URI de dados (data URI)
