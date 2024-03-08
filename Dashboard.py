@@ -36,7 +36,7 @@ else:
     
 # Definindo a data mínima e máxima
 data_minima = pd.to_datetime('2023-01-01')
-data_maxima = pd.to_datetime('2024-03-08')
+data_maxima = pd.to_datetime('2024-03-09')
 #data_maxima = pd.to_datetime(tnPortal.df_noticias.iloc[-1]['not_datapub'])
     
 # Adicionar seletor de períodos na coluna à esquerda
@@ -44,8 +44,12 @@ start_date = st.sidebar.date_input("Data de início", data_minima, min_value = d
 
 end_date = st.sidebar.date_input("Data de término", data_maxima, min_value = data_minima, max_value = data_maxima, format="DD-MM-YYYY") #+ pd.DateOffset(days=1)
 
-st.sidebar.write("AVISO (impresso): O dia 31/12/2023 não está sendo reconhecido corretamente. Não o selecionem, por favor.")
-st.sidebar.write("AVISO (online): No momento, por conta da mudança para o novo site, os dados disponíveis vão somente até 16/10/2023. Em breve os dados serão atualizados.")
+# st.sidebar.write("AVISO (impresso): O dia 31/12/2023 não está sendo reconhecido corretamente. Não o selecionem, por favor.")
+st.sidebar.write("AVISO (TN - online/Portal): No momento, por conta da mudança para o novo site, os dados disponíveis vão somente até 16/10/2023. Em breve os dados serão atualizados.")
+st.sidebar.write("• Coisas a serem corrigidas (TN - impresso):")
+st.sidebar.write("1. As datas de 2024 estão sendo interpretadas como se fossem em 2023, pontanto, alguns dados de 2024 estão sendo incluidos quando é selecionada alguma data do período de 01/01/2024 até 09/03/2024;")
+st.sidebar.write("2. Valores individuais (no gráfico) de cada tópico de 'Notícias por editoria' não estão sendo filtrados corretamente de acordo com o período delecionado, e estão mostrando sempre seus valores totais. O valor total de todas as notícias juntas, a esquerda do gráfico e logo abaixo dos tópicos do gráfico, está correto exceto pelo erro citado no tópico 1;")
+st.sidebar.write("Os erros a serem corrigidos citados acima passaram a ocorre por conta da entrada dos dados de 2024.")
 
 start_date = start_date.strftime('%m-%d-%y') #'%d-%m-%Y'
 end_date = end_date.strftime('%m-%d-%y')
