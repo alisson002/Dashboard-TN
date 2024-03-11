@@ -45,11 +45,11 @@ start_date = st.sidebar.date_input("Data de início", data_minima, min_value = d
 end_date = st.sidebar.date_input("Data de término", data_maxima, min_value = data_minima, max_value = data_maxima, format="YYYY-MM-DD") #+ pd.DateOffset(days=1) "DD-MM-YYYY"
 
 # st.sidebar.write("AVISO (impresso): O dia 31/12/2023 não está sendo reconhecido corretamente. Não o selecionem, por favor.")
-st.sidebar.write("AVISO (TN - online/Portal): No momento, por conta da mudança para o novo site, os dados disponíveis vão somente até 16/10/2023. Em breve os dados serão atualizados.")
-st.sidebar.write("• Coisas a serem corrigidas (TN - impresso):")
-st.sidebar.write("1. As datas de 2024 estão sendo interpretadas como se fossem em 2023, pontanto, alguns dados de 2024 estão sendo incluidos quando é selecionada alguma data do período de 01/01/2024 até 09/03/2024;")
-st.sidebar.write("2. Valores individuais (no gráfico) de cada tópico de 'Notícias por editoria' não estão sendo filtrados corretamente de acordo com o período delecionado, e estão mostrando sempre seus valores totais. O valor total de todas as notícias juntas, a esquerda do gráfico e logo abaixo dos tópicos do gráfico, está correto exceto pelo erro citado no tópico 1;")
-st.sidebar.write("Os erros a serem corrigidos citados acima passaram a ocorre por conta da entrada dos dados de 2024.")
+# st.sidebar.write("AVISO (TN - online/Portal): No momento, por conta da mudança para o novo site, os dados disponíveis vão somente até 16/10/2023. Em breve os dados serão atualizados.")
+# st.sidebar.write("• Coisas a serem corrigidas (TN - impresso):")
+# st.sidebar.write("1. As datas de 2024 estão sendo interpretadas como se fossem em 2023, pontanto, alguns dados de 2024 estão sendo incluidos quando é selecionada alguma data do período de 01/01/2024 até 09/03/2024;")
+# st.sidebar.write("2. Valores individuais (no gráfico) de cada tópico de 'Notícias por editoria' não estão sendo filtrados corretamente de acordo com o período delecionado, e estão mostrando sempre seus valores totais. O valor total de todas as notícias juntas, a esquerda do gráfico e logo abaixo dos tópicos do gráfico, está correto exceto pelo erro citado no tópico 1;")
+# st.sidebar.write("Os erros a serem corrigidos citados acima passaram a ocorre por conta da entrada dos dados de 2024.")
 
 start_date = start_date.strftime('%Y-%m-%d') #'%d-%m-%Y'
 end_date = end_date.strftime('%Y-%m-%d')
