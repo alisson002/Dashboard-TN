@@ -106,7 +106,7 @@ def noticiasPorEditoria(editorias_impresso,df_NOTICIAS_impresso_filtrado):
             
             pie_chart.add(edi, freq)
             
-    pie_chart.add(f"Total: {df_NOTICIAS_impresso_filtrado['pauta'].drop_duplicates().count()}", 0)
+    # pie_chart.add(f"Total: {df_NOTICIAS_impresso_filtrado['pauta'].drop_duplicates().count()}", 0)
     
         
     # Renderizaçãodo gráfico em formato SVG
