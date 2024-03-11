@@ -56,6 +56,10 @@ def filtroDeDatasImpresso(start_date, end_date):
 
     # Recebe a coluna 'editoria' do df df_editorias_impresso
     noticias_edi = df_editorias_impresso_filtrado[['editoria', 'freq_edi']]
+    
+    editorias_impresso = noticias_edi['editoria'].value_counts().reset_index()
+    
+    editorias_impresso.columns = ['editorias', 'freq']
 
     # Nesse caso vai sem ['editoria'] por ser um tipo Series e só ter aquela coluna
     noticias_edi_uniRow = noticias_edi.drop_duplicates()
@@ -82,20 +86,20 @@ def filtroDeDatasImpresso(start_date, end_date):
     #remove a ultima linha
     noticias_edi_somado = noticias_edi_somado[:len(noticias_edi_somado)-1]
     
-    return noticias_edi_somado, df_NOTICIAS_impresso_filtrado, reporteres_impresso, noticias_edi_somado
+    return noticias_edi_somado, df_NOTICIAS_impresso_filtrado, reporteres_impresso, noticias_edi_somado, editorias_impresso
 
 '''
 GRÁFICOS DE ROSCA/PIZZA/MEIA PIZZA
 '''
 
 '''NOTÍCIAS POR EDITORIA: contagem de noticias por editoria (organizado do maior para o menor)'''
-def noticiasPorEditoria(noticias_edi_somado,df_NOTICIAS_impresso_filtrado):
+def noticiasPorEditoria(editorias_impresso,df_NOTICIAS_impresso_filtrado):
     
     # Cria o gráfico de rosca
     pie_chart = pygal.Pie(inner_radius = raio_interno)
     
     # Adiciona as informações ao gráfico
-    for edi, freq in zip(noticias_edi_somado['editoria'],noticias_edi_somado['freq_edi']):
+    for edi, freq in zip(editorias_impresso['editorias'],editorias_impresso['freq']):
         
         # Filtra as informações para que nomes de reporteres não sejam adicionados as editorias
         if edi not in ['Bruno Vital', 'Líria Paz', 'Ícaro Carvalho', 'Felipe Salustino', 'Matteus Fernandes', 'Cláudio Oliveira', 'P.H.']:
@@ -103,6 +107,7 @@ def noticiasPorEditoria(noticias_edi_somado,df_NOTICIAS_impresso_filtrado):
             pie_chart.add(edi, freq)
             
     pie_chart.add(f"Total: {df_NOTICIAS_impresso_filtrado['pauta'].drop_duplicates().count()}", 0)
+    
         
     # Renderizaçãodo gráfico em formato SVG
     # .render_data_uri() gera a representação do gráfico em formato SVG e retorna um URI de dados (data URI)
@@ -128,7 +133,7 @@ def noticiasPorReporter(reporteres_impresso):
             pie_chart.add(rep_fot.title(), freq)
         
     pie_chart.add(f'total: {reporteres_impresso['freq'].sum()}', 0)
-    pie_chart.add(f'total: {reporteres_impresso}', 0)
+    
     
     # Renderizaçãodo gráfico em formato SVG
     # .render_data_uri() gera a representação do gráfico em formato SVG e retorna um URI de dados (data URI)
@@ -172,7 +177,7 @@ def tableEdiImpresso(noticias_edi_somado):
 
     # Recebe um Series com volores booleanos de acordo com as informação que quero ou não no df
     # Filtra as informação para não tem nomes de reporteres nas editorias
-    condicao_para_manter = ~teble_ediImpresso['editoria'].isin(['Bruno Vital', 'Líria Paz', 'Ícaro Carvalho', 'Felipe Salustino', 'Matteus Fernandes', 'Cláudio Oliveira', 'P.H.'])
+    condicao_para_manter = ~teble_ediImpresso['editorias'].isin(['Bruno Vital', 'Líria Paz', 'Ícaro Carvalho', 'Felipe Salustino', 'Matteus Fernandes', 'Cláudio Oliveira', 'P.H.'])
 
     # Df filtrado
     teble_ediImpresso = teble_ediImpresso[condicao_para_manter]
@@ -210,13 +215,13 @@ def tableFotografosImpresso(reporteres_impresso):
 '''GRÁFICOS DE BARRA'''
 
 '''NOTÍCIAS POR EDITORIA: contagem de noticias por editoria (organizado do maior para o menor)'''
-def noticiasPorEditoria_bc(noticias_edi_somado,df_NOTICIAS_impresso_filtrado):
+def noticiasPorEditoria_bc(editorias_impresso,df_NOTICIAS_impresso_filtrado):
     
     # Cria o gráfico de rosca
     bar_chart = pygal.HorizontalBar()
     
     # Adiciona as informações ao gráfico
-    for edi, freq in zip(noticias_edi_somado['editoria'],noticias_edi_somado['freq_edi']):
+    for edi, freq in zip(editorias_impresso['editorias'],editorias_impresso['freq']):
         
         # Filtra as informações para que nomes de reporteres não sejam adicionados as editorias
         if edi not in ['Bruno Vital', 'Líria Paz', 'Ícaro Carvalho', 'Felipe Salustino', 'Matteus Fernandes', 'Cláudio Oliveira', 'P.H.']:

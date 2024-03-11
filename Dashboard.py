@@ -58,7 +58,7 @@ end_date = end_date.strftime('%Y-%m-%d')
 # retorna multiplos dfs que seram utilizados nas funções dos gráficos do portal
 df_NOTICIAS_filtrado, editoria_freq, reporter_freq, reporter_unique, merge_ids_rep_noticias_editoria, fotografos, fotografos_teste = tnPortal.filtroDeDatas(start_date, end_date)
 
-noticias_edi_somado, df_NOTICIAS_impresso_filtrado, reporteres_impresso, noticias_edi_somado = tnImpresso.filtroDeDatasImpresso(start_date, end_date)
+noticias_edi_somado, df_NOTICIAS_impresso_filtrado, reporteres_impresso, noticias_edi_somado, editorias_impresso = tnImpresso.filtroDeDatasImpresso(start_date, end_date)
 
 # Adicione seus gráficos de acordo com as opções selecionadas
 if selected_option1 == "Tribuna do norte":
@@ -183,12 +183,12 @@ if selected_option1 == "Tribuna do norte":
             st.write('Obs2: A maioria das notícias possuem duas editorias cadastradas, portanto, a soma total é referente as notícias sem levar em consideração as editorias. Editorias com nomes de reporteres foram removidas da contagem')
             if exib_type == 'Gráficos de rosca/pizza':
                 # Gráfico de rosca
-                tnImpresso.noticiasPorEditoria(noticias_edi_somado,df_NOTICIAS_impresso_filtrado)
+                tnImpresso.noticiasPorEditoria(editorias_impresso,df_NOTICIAS_impresso_filtrado)
             elif exib_type == 'Tabelas':
                 # Exibindo df com o width maximo
-                st.dataframe(tnImpresso.tableEdiImpresso(noticias_edi_somado), use_container_width = True, hide_index=True)
+                st.dataframe(tnImpresso.tableEdiImpresso(editorias_impresso), use_container_width = True, hide_index=True)
             elif exib_type == 'Gráficos de barra':
-                tnImpresso.noticiasPorEditoria_bc(noticias_edi_somado,df_NOTICIAS_impresso_filtrado)
+                tnImpresso.noticiasPorEditoria_bc(editorias_impresso,df_NOTICIAS_impresso_filtrado)
         with tab2:
             if exib_type == 'Gráficos de rosca/pizza':
                 # Gráfico de rosca
