@@ -132,7 +132,7 @@ def noticiasPorReporter(reporteres_impresso):
         else:
             pie_chart.add(rep_fot.title(), freq)
         
-    pie_chart.add(f"total: {reporteres_impresso['freq'].sum()}", 0)
+    # pie_chart.add(f"total: {reporteres_impresso['freq'].sum()}", 0)
     
     
     # Renderizaçãodo gráfico em formato SVG
