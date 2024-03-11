@@ -11,10 +11,12 @@ raio_half = 0.2
 # Recebe a tabela com as notícias do impresso
 # low_memory=False por a tabela ser grande
 df_noticias_impresso = pd.read_csv('tabelas/impresso/dados_impresso.csv', low_memory=False)
+df_noticias_impresso['data'] = pd.to_datetime(df_noticias_impresso['data'])
 
 # Recebe a tabela com as notícias do impresso
 # low_memory=False por a tabela ser grande
 df_editorias_impresso = pd.read_csv('tabelas/impresso/EDI_impresso.csv', low_memory=False)
+df_editorias_impresso['data'] = pd.to_datetime(df_editorias_impresso['data'])
 
 
 '''
@@ -24,23 +26,23 @@ def filtroDeDatasImpresso(start_date, end_date):
     
     df_noticias_impresso_FILTRADAS = df_noticias_impresso.copy()
 
-    df_noticias_impresso_FILTRADAS['data'] = pd.to_datetime(df_noticias_impresso_FILTRADAS['data']).dt.strftime('%m-%d-%y')
+    #df_noticias_impresso_FILTRADAS['data'] = pd.to_datetime(df_noticias_impresso_FILTRADAS['data']).dt.strftime('%m-%d-%y')
 
     df_NOTICIAS_impresso_filtrado = df_noticias_impresso_FILTRADAS.loc[(df_noticias_impresso_FILTRADAS['data'] > start_date) & (df_noticias_impresso_FILTRADAS['data'] < end_date)]
 
     # Altera o formato da data para '%d-%m-%y' após o filtro
-    df_NOTICIAS_impresso_filtrado['data'] = pd.to_datetime(df_NOTICIAS_impresso_filtrado['data'], format='mixed').dt.strftime('%d-%m-%y')
+    #df_NOTICIAS_impresso_filtrado['data'] = pd.to_datetime(df_NOTICIAS_impresso_filtrado['data'], format='mixed').dt.strftime('%d-%m-%y')
     
     
     
     df_editorias_impresso_FILTRADAS = df_editorias_impresso.copy()
 
-    df_editorias_impresso_FILTRADAS['data'] = pd.to_datetime(df_editorias_impresso_FILTRADAS['data']).dt.strftime('%m-%d-%y')
+    #df_editorias_impresso_FILTRADAS['data'] = pd.to_datetime(df_editorias_impresso_FILTRADAS['data']).dt.strftime('%m-%d-%y')
 
     df_editorias_impresso_filtrado = df_editorias_impresso_FILTRADAS.loc[(df_editorias_impresso_FILTRADAS['data'] > start_date) & (df_editorias_impresso_FILTRADAS['data'] < end_date)]
 
     # Altera o formato da data para '%d-%m-%y' após o filtro
-    df_editorias_impresso_filtrado['data'] = pd.to_datetime(df_editorias_impresso_filtrado['data'], format='mixed').dt.strftime('%d-%m-%y')
+    #df_editorias_impresso_filtrado['data'] = pd.to_datetime(df_editorias_impresso_filtrado['data'], format='mixed').dt.strftime('%d-%m-%y')
     
     
     
@@ -124,6 +126,9 @@ def noticiasPorReporter(reporteres_impresso):
             continue # Vai para a próxima iteração do loop
         else:
             pie_chart.add(rep_fot.title(), freq)
+        
+    pie_chart.add(f'total: {reporteres_impresso['freq'].sum()}', 0)
+    pie_chart.add(f'total: {reporteres_impresso}', 0)
     
     # Renderizaçãodo gráfico em formato SVG
     # .render_data_uri() gera a representação do gráfico em formato SVG e retorna um URI de dados (data URI)
