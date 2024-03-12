@@ -76,7 +76,7 @@ def getIds(pautas_feitas_cards_data, publicados_cards_data,flashes_do_dia_cards_
 
 # Recebe uma lista de listas, remove as listas dentro da lista e unifica todas as informações na lista de "fora", juntando as listas em uma só     
 def simplificar_listas(*args):
-    lista_de_listas = args[0]+args[1]
+    lista_de_listas = args[0]+args[1]+args[2]
     lista_simplificada = []
     for lista in lista_de_listas:
         lista_simplificada.extend(lista)
@@ -98,7 +98,7 @@ def removePalavrasRepetidas(lista_palavras):
 # Usa o 'idMembers' que cada um dos cartões possui e pega o nome dos usuários que criaram aquele cartão
 def membersName(id_members):
     
-    # Variável para guardar os nomes com as IDs de cada reporter e fotógrafo
+    # Dicionario para guardar os nomes com as IDs de cada reporter e fotógrafo
     membros_nomes = {}
     
     # Com a lista de ids dos reporteres vai usar cada um deles para solicitar as informações de cada repórter, guardar em mamber_data, pegar o nome completo do repórter no dict recebido e depois criar um novo dict com id:nome completo
@@ -165,8 +165,6 @@ membros_nomes = membersName(id_members)
 # Junta todas as informações das duas listas em uma única lista para que tudo seja escrito em um único CSV
 todas_as_pautas = pautas_feitas_cards_data + publicados_cards_data + flashes_do_dia_cards_data
 
-print(todas_as_pautas[0])
-
 # Chamada de função que pega todas as IDs de labels
 # Guarda os ids das labels de cada card em sua repectiva lisa
 ID_labels_pautas_feitas, ID_labels_publicados, ID_labels_flashes = getIds(pautas_feitas_cards_data, publicados_cards_data, flashes_do_dia_cards_data, 'idLabels')
@@ -176,6 +174,10 @@ id_labels = removePalavrasRepetidas(simplificar_listas(ID_labels_pautas_feitas, 
 
 # Recebem dicionarios com as editorias e frequencias de cada editoria para cada id de label
 editoria, freq_edi = editoriasById(id_labels)
+
+# print(id_members)
+# print(membros_nomes)
+# print(todas_as_pautas[-4])
 
 '''ESCREVENDO NO CSV'''
 caminho = 'tabelas/impresso/EDI_impresso.csv'
