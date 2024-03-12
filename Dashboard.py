@@ -36,7 +36,7 @@ else:
     
 # Definindo a data mínima e máxima
 data_minima = pd.to_datetime('2023-01-01')
-data_maxima = pd.to_datetime('2024-03-09')
+data_maxima = pd.to_datetime('2024-03-13')
 #data_maxima = pd.to_datetime(tnPortal.df_noticias.iloc[-1]['not_datapub'])
     
 # Adicionar seletor de períodos na coluna à esquerda
