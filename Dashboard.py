@@ -36,7 +36,10 @@ else:
     
 # Definindo a data mínima e máxima
 data_minima = pd.to_datetime('2023-01-01')
-data_maxima = pd.to_datetime('2024-03-13')
+if selected_option2 == "Site/Portal":
+    data_maxima = pd.to_datetime('2023-10-16')
+else:
+    data_maxima = pd.to_datetime('2024-03-13')
 #data_maxima = pd.to_datetime(tnPortal.df_noticias.iloc[-1]['not_datapub'])
     
 # Adicionar seletor de períodos na coluna à esquerda
@@ -62,12 +65,15 @@ noticias_edi_somado, df_NOTICIAS_impresso_filtrado, reporteres_impresso, noticia
 
 # Adicione seus gráficos de acordo com as opções selecionadas
 if selected_option1 == "Tribuna do norte":
+    
     # Adiciona a respectiva imagem ao topo da página
     image_placeholder.image(TN_image_path, use_column_width=True)
     
     # Gráficos referentes a cada categoria
     if selected_option2 == "Site/Portal":
-        
+        #data_maxima = pd.to_datetime('2023-10-16')
+        # end_date = st.sidebar.date_input("Data de término", data_maxima, min_value = data_minima, max_value = data_maxima, format="DD-MM-YYYY")
+        # end_date = end_date.strftime('%d-%m-%Y')
         # Radio para selecionar a forma de visualização
         exib_type = st.radio("Selecione o tipo de exibição:", ['Gráficos de rosca/pizza', 'Gráficos de barra', "Tabelas"], horizontal=True)
         
