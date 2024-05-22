@@ -180,41 +180,41 @@ editoria, freq_edi = editoriasById(id_labels)
 # print(todas_as_pautas[-4])
 
 '''ESCREVENDO NO CSV'''
-caminho = 'tabelas/impresso/EDI_impresso.csv'
-# Escreve as informações selecionadas no arquivo CSV
-with open(caminho, 'w', newline='', encoding='utf-8') as csvfile:
+# caminho = 'tabelas/impresso/EDI_impresso.csv'
+# # Escreve as informações selecionadas no arquivo CSV
+# with open(caminho, 'w', newline='', encoding='utf-8') as csvfile:
     
-        csvwriter = csv.writer(csvfile)
+#         csvwriter = csv.writer(csvfile)
         
-        # Cria as colunas
-        csvwriter.writerow(['pauta', 'link', 'data', 'editoria', 'freq_edi'])
+#         # Cria as colunas
+#         csvwriter.writerow(['pauta', 'link', 'data', 'editoria', 'freq_edi'])
         
-        # Acessa cada um dos cards todas_as_pautas que possui todos os cards dos dois quadros
-        for card in todas_as_pautas:
+#         # Acessa cada um dos cards todas_as_pautas que possui todos os cards dos dois quadros
+#         for card in todas_as_pautas:
             
-            # Cada card possui uma key contendo uma lista(value) com os ids dos jornalistas que estão envolvidos com aquela pauta
-            # Acessa cada elemento dessa lista
-            # for membros in card['idMembers']: 
+#             # Cada card possui uma key contendo uma lista(value) com os ids dos jornalistas que estão envolvidos com aquela pauta
+#             # Acessa cada elemento dessa lista
+#             # for membros in card['idMembers']: 
                 
-                if card['idLabels'] == []:
+#                 if card['idLabels'] == []:
                     
-                    # Escreve as linhas em cada uma das colunas
-                    # 'membros' pega o id do membro
-                    # membros_nomes.get(membros) utiliza 'membros' para a cesar um dict onde cada id corresponde ao nome de um reporter id(key):reporter(value)
-                    # card['name']: titulo da notícia
-                    # card['shortUrl']: Link da notícia
-                    # card['dateLastActivity']: Data da ultima vez que o card foi modificado
-                    # 'Pauta sem editoria' para o caso de não tem editoria adicionada no card
-                    csvwriter.writerow([card['name'], card['shortUrl'], card['dateLastActivity'], 'Pauta sem editoria', 0])
+#                     # Escreve as linhas em cada uma das colunas
+#                     # 'membros' pega o id do membro
+#                     # membros_nomes.get(membros) utiliza 'membros' para a cesar um dict onde cada id corresponde ao nome de um reporter id(key):reporter(value)
+#                     # card['name']: titulo da notícia
+#                     # card['shortUrl']: Link da notícia
+#                     # card['dateLastActivity']: Data da ultima vez que o card foi modificado
+#                     # 'Pauta sem editoria' para o caso de não tem editoria adicionada no card
+#                     csvwriter.writerow([card['name'], card['shortUrl'], card['dateLastActivity'], 'Pauta sem editoria', 0])
                 
-                else:
+#                 else:
                     
-                    # Cada card possui uma key contendo uma lista(value) com os ids das labels de cada editoria
-                    # Acessa cada elemento dessa lista
-                    for lbl in card['idLabels']:
+#                     # Cada card possui uma key contendo uma lista(value) com os ids das labels de cada editoria
+#                     # Acessa cada elemento dessa lista
+#                     for lbl in card['idLabels']:
                         
-                        # editoria.get(lbl): editoria de acordo com o id da label
-                        # freq_edi.get(lbl): frequencia de determinada editoria de acordo com o id da label
-                        csvwriter.writerow([card['name'], card['shortUrl'], card['dateLastActivity'], editoria.get(lbl), int(freq_edi.get(lbl))])
+#                         # editoria.get(lbl): editoria de acordo com o id da label
+#                         # freq_edi.get(lbl): frequencia de determinada editoria de acordo com o id da label
+#                         csvwriter.writerow([card['name'], card['shortUrl'], card['dateLastActivity'], editoria.get(lbl), int(freq_edi.get(lbl))])
 
-print('Arquivo EDI_impresso.csv criado.')
+# print('Arquivo EDI_impresso.csv criado.')
