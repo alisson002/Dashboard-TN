@@ -1,6 +1,7 @@
 import requests
 import json
 import csv
+from datetime import datetime
 
 '''CHAVES, TOKEN E REQUESTS INICIAIS'''
 # Chave de API e Token de acesso fornecidos pelo Trello
@@ -14,6 +15,7 @@ LIST_ID = TRELLO_BOARD_ID
 # URL da API do Trello para obter listas e cartões
 LISTS_URL = f'https://api.trello.com/1/boards/{TRELLO_BOARD_ID}/lists'
 CARDS_URL = f'https://api.trello.com/1/lists/{LIST_ID}/cards'
+ACTIONS_URL = f'https://api.trello.com/1/cards/{{card_id}}/actions' # estou usando {{card_id}} dessa forma por conta da substituição feita dentro da função fetch_actions
 
 # Lista para armazenar dados
 data = []
@@ -151,6 +153,72 @@ def editoriasById(id_labels):
             print(f"Erro na solicitação para a etiqueta com ID {id}. Status code: {responseLabel.status_code}")
     return editoria, freq_edi
 
+# pega a data de criação do card de acordo com os primeiros elementos de seu card id, que representa uma dtaa em hexadecimal
+def get_creation_date(card_id):
+    timestamp = int(card_id[:8], 16)
+    # return datetime.utcfromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S')
+    return datetime.fromtimestamp(timestamp).isoformat()
+
+# retorna as ações de movimentação de cada card entre os quadros
+def fetch_actions(card_id):
+    url = ACTIONS_URL.format(card_id=card_id)
+    response = requests.get(url, params={'key': API_KEY, 'token': TOKEN})
+    return response.json()
+
+# recebe as ações e retorna a data em que elas ocorreram em um vetor []
+def get_move_dates(actions):
+    move_dates = []
+    for action in actions:
+        if action['type'] == 'updateCard' and 'listAfter' in action['data'] and 'listBefore' in action['data']:
+            move_dates.append(action['date'])
+    return move_dates
+
+def dataCard_PautasFeitas(cardID):
+    # retorna as ações de movimentação de cada card entre os quadros
+    actions_pautasFeitas = fetch_actions(cardID)
+    
+    # recebe as ações e retorna a data em que elas ocorreram em um vetor []
+    datas_pautas_feitas = get_move_dates(actions_pautasFeitas)
+    # datas_pautas_feitas[-1]: recebe a ultima data do vetor que representa a data de quando foi movida para o quadro PAUTAS FEITAS
+    # caso esteja vazio, recebe a data de criação do card
+    data_pautasFeitas = datas_pautas_feitas[-1] if datas_pautas_feitas else get_creation_date(card['id'])
+    
+    return data_pautasFeitas
+
+def dataCard_Publicados(cardID):
+    # retorna as ações de movimentação de cada card entre os quadros
+    actions_Publicados = fetch_actions(cardID)
+    
+    # recebe as ações e retorna a data em que elas ocorreram em um vetor []
+    datas_publicados = get_move_dates(actions_Publicados)
+    # datas_pautas_feitas[-2]: recebe a ultima data do vetor que representa a data de quando foi movida para o quadro PAUTAS FEITAS
+    # caso esteja vazio, recebe a data de criação do card
+    data_Publicados = datas_publicados[-2] if len(datas_publicados)>=2 else (datas_publicados[-1] if datas_publicados else get_creation_date(card['id']))
+    
+    return data_Publicados
+
+def andamento(lista,count):
+    if count >= len(lista)*0.1 and count < len(lista)*0.2:
+        print("[•",end=" ")
+    elif count >= len(lista)*0.2 and count < len(lista)*0.3:
+        print("•",end=" ")
+    elif count >= len(lista)*0.3 and count < len(lista)*0.4:
+        print("•",end=" ")
+    elif count >= len(lista)*0.4 and count < len(lista)*0.5:
+        print("•",end=" ")
+    elif count >= len(lista)*0.5 and count < len(lista)*0.6:
+        print("•",end=" ")
+    elif count >= len(lista)*0.6 and count < len(lista)*0.7:
+        print("•",end=" ")
+    elif count >= len(lista)*0.7 and count < len(lista)*0.8:
+        print("•",end=" ")
+    elif count >= len(lista)*0.8 and count < len(lista)*0.9:
+        print("•",end=" ")
+    elif count >= len(lista)*0.9 and count < len(lista):
+        print("•",end=" ")
+    elif count >= len(lista):
+        print("•] - 100%",end=" ")
+
 '''CHAMADAS DE FUNÇÕES: recebendo as informações que serão utilizadas''' 
 # Chamada de função que pega todas as IDs de membros
 # Guarda os ids dos membros de cada card em sua repectiva lisa
@@ -180,41 +248,76 @@ editoria, freq_edi = editoriasById(id_labels)
 # print(todas_as_pautas[-4])
 
 '''ESCREVENDO NO CSV'''
-# caminho = 'tabelas/impresso/EDI_impresso.csv'
-# # Escreve as informações selecionadas no arquivo CSV
-# with open(caminho, 'w', newline='', encoding='utf-8') as csvfile:
+caminho = 'tabelas/impresso/EDI_impresso.csv'
+# Escreve as informações selecionadas no arquivo CSV
+with open(caminho, 'w', newline='', encoding='utf-8') as csvfile:
     
-#         csvwriter = csv.writer(csvfile)
+        csvwriter = csv.writer(csvfile)
         
-#         # Cria as colunas
-#         csvwriter.writerow(['pauta', 'link', 'data', 'editoria', 'freq_edi'])
-        
-#         # Acessa cada um dos cards todas_as_pautas que possui todos os cards dos dois quadros
-#         for card in todas_as_pautas:
+        # Cria as colunas
+        csvwriter.writerow(['pauta', 'link', 'data', 'editoria', 'freq_edi'])
+        count = 0
+        # escreve os dados de PAUTAS FEITAS
+        print("Atualizando dados de Pautas Feitas:")
+        for card in pautas_feitas_cards_data:
             
-#             # Cada card possui uma key contendo uma lista(value) com os ids dos jornalistas que estão envolvidos com aquela pauta
-#             # Acessa cada elemento dessa lista
-#             # for membros in card['idMembers']: 
+            # Cada card possui uma key contendo uma lista(value) com os ids dos jornalistas que estão envolvidos com aquela pauta
+            # Acessa cada elemento dessa lista
+            # for membros in card['idMembers']: 
                 
-#                 if card['idLabels'] == []:
+                if card['idLabels'] == []:
                     
-#                     # Escreve as linhas em cada uma das colunas
-#                     # 'membros' pega o id do membro
-#                     # membros_nomes.get(membros) utiliza 'membros' para a cesar um dict onde cada id corresponde ao nome de um reporter id(key):reporter(value)
-#                     # card['name']: titulo da notícia
-#                     # card['shortUrl']: Link da notícia
-#                     # card['dateLastActivity']: Data da ultima vez que o card foi modificado
-#                     # 'Pauta sem editoria' para o caso de não tem editoria adicionada no card
-#                     csvwriter.writerow([card['name'], card['shortUrl'], card['dateLastActivity'], 'Pauta sem editoria', 0])
+                    # Escreve as linhas em cada uma das colunas
+                    # 'membros' pega o id do membro
+                    # membros_nomes.get(membros) utiliza 'membros' para a cesar um dict onde cada id corresponde ao nome de um reporter id(key):reporter(value)
+                    # card['name']: titulo da notícia
+                    # card['shortUrl']: Link da notícia
+                    # card['dateLastActivity']: Data da ultima vez que o card foi modificado
+                    # 'Pauta sem editoria' para o caso de não tem editoria adicionada no card
+                    csvwriter.writerow([card['name'], card['shortUrl'], dataCard_PautasFeitas(card['id']), 'Pauta sem editoria', 0])
                 
-#                 else:
+                else:
                     
-#                     # Cada card possui uma key contendo uma lista(value) com os ids das labels de cada editoria
-#                     # Acessa cada elemento dessa lista
-#                     for lbl in card['idLabels']:
+                    # Cada card possui uma key contendo uma lista(value) com os ids das labels de cada editoria
+                    # Acessa cada elemento dessa lista
+                    for lbl in card['idLabels']:
                         
-#                         # editoria.get(lbl): editoria de acordo com o id da label
-#                         # freq_edi.get(lbl): frequencia de determinada editoria de acordo com o id da label
-#                         csvwriter.writerow([card['name'], card['shortUrl'], card['dateLastActivity'], editoria.get(lbl), int(freq_edi.get(lbl))])
+                        # editoria.get(lbl): editoria de acordo com o id da label
+                        # freq_edi.get(lbl): frequencia de determinada editoria de acordo com o id da label
+                        csvwriter.writerow([card['name'], card['shortUrl'], dataCard_PautasFeitas(card['id']), editoria.get(lbl), int(freq_edi.get(lbl))])
+                count += 1
+                andamento(lista,count)
+        
+        # escreve os dados de ✅PUBLICADOS
+        print("Atualizando dados de Publicados:")
+        for card in publicados_cards_data:
+            
+            if card['idLabels'] == []:
+                
+                csvwriter.writerow([card['name'], card['shortUrl'], dataCard_Publicados(card['id']), 'Pauta sem editoria', 0])
+            
+            else:
+                
+                for lbl in card['idLabels']:
+                    
+                    csvwriter.writerow([card['name'], card['shortUrl'], dataCard_Publicados(card['id']), editoria.get(lbl), int(freq_edi.get(lbl))])
+            count += 1
+            andamento(lista,count)
+        
+        # escreve os dados de FLASHES DO DIA
+        print("Atualizando dados de Flashes do Dia:")
+        for card in flashes_do_dia_cards_data:
+            
+            if card['idLabels'] == []:
+                
+                csvwriter.writerow([card['name'], card['shortUrl'], dataCard_PautasFeitas(card['id']), 'Pauta sem editoria', 0])
+            
+            else:
+                
+                for lbl in card['idLabels']:
+                    
+                    csvwriter.writerow([card['name'], card['shortUrl'], dataCard_PautasFeitas(card['id']), editoria.get(lbl), int(freq_edi.get(lbl))])
+            count += 1
+            andamento(lista,count)
 
-# print('Arquivo EDI_impresso.csv criado.')
+print('Arquivo EDI_impresso.csv criado.')
