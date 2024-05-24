@@ -286,7 +286,7 @@ with open(caminho, 'w', newline='', encoding='utf-8') as csvfile:
                         # freq_edi.get(lbl): frequencia de determinada editoria de acordo com o id da label
                         csvwriter.writerow([card['name'], card['shortUrl'], dataCard_PautasFeitas(card['id']), editoria.get(lbl), int(freq_edi.get(lbl))])
                 count += 1
-                andamento(lista,count)
+                andamento(pautas_feitas_cards_data,count)
         
         # escreve os dados de ✅PUBLICADOS
         print("Atualizando dados de Publicados:")
@@ -302,7 +302,7 @@ with open(caminho, 'w', newline='', encoding='utf-8') as csvfile:
                     
                     csvwriter.writerow([card['name'], card['shortUrl'], dataCard_Publicados(card['id']), editoria.get(lbl), int(freq_edi.get(lbl))])
             count += 1
-            andamento(lista,count)
+            andamento(publicados_cards_data,count)
         
         # escreve os dados de FLASHES DO DIA
         print("Atualizando dados de Flashes do Dia:")
@@ -318,6 +318,6 @@ with open(caminho, 'w', newline='', encoding='utf-8') as csvfile:
                     
                     csvwriter.writerow([card['name'], card['shortUrl'], dataCard_PautasFeitas(card['id']), editoria.get(lbl), int(freq_edi.get(lbl))])
             count += 1
-            andamento(lista,count)
+            andamento(flashes_do_dia_cards_data,count)
 
 print('Arquivo EDI_impresso.csv criado.')

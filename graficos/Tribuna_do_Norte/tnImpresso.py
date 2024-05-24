@@ -11,12 +11,12 @@ raio_half = 0.2
 # Recebe a tabela com as notícias do impresso
 # low_memory=False por a tabela ser grande
 df_noticias_impresso = pd.read_csv('tabelas/impresso/dados_impresso.csv', low_memory=False)
-df_noticias_impresso['data'] = pd.to_datetime(df_noticias_impresso['data'])
+df_noticias_impresso['data'] = pd.to_datetime(df_noticias_impresso['data']).strftime('%d-%m-%Y')
 
 # Recebe a tabela com as notícias do impresso
 # low_memory=False por a tabela ser grande
 df_editorias_impresso = pd.read_csv('tabelas/impresso/EDI_impresso.csv', low_memory=False)
-df_editorias_impresso['data'] = pd.to_datetime(df_editorias_impresso['data'])
+df_editorias_impresso['data'] = pd.to_datetime(df_editorias_impresso['data']).strftime('%d-%m-%Y')
 
 
 '''
