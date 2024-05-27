@@ -48,9 +48,27 @@ start_date = st.sidebar.date_input("Data de início", data_minima, min_value = d
 end_date = st.sidebar.date_input("Data de término", data_maxima, min_value = data_minima, max_value = data_maxima, format="YYYY-MM-DD") #+ pd.DateOffset(days=1) #"DD-MM-YYYY"
 
 # st.sidebar.write("AVISO (impresso): O dia 31/12/2023 não está sendo reconhecido corretamente. Não o selecionem, por favor.")
-st.sidebar.write("**FORMATO DA DATA:** A data está sendo exibida no formato **AAAA-MM-DD** para que os dados sejam selecionados/comparados corretamente. A forma de selecionar continua a mesma.")
-st.sidebar.write("**AVISO (TN - online/Portal):** No momento, por conta da mudança para o novo site, os dados disponíveis vão somente até 16/10/2023. Em breve os dados serão atualizados. Quaisquer dados do portal que estiverem sendo exibidos em períodos após essa data não devem ser levados em consideração por enquanto.")
-st.sidebar.write("**ORIENTAÇÃO (tema/ cor de fundo):** caso no seu computador esteja iniciando com o tema escuro e você, usuário deste sistema, não goste de como está por conta do fundo do gráfico continuar branco, basta fazer o seguinte: 3 pontos verticais (canto superior direito) >> Settings >> Seletor (Choose app theme, colors and fonts) >> Light")
+html_text_data = """
+        <p style='font-size:12px;'><b>FORMATO DA DATA:</b> A data está sendo exibida no formato <b>AAAA-MM-DD</b> para que os dados sejam selecionados/comparados corretamente. A forma de selecionar continua a mesma.</p>
+        """
+st.sidebar.write(html_text_data, unsafe_allow_html=True)
+
+html_text_avisoPortal = """
+        <p style='font-size:12px;'><b>AVISO (TN - online/Portal):</b> No momento, por conta da mudança para o novo site, os dados disponíveis vão somente até 16/10/2023. Em breve os dados serão atualizados. Quaisquer dados do portal que estiverem sendo exibidos em períodos após essa data não devem ser levados em consideração por enquanto.</p>
+        """
+st.sidebar.write(html_text_avisoPortal, unsafe_allow_html=True)
+
+html_text_orientacao = """
+        <p style='font-size:12px;'><b>ORIENTAÇÃO (tema/ cor de fundo):</b> caso no seu computador esteja iniciando com o tema escuro e você, usuário deste sistema, não goste de como está por conta do fundo do gráfico continuar branco, basta fazer o seguinte: 3 pontos verticais (canto superior direito) >> Settings >> Seletor (Choose app theme, colors and fonts) >> Light.</p>
+        """
+st.sidebar.write(html_text_orientacao, unsafe_allow_html=True)
+
+html_text_criador = """
+        <div style='text-align: right;'>
+        <p style='font-size:14px;'><b>Criado por:</b> Alisson Moreira.</p>
+        </div>
+        """
+st.sidebar.write(html_text_criador, unsafe_allow_html=True)
 # st.sidebar.write("• Coisas a serem corrigidas (TN - impresso):")
 # st.sidebar.write("1. As datas de 2024 estão sendo interpretadas como se fossem em 2023, pontanto, alguns dados de 2024 estão sendo incluidos quando é selecionada alguma data do período de 01/01/2024 até 09/03/2024;")
 # st.sidebar.write("2. Valores individuais (no gráfico) de cada tópico de 'Notícias por editoria' não estão sendo filtrados corretamente de acordo com o período delecionado, e estão mostrando sempre seus valores totais. O valor total de todas as notícias juntas, a esquerda do gráfico e logo abaixo dos tópicos do gráfico, está correto exceto pelo erro citado no tópico 1;")
@@ -215,7 +233,20 @@ if selected_option1 == "Tribuna do norte":
                 st.dataframe(tnImpresso.tableFotografosImpresso(reporteres_impresso), use_container_width = True, hide_index=True)
             elif exib_type == 'Gráficos de barra':
                 tnImpresso.credfotografos_bc(reporteres_impresso)
-        
+    
+    elif selected_option2 == "Google Analytics (portal)":
+        html_text = """
+        <p style='font-size:32px;'><b>•</b> Os dados do Google Analytics relacionados ao portal estão no link abaixo em uma dashboard construida no <b>Loocker Studio</b>, que também é uma plataforma da Google.</p>
+        """
+        st.write(" ")
+        st.write(html_text, unsafe_allow_html=True) 
+        st.write("**Link: https://lookerstudio.google.com/reporting/c15e734d-d123-4070-acd9-a7c5e23df494**")   
+        st.write(" ")
+        st.write("Para ter acesso aos dados, siga os seguintes passos:")
+        st.write("1. Entre no link;")
+        st.write("2. Faça login com uma conta Gmail;")
+        st.write("3. Solicite acesso para visualizar (**Ver**) os dados.")
+
     elif selected_option2 == "Instagram":
         st.write("Gráficos do instagram")
     elif selected_option2 == "Facebook":
