@@ -54,7 +54,7 @@ html_text_data = """
 st.sidebar.write(html_text_data, unsafe_allow_html=True)
 
 html_text_avisoPortal = """
-        <p style='font-size:12px;'><b>AVISO (TN - online/Portal):</b> No momento, por conta da mudança para o novo site, os dados disponíveis vão somente até 16/10/2023. Em breve os dados serão atualizados. Quaisquer dados do portal que estiverem sendo exibidos em períodos após essa data não devem ser levados em consideração por enquanto.</p>
+        <p style='font-size:12px;'><b>AVISO (TN - Site/Portal):</b> No momento, por conta da mudança para o novo site, os dados disponíveis vão somente até 16/10/2023. Em breve os dados serão atualizados. Quaisquer dados do portal que estiverem sendo exibidos em períodos após essa data não devem ser levados em consideração por enquanto.</p>
         """
 st.sidebar.write(html_text_avisoPortal, unsafe_allow_html=True)
 
