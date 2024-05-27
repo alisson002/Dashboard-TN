@@ -31,13 +31,13 @@ def filtroDeDatas(start_date, end_date):
     # Manipulação da coluna com data e horário de publicação
     # Remove o horário e mantem somente a data
     # data inicialmente no formato '%m-%d-%y' para que em seguida seja feita a comparação de datas, no formato '%d-%m-%y' a comparação não ocorria corretamente
-    df_noticias_FILTRADAS_POR_DATAS['not_datapub'] = pd.to_datetime(df_noticias_FILTRADAS_POR_DATAS['not_datapub']).dt.strftime('%m-%d-%y')
+    df_noticias_FILTRADAS_POR_DATAS['not_datapub'] = pd.to_datetime(df_noticias_FILTRADAS_POR_DATAS['not_datapub']).dt.strftime('%Y-%m-%d')
 
     # Agrupa todos os dados do df de acordo com o periodo selecionado e as datas na coluna de datas
     df_NOTICIAS_filtrado = df_noticias_FILTRADAS_POR_DATAS.loc[(df_noticias_FILTRADAS_POR_DATAS['not_datapub'] > start_date) & (df_noticias_FILTRADAS_POR_DATAS['not_datapub'] < end_date)]
 
     # Altera o formato da data para '%d-%m-%y' após o filtro
-    df_NOTICIAS_filtrado['not_datapub'] = pd.to_datetime(df_NOTICIAS_filtrado['not_datapub'], format='mixed').dt.strftime('%d-%m-%y')
+    df_NOTICIAS_filtrado['not_datapub'] = pd.to_datetime(df_NOTICIAS_filtrado['not_datapub'], format='mixed').dt.strftime('%Y-%m-%d')
     
     '''FIM NOTICIAS FILTRADAS'''
 

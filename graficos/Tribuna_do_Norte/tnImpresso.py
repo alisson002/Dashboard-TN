@@ -20,16 +20,16 @@ def try_parsing_date(text):
 # Recebe a tabela com as notícias do impresso
 # low_memory=False por a tabela ser grande
 df_noticias_impresso = pd.read_csv('tabelas/impresso/dados_impresso.csv', low_memory=False)
-df_noticias_impresso['data'] = pd.to_datetime(df_noticias_impresso['data'].apply(try_parsing_date))
+df_noticias_impresso['data'] = pd.to_datetime(df_noticias_impresso['data'].apply(try_parsing_date))#VERIFICAR
 
-df_noticias_impresso = df_noticias_impresso.dropna(subset=['data'])
+df_noticias_impresso = df_noticias_impresso.dropna(subset=['data']) #VERIFICAR
 
 # Recebe a tabela com as notícias do impresso
 # low_memory=False por a tabela ser grande
 df_editorias_impresso = pd.read_csv('tabelas/impresso/EDI_impresso.csv', low_memory=False)
-df_editorias_impresso['data'] = pd.to_datetime(df_editorias_impresso['data'].apply(try_parsing_date))
+df_editorias_impresso['data'] = pd.to_datetime(df_editorias_impresso['data'].apply(try_parsing_date))#VERIFICAR
 
-df_editorias_impresso = df_editorias_impresso.dropna(subset=['data'])
+df_editorias_impresso = df_editorias_impresso.dropna(subset=['data'])#VERIFICAR
 '''
 MANIPULANDO OS DFs
 '''
