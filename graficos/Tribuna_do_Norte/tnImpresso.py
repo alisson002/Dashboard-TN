@@ -7,18 +7,29 @@ from graficos.Tribuna_do_Norte import tnPortal
 raio_interno = 0.7
 raio_half = 0.2
 
+# Função para tentar múltiplos formatos
+def try_parsing_date(text):
+    for fmt in ("%Y-%m-%dT%H:%M:%S.%fZ", "%Y-%m-%d %H:%M:%S"):
+        try:
+            return pd.to_datetime(text, format=fmt)
+        except ValueError:
+            continue
+    return pd.NaT
+
 '''RECEBENDO OS DF'''
 # Recebe a tabela com as notícias do impresso
 # low_memory=False por a tabela ser grande
 df_noticias_impresso = pd.read_csv('tabelas/impresso/dados_impresso.csv', low_memory=False)
-df_noticias_impresso['data'] = pd.to_datetime(df_noticias_impresso['data']).strftime('%d-%m-%Y')
+df_noticias_impresso['data'] = pd.to_datetime(df_noticias_impresso['data'].apply(try_parsing_date))
+
+df_noticias_impresso = df_noticias_impresso.dropna(subset=['data'])
 
 # Recebe a tabela com as notícias do impresso
 # low_memory=False por a tabela ser grande
 df_editorias_impresso = pd.read_csv('tabelas/impresso/EDI_impresso.csv', low_memory=False)
-df_editorias_impresso['data'] = pd.to_datetime(df_editorias_impresso['data']).strftime('%d-%m-%Y')
+df_editorias_impresso['data'] = pd.to_datetime(df_editorias_impresso['data'].apply(try_parsing_date))
 
-
+df_editorias_impresso = df_editorias_impresso.dropna(subset=['data'])
 '''
 MANIPULANDO OS DFs
 '''
