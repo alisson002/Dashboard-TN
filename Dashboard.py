@@ -236,7 +236,7 @@ if selected_option1 == "Tribuna do norte":
     
     elif selected_option2 == "Google Analytics (portal)":
         html_text = """
-        <p style='font-size:32px;'><b>•</b> Os dados do Google Analytics relacionados ao portal estão no link abaixo em uma dashboard construida no <b>Loocker Studio</b>, que também é uma plataforma da Google.</p>
+        <p style='font-size:32px;'><b>•</b> Os dados do Google Analytics relacionados ao portal estão no link abaixo em uma dashboard construida no <b>Looker Studio</b>, que também é uma plataforma da Google.</p>
         """
         st.write(" ")
         st.write(html_text, unsafe_allow_html=True) 
