@@ -5,6 +5,7 @@ from PIL import Image # Imagens da tn e jpn
 from graficos.Tribuna_do_Norte import tnPortal
 from graficos.Tribuna_do_Norte import tnImpresso
 import importlib
+from graficos.Tribuna_do_Norte import tnFB
 
 # Cria um espaço reservado vazio onde vai receber as imagens
 image_placeholder = st.empty()
@@ -43,9 +44,16 @@ else:
 #data_maxima = pd.to_datetime(tnPortal.df_noticias.iloc[-1]['not_datapub'])
     
 # Adicionar seletor de períodos na coluna à esquerda
-start_date = st.sidebar.date_input("Data de início", data_minima, min_value = data_minima, max_value = data_maxima, format="YYYY-MM-DD") #"DD-MM-YYYY"
+start_date_ = st.sidebar.date_input("Data de início", data_minima, min_value = data_minima, max_value = data_maxima, format="YYYY-MM-DD") #"DD-MM-YYYY"
 
-end_date = st.sidebar.date_input("Data de término", data_maxima, min_value = data_minima, max_value = data_maxima, format="YYYY-MM-DD") #+ pd.DateOffset(days=1) #"DD-MM-YYYY"
+end_date_ = st.sidebar.date_input("Data de término", data_maxima, min_value = data_minima, max_value = data_maxima, format="YYYY-MM-DD") #+ pd.DateOffset(days=1) #"DD-MM-YYYY"
+
+periodo = end_date_ - start_date_
+
+# Periodo anteior para gráficos com comparações
+start_date_b4 = start_date_ - pd.DateOffset(days = periodo.days+1)
+
+end_date_b4 = end_date_ - pd.DateOffset(days = periodo.days+1)
 
 # st.sidebar.write("AVISO (impresso): O dia 31/12/2023 não está sendo reconhecido corretamente. Não o selecionem, por favor.")
 html_text_data = """
@@ -74,14 +82,16 @@ st.sidebar.write(html_text_criador, unsafe_allow_html=True)
 # st.sidebar.write("2. Valores individuais (no gráfico) de cada tópico de 'Notícias por editoria' não estão sendo filtrados corretamente de acordo com o período delecionado, e estão mostrando sempre seus valores totais. O valor total de todas as notícias juntas, a esquerda do gráfico e logo abaixo dos tópicos do gráfico, está correto exceto pelo erro citado no tópico 1;")
 # st.sidebar.write("Os erros a serem corrigidos citados acima passaram a ocorre por conta da entrada dos dados de 2024.")
 
-start_date = start_date.strftime('%Y-%m-%d') #'%d-%m-%Y'
-end_date = end_date.strftime('%Y-%m-%d')
+start_date = start_date_.strftime('%Y-%m-%d') #'%d-%m-%Y'
+end_date = end_date_.strftime('%Y-%m-%d')
 
 # tnPortal.filtroDeDatas(start_date, end_date) é a função que recebe as datas de inicio e fim do período selecionado e atualiza os dfs
 # retorna multiplos dfs que seram utilizados nas funções dos gráficos do portal
 df_NOTICIAS_filtrado, editoria_freq, reporter_freq, reporter_unique, merge_ids_rep_noticias_editoria, fotografos, fotografos_teste = tnPortal.filtroDeDatas(start_date, end_date)
 
 noticias_edi_somado, df_NOTICIAS_impresso_filtrado, reporteres_impresso, noticias_edi_somado, editorias_impresso = tnImpresso.filtroDeDatasImpresso(start_date, end_date)
+
+dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS = tnFB.filtrosDatasFACEBOOK(start_date, end_date, start_date_b4.strftime('%Y-%m-%d'), end_date_b4.strftime('%Y-%m-%d'))
 
 # Adicione seus gráficos de acordo com as opções selecionadas
 if selected_option1 == "Tribuna do norte":
@@ -250,7 +260,9 @@ if selected_option1 == "Tribuna do norte":
     elif selected_option2 == "Instagram":
         st.write("Gráficos do instagram")
     elif selected_option2 == "Facebook":
-        st.write("Gráficos do facebook")
+        
+        tnFB.FB_alcance(dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS,periodo, start_date, end_date, start_date_b4.strftime('%Y-%m-%d'), end_date_b4.strftime('%Y-%m-%d'))
+        
     elif selected_option2 == "Twitter":
         st.write("Gráficos do twitter")
     elif selected_option2 == "YouTube":
