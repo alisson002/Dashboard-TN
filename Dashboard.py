@@ -40,7 +40,7 @@ data_minima = pd.to_datetime('2023-01-01')
 if selected_option2 == "Site/Portal":
     data_maxima = pd.to_datetime('2023-10-16')
 else:
-    data_maxima = pd.to_datetime('2024-05-23')
+    data_maxima = pd.to_datetime('2024-06-01')
 #data_maxima = pd.to_datetime(tnPortal.df_noticias.iloc[-1]['not_datapub'])
     
 # Adicionar seletor de períodos na coluna à esquerda
@@ -260,8 +260,8 @@ if selected_option1 == "Tribuna do norte":
     elif selected_option2 == "Instagram":
         st.write("Gráficos do instagram")
     elif selected_option2 == "Facebook":
-        
-        tnFB.FB_alcance(dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS,periodo, start_date, end_date, start_date_b4.strftime('%Y-%m-%d'), end_date_b4.strftime('%Y-%m-%d'))
+        st.write("Gráficos do fb")
+        # tnFB.FB_alcance(dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS,periodo, start_date, end_date, start_date_b4.strftime('%Y-%m-%d'), end_date_b4.strftime('%Y-%m-%d'))
         
     elif selected_option2 == "Twitter":
         st.write("Gráficos do twitter")
