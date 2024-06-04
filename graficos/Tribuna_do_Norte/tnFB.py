@@ -53,14 +53,14 @@
 
 # def FB_alcance(dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS,periodo, start_date, end_date, start_date_b4, end_date_b4):
     
-#     # line_chart = pygal.Line()
-#     # line_chart.title = 'FB: Alcance'
-#     # line_chart.x_labels = map(str, range(1, (periodo.days)))
-#     # line_chart.add(f'Anterior: {start_date_b4} \n a \n{end_date_b4}',dados_FB_alcance_ANTERIOR['Primary'].cumsum())
-#     # line_chart.x_labels = map(lambda d: pd.to_datetime(d).strftime('%d-%m-%Y'), dados_FB_alcance_FILTRADAS['Data'])
-#     # line_chart.add(f'Período selecionado: {start_date} \n a \n{end_date}',dados_FB_alcance_FILTRADAS['Primary'].cumsum())
-#     # svg = line_chart.render_data_uri()
-#     # st.markdown(f'<embed type="image/svg+xml" src="{svg}" />', unsafe_allow_html=True)
+#     line_chart = pygal.Line()
+#     line_chart.title = 'FB: Alcance'
+#     line_chart.x_labels = map(str, range(1, (periodo.days)))
+#     line_chart.add(f'Anterior: {start_date_b4} \n a \n{end_date_b4}',dados_FB_alcance_ANTERIOR['Primary'].cumsum())
+#     line_chart.x_labels = map(lambda d: pd.to_datetime(d).strftime('%d-%m-%Y'), dados_FB_alcance_FILTRADAS['Data'])
+#     line_chart.add(f'Período selecionado: {start_date} \n a \n{end_date}',dados_FB_alcance_FILTRADAS['Primary'].cumsum())
+#     svg = line_chart.render_data_uri()
+#     st.markdown(f'<embed type="image/svg+xml" src="{svg}" />', unsafe_allow_html=True)
     
     
     
@@ -76,7 +76,7 @@
 #     # Adicionar os dados ao gráfico
 #     xy_chart.add('A', [(data.timestamp(), value) for data, value in data_points])
 #     # Customizar o formato do eixo x para datas legíveis
-#     xy_chart.x_labels = [data.strftime('%d-%m-%Y') for data, value in data_points]
+#     xy_chart.x_labels = [(data) for data, value in data_points]
 #     xy_chart.x_labels_major = xy_chart.x_labels
 #     xy_chart.show_x_labels = True
 #     xy_chart.show_minor_x_labels = False
