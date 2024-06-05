@@ -55,6 +55,21 @@ start_date_b4 = start_date_ - pd.DateOffset(days = periodo.days+1)
 
 end_date_b4 = end_date_ - pd.DateOffset(days = periodo.days+1)
 
+#VERIFICAR ESSAS DATAS
+#periodo selecionado difere um pouco do que realmente estáno gráfico
+# # Adicionar seletor de períodos na coluna à esquerda
+# start_date_ = st.sidebar.date_input("Data de início", data_minima, min_value = data_minima, max_value = data_maxima, format="YYYY-MM-DD") #"DD-MM-YYYY"
+
+# end_date_ = st.sidebar.date_input("Data de término", data_maxima, min_value = data_minima, max_value = data_maxima, format="YYYY-MM-DD") + pd.DateOffset(days=1) #"DD-MM-YYYY"
+
+# periodo = pd.to_datetime(end_date_) - pd.to_datetime(start_date_)
+
+# # Periodo anteior para gráficos com comparações
+# start_date_b4 = start_date_ - pd.DateOffset(days = periodo.days-2)
+
+# end_date_b4 = end_date_ - pd.DateOffset(days = periodo.days-2)
+
+
 # st.sidebar.write("AVISO (impresso): O dia 31/12/2023 não está sendo reconhecido corretamente. Não o selecionem, por favor.")
 html_text_data = """
         <p style='font-size:12px;'><b>FORMATO DA DATA:</b> A data está sendo exibida no formato <b>AAAA-MM-DD</b> para que os dados sejam selecionados/comparados corretamente. A forma de selecionar continua a mesma.</p>
@@ -91,7 +106,7 @@ df_NOTICIAS_filtrado, editoria_freq, reporter_freq, reporter_unique, merge_ids_r
 
 noticias_edi_somado, df_NOTICIAS_impresso_filtrado, reporteres_impresso, noticias_edi_somado, editorias_impresso = tnImpresso.filtroDeDatasImpresso(start_date, end_date)
 
-# dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS = tnFB.filtrosDatasFACEBOOK(start_date, end_date, start_date_b4.strftime('%Y-%m-%d'), end_date_b4.strftime('%Y-%m-%d'))
+dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS = tnFB.filtrosDatasFACEBOOK(start_date, end_date, start_date_b4.strftime('%Y-%m-%d'), end_date_b4.strftime('%Y-%m-%d'))
 
 # Adicione seus gráficos de acordo com as opções selecionadas
 if selected_option1 == "Tribuna do norte":
@@ -255,13 +270,13 @@ if selected_option1 == "Tribuna do norte":
         st.write("Para ter acesso aos dados, siga os seguintes passos:")
         st.write("1. Entre no link;")
         st.write("2. Faça login com uma conta Gmail;")
-        st.write("3. Solicite acesso para visualizar (**Ver**) os dados.")
+        st.write("3. Solicite acesso para visualizar (**Ver**) os dados.") 
 
     elif selected_option2 == "Instagram":
         st.write("Gráficos do instagram")
     elif selected_option2 == "Facebook":
-        st.write("Gráficos do fb")
-        # tnFB.FB_alcance(dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS,periodo, start_date, end_date, start_date_b4.strftime('%Y-%m-%d'), end_date_b4.strftime('%Y-%m-%d'))
+        
+        tnFB.FB_alcance(dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS, start_date, end_date, start_date_b4, end_date_b4)
         
     elif selected_option2 == "Twitter":
         st.write("Gráficos do twitter")
