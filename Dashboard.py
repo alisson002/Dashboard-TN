@@ -15,7 +15,7 @@ TN_image_path = Image.open("imagens/tribunaLogo.png")
 JPN_image_path = Image.open("imagens/jpnnatalLogo3.png") 
 
 # Criar seletor 1 na coluna à esquerda
-options1 = ["Escolha uma opção","Tribuna do norte", "JP News - Natal"]
+options1 = ["Escolha uma opção","ATUALIZAÇÕES","Tribuna do norte", "JP News - Natal"]
 selected_option1 = st.sidebar.selectbox("Selecione a opção 1:", options1)
 
 # if selected_option1 == "Tribuna do norte":
@@ -34,11 +34,15 @@ elif selected_option1 == "JP News - Natal":
 else:
     options2 = []
     selected_option2 = st.sidebar.selectbox("Selecione a opção 2:", options2)
-    
+
 # Definindo a data mínima e máxima
 data_minima = pd.to_datetime('2023-01-01')
 if selected_option2 == "Site/Portal":
     data_maxima = pd.to_datetime('2023-10-16')
+elif selected_option2 == "Impresso":
+    data_maxima = pd.to_datetime(tnImpresso.df_noticias_impresso['data'].max()) + pd.DateOffset(days=1) # foi adicionado um dia pois na dashboard não aparece o ultimo dia, o dia o qual a tabela foi atualizada.
+elif selected_option2 == "Facebook":
+    data_maxima = pd.to_datetime(tnFB.dados_FB_alcance['Data'].max())
 else:
     data_maxima = pd.to_datetime('2024-06-06')
 #data_maxima = pd.to_datetime(tnPortal.df_noticias.iloc[-1]['not_datapub'])
