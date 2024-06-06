@@ -3,6 +3,7 @@ import pandas as pd
 import streamlit as st
 from datetime import datetime
 import csv
+import plotly
 import plotly.graph_objects as go
 
 def encontrar_frase_em_csv_meta(nome_arquivo, frase_procurada):
