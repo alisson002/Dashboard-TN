@@ -9,6 +9,7 @@ pillow = "==10.1.0"
 pygal = "==3.0.0"
 requests = "==2.31.0"
 streamlit = "==1.28.2"
+plotly = "==5.18.0"
 
 [dev-packages]
 
