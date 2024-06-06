@@ -22,10 +22,10 @@ def encontrar_frase_em_csv_meta(nome_arquivo, frase_procurada):
         print(f'O arquivo {nome_arquivo} não foi encontrado.')
         return -1
 
-# final_alcanceFB = encontrar_frase_em_csv_meta('tabelas/meta/alcance.csv', 'Alcance do Instagram')
+final_alcanceFB = encontrar_frase_em_csv_meta('tabelas/meta/Alcance.csv', 'Alcance do Instagram')
 
-#dados_FB_alcance = pd.read_csv('tabelas/meta/alcance.csv',skiprows=2,encoding='utf-16',nrows=final_alcanceFB-5)
-dados_FB_alcance = pd.read_csv('tabelas/meta/AlcanceFB.csv',encoding='utf-16')
+dados_FB_alcance = pd.read_csv('tabelas/meta/Alcance.csv',skiprows=2,encoding='utf-16',nrows=final_alcanceFB-5)
+#dados_FB_alcance = pd.read_csv('tabelas/meta/AlcanceFB.csv',encoding='utf-16')
 
 # Função para tentar múltiplos formatos
 def try_parsing_date(text):
