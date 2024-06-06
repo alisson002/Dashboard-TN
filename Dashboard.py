@@ -15,7 +15,7 @@ TN_image_path = Image.open("imagens/tribunaLogo.png")
 JPN_image_path = Image.open("imagens/jpnnatalLogo3.png") 
 
 # Criar seletor 1 na coluna à esquerda
-options1 = ["Escolha uma opção","ATUALIZAÇÕES","Tribuna do norte", "JP News - Natal"]
+options1 = ["Inicio - escolha uma opção:","Tribuna do norte", "JP News - Natal"]
 selected_option1 = st.sidebar.selectbox("Selecione a opção 1:", options1)
 
 # if selected_option1 == "Tribuna do norte":
@@ -32,6 +32,30 @@ elif selected_option1 == "JP News - Natal":
     options2 = ["Instagram", "Twitter", "YouTube"]
     selected_option2 = st.sidebar.selectbox("Selecione a opção 2:", options2)
 else:
+    html_text = """
+        <p style='font-size:32px;'><b>•</b> Atualizações:</p>
+        """
+    st.write(html_text, unsafe_allow_html=True) 
+    st.write(" ")
+    st.write("**Tribuna do Norte:**")
+    st.write("╰┈➤ Em breve todos os dados do Focebook e Instagram (06/06/2024);")
+    st.write("╰┈➤ Adiconado o gráfico de alcance do Facebook (06/06/2024);")
+    st.write(" ")
+    st.write("**Jovem Pan News - Natal:**")
+    st.write("╰┈➤ Em breve;")
+    st.write(" ")
+    html_text = """
+        <p style='font-size:32px;'><b>•</b> Sugestões/Informar erros:</p>
+        """
+    st.write(html_text, unsafe_allow_html=True)
+    st.write("E-mail: kinto17@gmail.com")
+    st.write("**Sugestões:**")
+    st.write("╰┈➤ Título do e-mail: **SUGESTÃO - DASHBOARD STREAMLIT TN**;")
+    st.write("╰┈➤ Título do e-mail: **SUGESTÃO - DASHBOARD STREAMLIT JPN**;")
+    st.write("**Erro:**")
+    st.write("╰┈➤ Título do e-mail: **ERRO - DASHBOARD STREAMLIT TN**;")
+    st.write("╰┈➤ Título do e-mail: **ERRO - DASHBOARD STREAMLIT JPN**;")
+    st.write("╰┈➤ Se possível envie prints complementando a informação do e-mail;")
     options2 = []
     selected_option2 = st.sidebar.selectbox("Selecione a opção 2:", options2)
 
