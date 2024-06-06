@@ -106,7 +106,7 @@ df_NOTICIAS_filtrado, editoria_freq, reporter_freq, reporter_unique, merge_ids_r
 
 noticias_edi_somado, df_NOTICIAS_impresso_filtrado, reporteres_impresso, noticias_edi_somado, editorias_impresso = tnImpresso.filtroDeDatasImpresso(start_date, end_date)
 
-#dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS = tnFB.filtrosDatasFACEBOOK(start_date, end_date, start_date_b4.strftime('%Y-%m-%d'), end_date_b4.strftime('%Y-%m-%d'))
+dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS = tnFB.filtrosDatasFACEBOOK(start_date, end_date, start_date_b4.strftime('%Y-%m-%d'), end_date_b4.strftime('%Y-%m-%d'))
 
 # Adicione seus gráficos de acordo com as opções selecionadas
 if selected_option1 == "Tribuna do norte":
@@ -275,8 +275,8 @@ if selected_option1 == "Tribuna do norte":
     elif selected_option2 == "Instagram":
         st.write("Gráficos do instagram")
     elif selected_option2 == "Facebook":
-        pass
-        #tnFB.FB_alcance(dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS, start_date, end_date, start_date_b4, end_date_b4)
+        
+        tnFB.FB_alcance(dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS, start_date, end_date, start_date_b4, end_date_b4)
         
     elif selected_option2 == "Twitter":
         st.write("Gráficos do twitter")
