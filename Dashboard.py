@@ -40,7 +40,7 @@ data_minima = pd.to_datetime('2023-01-01')
 if selected_option2 == "Site/Portal":
     data_maxima = pd.to_datetime('2023-10-16')
 else:
-    data_maxima = pd.to_datetime('2024-06-01')
+    data_maxima = pd.to_datetime('2024-06-06')
 #data_maxima = pd.to_datetime(tnPortal.df_noticias.iloc[-1]['not_datapub'])
     
 # Adicionar seletor de períodos na coluna à esquerda
