@@ -92,7 +92,7 @@ def FB_alcance(dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS, start_date
     x=dados_FB_alcance_ANTERIOR['Dia'],
     y=dados_FB_alcance_ANTERIOR['Primary'],
     mode='lines+markers',
-    name=f'Anterior: {start_date_b4.strftime('%d-%m-%Y')} a {end_date_b4.strftime('%d-%m-%Y')}',
+    name=f"Anterior: {start_date_b4.strftime('%d-%m-%Y')} a {end_date_b4.strftime('%d-%m-%Y')}",
     text=dados_FB_alcance_ANTERIOR['Data_Original'].dt.strftime('%d-%m-%Y'),
     hovertemplate='<br>Data Original: %{text}<br>Valor: %{y}',
     line=dict(color='#6184D1')
