@@ -38,6 +38,8 @@ else:
     st.write(html_text, unsafe_allow_html=True) 
     st.write(" ")
     st.write("**Tribuna do Norte:**")
+    st.write("╰┈➤ Adiconadas versões normal e acumulativa dos gráficos do Facebook (10/06/2024);")
+    st.write("╰┈➤ Adiconado o gráfico de visitas e seguidores do Facebook (10/06/2024);")
     st.write("╰┈➤ Em breve todos os dados do Focebook e Instagram (06/06/2024);")
     st.write("╰┈➤ Adiconado o gráfico de alcance do Facebook (06/06/2024);")
     st.write(" ")
@@ -134,7 +136,7 @@ df_NOTICIAS_filtrado, editoria_freq, reporter_freq, reporter_unique, merge_ids_r
 
 noticias_edi_somado, df_NOTICIAS_impresso_filtrado, reporteres_impresso, noticias_edi_somado, editorias_impresso = tnImpresso.filtroDeDatasImpresso(start_date, end_date)
 
-dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS = tnFB.filtrosDatasFACEBOOK(start_date, end_date, start_date_b4.strftime('%Y-%m-%d'), end_date_b4.strftime('%Y-%m-%d'))
+dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS,visitasFB_ANTERIOR,visitasFB_FILTRADO,seguidoresFB_ANTERIOR,seguidoresFB_FILTRADO = tnFB.filtrosDatasFACEBOOK(start_date, end_date, start_date_b4.strftime('%Y-%m-%d'), end_date_b4.strftime('%Y-%m-%d'))
 
 # Adicione seus gráficos de acordo com as opções selecionadas
 if selected_option1 == "Tribuna do norte":
@@ -303,8 +305,39 @@ if selected_option1 == "Tribuna do norte":
     elif selected_option2 == "Instagram":
         st.write("Gráficos do instagram")
     elif selected_option2 == "Facebook":
+
+        exib_type = st.radio("Selecione o tipo de exibição:", ['Normal', 'Acumulativo'], horizontal=True)
         
-        tnFB.FB_alcance(dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS, start_date, end_date, start_date_b4, end_date_b4)
+        # Tabs para separar as áreas analisadas
+        tab1, tab2, tab3 = st.tabs(["Alcance", "Visitas", "Seguidores"])
+        
+        # Informações de cada tab
+        with tab1:
+
+            if exib_type == "Normal":
+
+                tnFB.FB_alcance(dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS, start_date, end_date, start_date_b4, end_date_b4)
+
+            elif exib_type == "Acumulativo":
+                tnFB.FB_alcance_cumsum(dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS, start_date, end_date, start_date_b4, end_date_b4)
+        
+        with tab2:
+
+            if exib_type == "Normal":
+
+                tnFB.FB_visitas(visitasFB_ANTERIOR, visitasFB_FILTRADO, start_date, end_date, start_date_b4, end_date_b4)
+
+            elif exib_type == "Acumulativo":
+                tnFB.FB_visitas_cumsum(visitasFB_ANTERIOR, visitasFB_FILTRADO, start_date, end_date, start_date_b4, end_date_b4)
+        
+        with tab3:
+
+            if exib_type == "Normal":
+
+                tnFB.FB_seguidores(seguidoresFB_ANTERIOR, seguidoresFB_FILTRADO, start_date, end_date, start_date_b4, end_date_b4)
+
+            elif exib_type == "Acumulativo":
+                tnFB.FB_seguidores_cumsum(seguidoresFB_ANTERIOR, seguidoresFB_FILTRADO, start_date, end_date, start_date_b4, end_date_b4)
         
     elif selected_option2 == "Twitter":
         st.write("Gráficos do twitter")
