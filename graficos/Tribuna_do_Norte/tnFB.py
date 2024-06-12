@@ -22,6 +22,12 @@ def encontrar_frase_em_csv_meta(nome_arquivo, frase_procurada):
         print(f'O arquivo {nome_arquivo} não foi encontrado.')
         return -1
 
+def transformaData_final(data):
+    return (pd.to_datetime(data)-pd.DateOffset(days=1)).strftime('%d-%m-%Y')
+
+def transformaData_inicio(data):
+    return (pd.to_datetime(data)).strftime('%d-%m-%Y')
+
 final_alcanceFB = encontrar_frase_em_csv_meta('tabelas/meta/Alcance.csv', 'Alcance do Instagram')
 
 dados_FB_alcance = pd.read_csv('tabelas/meta/Alcance.csv',skiprows=2,encoding='utf-16',nrows=final_alcanceFB-5)
@@ -111,7 +117,7 @@ def FB_alcance(dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS, start_date
     x=dados_FB_alcance_FILTRADAS['Dia'],
     y=dados_FB_alcance_FILTRADAS['Primary'],
     mode='lines+markers',
-    name=f'Selecionado: {start_date} a {end_date}',
+    name=f'Selecionado: {transformaData_inicio(start_date)} a {transformaData_final(end_date)}',
     text=dados_FB_alcance_FILTRADAS['Data_Original'].dt.strftime('%Y-%m-%d'),
     hovertemplate='<br>Data Original: %{text}<br>Valor: %{y}',
     line=dict(color='#2f55a4')
@@ -122,7 +128,7 @@ def FB_alcance(dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS, start_date
     x=dados_FB_alcance_ANTERIOR['Dia'],
     y=dados_FB_alcance_ANTERIOR['Primary'],
     mode='lines+markers',
-    name=f"Anterior: {start_date_b4.strftime('%d-%m-%Y')} a {end_date_b4.strftime('%d-%m-%Y')}",
+    name=f"Anterior: {start_date_b4.strftime('%d-%m-%Y')} a {(end_date_b4 - pd.DateOffset(days=1)).strftime('%d-%m-%Y')}",
     text=dados_FB_alcance_ANTERIOR['Data_Original'].dt.strftime('%d-%m-%Y'),
     hovertemplate='<br>Data Original: %{text}<br>Valor: %{y}',
     line=dict(color='#6184D1')
@@ -171,7 +177,7 @@ def FB_alcance_cumsum(dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS, sta
     x=dados_FB_alcance_FILTRADAS['Dia'],
     y=dados_FB_alcance_FILTRADAS['Primary'].cumsum(),
     mode='lines+markers',
-    name=f'Selecionado: {start_date} a {end_date}',
+    name=f'Selecionado: {transformaData_inicio(start_date)} a {transformaData_final(end_date)}',
     text=dados_FB_alcance_FILTRADAS['Data_Original'].dt.strftime('%Y-%m-%d'),
     hovertemplate='<br>Data Original: %{text}<br>Valor: %{y}',
     line=dict(color='#2f55a4')
@@ -182,7 +188,7 @@ def FB_alcance_cumsum(dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS, sta
     x=dados_FB_alcance_ANTERIOR['Dia'],
     y=dados_FB_alcance_ANTERIOR['Primary'].cumsum(),
     mode='lines+markers',
-    name=f"Anterior: {start_date_b4.strftime('%d-%m-%Y')} a {end_date_b4.strftime('%d-%m-%Y')}",
+    name=f"Anterior: {start_date_b4.strftime('%d-%m-%Y')} a {(end_date_b4 - pd.DateOffset(days=1)).strftime('%d-%m-%Y')}",
     text=dados_FB_alcance_ANTERIOR['Data_Original'].dt.strftime('%d-%m-%Y'),
     hovertemplate='<br>Data Original: %{text}<br>Valor: %{y}',
     line=dict(color='#6184D1')
@@ -231,7 +237,7 @@ def FB_visitas(visitasFB_ANTERIOR, visitasFB_FILTRADO, start_date, end_date, sta
     x=visitasFB_FILTRADO['Dia'],
     y=visitasFB_FILTRADO['Primary'],
     mode='lines+markers',
-    name=f'Selecionado: {start_date} a {end_date}',
+    name=f'Selecionado: {transformaData_inicio(start_date)} a {transformaData_final(end_date)}',
     text=visitasFB_FILTRADO['Data_Original'].dt.strftime('%Y-%m-%d'),
     hovertemplate='<br>Data Original: %{text}<br>Valor: %{y}',
     line=dict(color='#3b5998')
@@ -242,7 +248,7 @@ def FB_visitas(visitasFB_ANTERIOR, visitasFB_FILTRADO, start_date, end_date, sta
     x=visitasFB_ANTERIOR['Dia'],
     y=visitasFB_ANTERIOR['Primary'],
     mode='lines+markers',
-    name=f"Anterior: {start_date_b4.strftime('%d-%m-%Y')} a {end_date_b4.strftime('%d-%m-%Y')}",
+    name=f"Anterior: {start_date_b4.strftime('%d-%m-%Y')} a {(end_date_b4 - pd.DateOffset(days=1)).strftime('%d-%m-%Y')}",
     text=visitasFB_ANTERIOR['Data_Original'].dt.strftime('%d-%m-%Y'),
     hovertemplate='<br>Data Original: %{text}<br>Valor: %{y}',
     line=dict(color='#7B94CC')
@@ -291,7 +297,7 @@ def FB_visitas_cumsum(visitasFB_ANTERIOR, visitasFB_FILTRADO, start_date, end_da
     x=visitasFB_FILTRADO['Dia'],
     y=visitasFB_FILTRADO['Primary'].cumsum(),
     mode='lines+markers',
-    name=f'Selecionado: {start_date} a {end_date}',
+    name=f'Selecionado: {transformaData_inicio(start_date)} a {transformaData_final(end_date)}',
     text=visitasFB_FILTRADO['Data_Original'].dt.strftime('%Y-%m-%d'),
     hovertemplate='<br>Data Original: %{text}<br>Valor: %{y}',
     line=dict(color='#3b5998')
@@ -302,7 +308,7 @@ def FB_visitas_cumsum(visitasFB_ANTERIOR, visitasFB_FILTRADO, start_date, end_da
     x=visitasFB_ANTERIOR['Dia'],
     y=visitasFB_ANTERIOR['Primary'].cumsum(),
     mode='lines+markers',
-    name=f"Anterior: {start_date_b4.strftime('%d-%m-%Y')} a {end_date_b4.strftime('%d-%m-%Y')}",
+    name=f"Anterior: {start_date_b4.strftime('%d-%m-%Y')} a {(end_date_b4 - pd.DateOffset(days=1)).strftime('%d-%m-%Y')}",
     text=visitasFB_ANTERIOR['Data_Original'].dt.strftime('%d-%m-%Y'),
     hovertemplate='<br>Data Original: %{text}<br>Valor: %{y}',
     line=dict(color='#7B94CC')
@@ -351,7 +357,7 @@ def FB_seguidores(seguidoresFB_ANTERIOR, seguidoresFB_FILTRADO, start_date, end_
     x=seguidoresFB_FILTRADO['Dia'],
     y=seguidoresFB_FILTRADO['Primary'],
     mode='lines+markers',
-    name=f'Selecionado: {start_date} a {end_date}',
+    name=f'Selecionado: {transformaData_inicio(start_date)} a {transformaData_final(end_date)}',
     text=seguidoresFB_FILTRADO['Data_Original'].dt.strftime('%Y-%m-%d'),
     hovertemplate='<br>Data Original: %{text}<br>Valor: %{y}',
     line=dict(color='#5874af')
@@ -362,7 +368,7 @@ def FB_seguidores(seguidoresFB_ANTERIOR, seguidoresFB_FILTRADO, start_date, end_
     x=seguidoresFB_ANTERIOR['Dia'],
     y=seguidoresFB_ANTERIOR['Primary'],
     mode='lines+markers',
-    name=f"Anterior: {start_date_b4.strftime('%d-%m-%Y')} a {end_date_b4.strftime('%d-%m-%Y')}",
+    name=f"Anterior: {start_date_b4.strftime('%d-%m-%Y')} a {(end_date_b4 - pd.DateOffset(days=1)).strftime('%d-%m-%Y')}",
     text=seguidoresFB_ANTERIOR['Data_Original'].dt.strftime('%d-%m-%Y'),
     hovertemplate='<br>Data Original: %{text}<br>Valor: %{y}',
     line=dict(color='#ACB9D7')
@@ -411,7 +417,7 @@ def FB_seguidores_cumsum(seguidoresFB_ANTERIOR, seguidoresFB_FILTRADO, start_dat
     x=seguidoresFB_FILTRADO['Dia'],
     y=seguidoresFB_FILTRADO['Primary'].cumsum(),
     mode='lines+markers',
-    name=f'Selecionado: {start_date} a {end_date}',
+    name=f'Selecionado: {transformaData_inicio(start_date)} a {transformaData_final(end_date)}',
     text=seguidoresFB_FILTRADO['Data_Original'].dt.strftime('%Y-%m-%d'),
     hovertemplate='<br>Data Original: %{text}<br>Valor: %{y}',
     line=dict(color='#5874af')
@@ -422,7 +428,7 @@ def FB_seguidores_cumsum(seguidoresFB_ANTERIOR, seguidoresFB_FILTRADO, start_dat
     x=seguidoresFB_ANTERIOR['Dia'],
     y=seguidoresFB_ANTERIOR['Primary'].cumsum(),
     mode='lines+markers',
-    name=f"Anterior: {start_date_b4.strftime('%d-%m-%Y')} a {end_date_b4.strftime('%d-%m-%Y')}",
+    name=f"Anterior: {start_date_b4.strftime('%d-%m-%Y')} a {(end_date_b4 - pd.DateOffset(days=1)).strftime('%d-%m-%Y')}",
     text=seguidoresFB_ANTERIOR['Data_Original'].dt.strftime('%d-%m-%Y'),
     hovertemplate='<br>Data Original: %{text}<br>Valor: %{y}',
     line=dict(color='#ACB9D7')

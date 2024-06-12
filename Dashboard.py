@@ -68,7 +68,7 @@ if selected_option2 == "Site/Portal":
 elif selected_option2 == "Impresso":
     data_maxima = pd.to_datetime(tnImpresso.df_noticias_impresso['data'].max()) + pd.DateOffset(days=1) # foi adicionado um dia pois na dashboard não aparece o ultimo dia, o dia o qual a tabela foi atualizada.
 elif selected_option2 == "Facebook":
-    data_maxima = pd.to_datetime(tnFB.dados_FB_alcance['Data'].max())
+    data_maxima = pd.to_datetime(tnFB.dados_FB_alcance['Data'].max()) 
 else:
     data_maxima = pd.to_datetime('2024-06-06')
 #data_maxima = pd.to_datetime(tnPortal.df_noticias.iloc[-1]['not_datapub'])
@@ -83,7 +83,7 @@ periodo = end_date_ - start_date_
 # Periodo anteior para gráficos com comparações
 start_date_b4 = start_date_ - pd.DateOffset(days = periodo.days+1)
 
-end_date_b4 = end_date_ - pd.DateOffset(days = periodo.days+1)
+end_date_b4 = end_date_ - pd.DateOffset(days = periodo.days+1) + pd.DateOffset(days=1)
 
 #VERIFICAR ESSAS DATAS
 #periodo selecionado difere um pouco do que realmente estáno gráfico
@@ -128,7 +128,7 @@ st.sidebar.write(html_text_criador, unsafe_allow_html=True)
 # st.sidebar.write("Os erros a serem corrigidos citados acima passaram a ocorre por conta da entrada dos dados de 2024.")
 
 start_date = start_date_.strftime('%Y-%m-%d') #'%d-%m-%Y'
-end_date = end_date_.strftime('%Y-%m-%d')
+end_date = (end_date_+ pd.DateOffset(days=1)).strftime('%Y-%m-%d')
 
 # tnPortal.filtroDeDatas(start_date, end_date) é a função que recebe as datas de inicio e fim do período selecionado e atualiza os dfs
 # retorna multiplos dfs que seram utilizados nas funções dos gráficos do portal
