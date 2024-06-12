@@ -38,6 +38,7 @@ else:
     st.write(html_text, unsafe_allow_html=True) 
     st.write(" ")
     st.write("**Tribuna do Norte:**")
+    st.write("╰┈➤ Adiconados os gráficos do Instagram e suas versões normal e acumulativa (12/06/2024);")
     st.write("╰┈➤ Adiconadas versões normal e acumulativa dos gráficos do Facebook (10/06/2024);")
     st.write("╰┈➤ Adiconado o gráfico de visitas e seguidores do Facebook (10/06/2024);")
     st.write("╰┈➤ Em breve todos os dados do Focebook e Instagram (06/06/2024);")
@@ -68,7 +69,9 @@ if selected_option2 == "Site/Portal":
 elif selected_option2 == "Impresso":
     data_maxima = pd.to_datetime(tnImpresso.df_noticias_impresso['data'].max()) + pd.DateOffset(days=1) # foi adicionado um dia pois na dashboard não aparece o ultimo dia, o dia o qual a tabela foi atualizada.
 elif selected_option2 == "Facebook":
-    data_maxima = pd.to_datetime(tnFB.dados_FB_alcance['Data'].max()) 
+    data_maxima = pd.to_datetime(tnFB.dados_FB_alcance['Data'].max())
+elif selected_option2 == "Instagram":
+    data_maxima = pd.to_datetime(tnFB.alcanceIG['Data'].max()) 
 else:
     data_maxima = pd.to_datetime('2024-06-06')
 #data_maxima = pd.to_datetime(tnPortal.df_noticias.iloc[-1]['not_datapub'])
@@ -137,6 +140,8 @@ df_NOTICIAS_filtrado, editoria_freq, reporter_freq, reporter_unique, merge_ids_r
 noticias_edi_somado, df_NOTICIAS_impresso_filtrado, reporteres_impresso, noticias_edi_somado, editorias_impresso = tnImpresso.filtroDeDatasImpresso(start_date, end_date)
 
 dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS,visitasFB_ANTERIOR,visitasFB_FILTRADO,seguidoresFB_ANTERIOR,seguidoresFB_FILTRADO = tnFB.filtrosDatasFACEBOOK(start_date, end_date, start_date_b4.strftime('%Y-%m-%d'), end_date_b4.strftime('%Y-%m-%d'))
+
+dados_IG_alcance_ANTERIOR,dados_IG_alcance_FILTRADAS,visitasIG_ANTERIOR,visitasIG_FILTRADO,seguidoresIG_ANTERIOR,seguidoresIG_FILTRADO = tnFB.filtrosDatasINSTAGRAM(start_date, end_date, start_date_b4.strftime('%Y-%m-%d'), end_date_b4.strftime('%Y-%m-%d'))
 
 # Adicione seus gráficos de acordo com as opções selecionadas
 if selected_option1 == "Tribuna do norte":
@@ -303,7 +308,40 @@ if selected_option1 == "Tribuna do norte":
         st.write("3. Solicite acesso para visualizar (**Ver**) os dados.") 
 
     elif selected_option2 == "Instagram":
-        st.write("Gráficos do instagram")
+        
+        exib_type = st.radio("Selecione o tipo de exibição:", ['Normal', 'Acumulativo'], horizontal=True)
+        
+        # Tabs para separar as áreas analisadas
+        tab1, tab2, tab3 = st.tabs(["Alcance", "Visitas", "Seguidores"])
+        
+        # Informações de cada tab
+        with tab1:
+
+            if exib_type == "Normal":
+
+                tnFB.IG_alcance(dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS, start_date, end_date, start_date_b4, end_date_b4)
+
+            elif exib_type == "Acumulativo":
+                tnFB.IG_alcance_cumsum(dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS, start_date, end_date, start_date_b4, end_date_b4)
+        
+        with tab2:
+
+            if exib_type == "Normal":
+
+                tnFB.IG_visitas(visitasFB_ANTERIOR, visitasFB_FILTRADO, start_date, end_date, start_date_b4, end_date_b4)
+
+            elif exib_type == "Acumulativo":
+                tnFB.IG_visitas_cumsum(visitasFB_ANTERIOR, visitasFB_FILTRADO, start_date, end_date, start_date_b4, end_date_b4)
+        
+        with tab3:
+
+            if exib_type == "Normal":
+
+                tnFB.IG_seguidores(seguidoresFB_ANTERIOR, seguidoresFB_FILTRADO, start_date, end_date, start_date_b4, end_date_b4)
+
+            elif exib_type == "Acumulativo":
+                tnFB.IG_seguidores_cumsum(seguidoresFB_ANTERIOR, seguidoresFB_FILTRADO, start_date, end_date, start_date_b4, end_date_b4)
+        
     elif selected_option2 == "Facebook":
 
         exib_type = st.radio("Selecione o tipo de exibição:", ['Normal', 'Acumulativo'], horizontal=True)
