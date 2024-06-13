@@ -7,6 +7,7 @@ from graficos.Tribuna_do_Norte import tnImpresso
 import importlib
 from graficos.Tribuna_do_Norte import tnFB
 from graficos.Tribuna_do_Norte import tnIG
+from graficos.JP_News import jpnIG
 
 # Cria um espaço reservado vazio onde vai receber as imagens
 image_placeholder = st.empty()
@@ -39,7 +40,7 @@ else:
     st.write(html_text, unsafe_allow_html=True) 
     st.write(" ")
     st.write("**Tribuna do Norte:**")
-    st.write("╰┈➤ Adicionadas métricas de alcance, visitas e seguidores do FB e IG com comparativos em porcentagem em relação ao período anterior. (13/06/2024);")
+    st.write("╰┈➤ Adicionadas métricas de alcance, visitas e seguidores do FB e IG com comparativos em porcentagem em relação ao período anterior (13/06/2024);")
     st.write("╰┈➤ Adiconados os gráficos do Instagram e suas versões normal e acumulativa (12/06/2024);")
     st.write("╰┈➤ Adiconadas versões normal e acumulativa dos gráficos do Facebook (10/06/2024);")
     st.write("╰┈➤ Adiconado o gráfico de visitas e seguidores do Facebook (10/06/2024);")
@@ -47,6 +48,7 @@ else:
     st.write("╰┈➤ Adiconado o gráfico de alcance do Facebook (06/06/2024);")
     st.write(" ")
     st.write("**Jovem Pan News - Natal:**")
+    st.write("╰┈➤ Adicionadas gráficos e métricas de alcance, visitas e seguidores do IG com comparativos em relação ao período anterior (13/06/2024);")
     st.write("╰┈➤ Em breve;")
     st.write(" ")
     html_text = """
@@ -144,6 +146,8 @@ noticias_edi_somado, df_NOTICIAS_impresso_filtrado, reporteres_impresso, noticia
 dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS,visitasFB_ANTERIOR,visitasFB_FILTRADO,seguidoresFB_ANTERIOR,seguidoresFB_FILTRADO = tnFB.filtrosDatasFACEBOOK(start_date, end_date, start_date_b4.strftime('%Y-%m-%d'), end_date_b4.strftime('%Y-%m-%d'))
 
 dados_IG_alcance_ANTERIOR,dados_IG_alcance_FILTRADAS,visitasIG_ANTERIOR,visitasIG_FILTRADO,seguidoresIG_ANTERIOR,seguidoresIG_FILTRADO = tnIG.filtrosDatasINSTAGRAM(start_date, end_date, start_date_b4.strftime('%Y-%m-%d'), end_date_b4.strftime('%Y-%m-%d'))
+
+dados_IG_alcance_ANTERIOR,dados_IG_alcance_FILTRADAS,visitasIG_ANTERIOR,visitasIG_FILTRADO,seguidoresIG_ANTERIOR,seguidoresIG_FILTRADO = jpnIG.filtrosDatasINSTAGRAMjpn(start_date, end_date, start_date_b4.strftime('%Y-%m-%d'), end_date_b4.strftime('%Y-%m-%d'))
 
 # Adicione seus gráficos de acordo com as opções selecionadas
 if selected_option1 == "Tribuna do norte":
@@ -394,7 +398,42 @@ elif selected_option1 == "JP News - Natal":
     
     # Gráficos referentes a cada categoria
     if selected_option2 == "Instagram":
-        st.write("Gráficos do instagram")
+        
+        jpnIG.igMetrics(dados_IG_alcance_ANTERIOR,dados_IG_alcance_FILTRADAS,visitasIG_ANTERIOR,visitasIG_FILTRADO,seguidoresIG_ANTERIOR,seguidoresIG_FILTRADO)
+        
+        exib_type = st.radio("Selecione o tipo de exibição:", ['Normal', 'Acumulativo'], horizontal=True)
+        
+        # Tabs para separar as áreas analisadas
+        tab1, tab2, tab3 = st.tabs(["Alcance", "Visitas", "Seguidores"])
+        
+        # Informações de cada tab
+        with tab1:
+
+            if exib_type == "Normal":
+
+                jpnIG.IG_alcance(dados_IG_alcance_ANTERIOR, dados_IG_alcance_FILTRADAS, start_date, end_date, start_date_b4, end_date_b4)
+
+            elif exib_type == "Acumulativo":
+                jpnIG.IG_alcance_cumsum(dados_IG_alcance_ANTERIOR, dados_IG_alcance_FILTRADAS, start_date, end_date, start_date_b4, end_date_b4)
+        
+        with tab2:
+
+            if exib_type == "Normal":
+
+                jpnIG.IG_visitas(visitasIG_ANTERIOR, visitasIG_FILTRADO, start_date, end_date, start_date_b4, end_date_b4)
+
+            elif exib_type == "Acumulativo":
+                jpnIG.IG_visitas_cumsum(visitasIG_ANTERIOR, visitasIG_FILTRADO, start_date, end_date, start_date_b4, end_date_b4)
+        
+        with tab3:
+
+            if exib_type == "Normal":
+
+                jpnIG.IG_seguidores(seguidoresIG_ANTERIOR, seguidoresIG_FILTRADO, start_date, end_date, start_date_b4, end_date_b4)
+
+            elif exib_type == "Acumulativo":
+                jpnIG.IG_seguidores_cumsum(seguidoresIG_ANTERIOR, seguidoresIG_FILTRADO, start_date, end_date, start_date_b4, end_date_b4)
+        
     elif selected_option2 == "Twitter":
         st.write("Gráficos do twitter")
     elif selected_option2 == "YouTube":
