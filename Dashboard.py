@@ -148,7 +148,7 @@ dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS,visitasFB_ANTERIOR,visitas
 
 dados_IG_alcance_ANTERIOR,dados_IG_alcance_FILTRADAS,visitasIG_ANTERIOR,visitasIG_FILTRADO,seguidoresIG_ANTERIOR,seguidoresIG_FILTRADO = tnIG.filtrosDatasINSTAGRAM(start_date, end_date, start_date_b4.strftime('%Y-%m-%d'), end_date_b4.strftime('%Y-%m-%d'))
 
-dados_IG_alcance_ANTERIOR,dados_IG_alcance_FILTRADAS,visitasIG_ANTERIOR,visitasIG_FILTRADO,seguidoresIG_ANTERIOR,seguidoresIG_FILTRADO = jpnIG.filtrosDatasINSTAGRAMjpn(start_date, end_date, start_date_b4.strftime('%Y-%m-%d'), end_date_b4.strftime('%Y-%m-%d'))
+dados_IG_alcance_ANTERIORjpn,dados_IG_alcance_FILTRADASjpn,visitasIG_ANTERIORjpn,visitasIG_FILTRADOjpn,seguidoresIG_ANTERIORjpn,seguidoresIG_FILTRADOjpn = jpnIG.filtrosDatasINSTAGRAMjpn(start_date, end_date, start_date_b4.strftime('%Y-%m-%d'), end_date_b4.strftime('%Y-%m-%d'))
 
 # Adicione seus gráficos de acordo com as opções selecionadas
 if selected_option1 == "Tribuna do norte":
@@ -412,28 +412,28 @@ elif selected_option1 == "JP News - Natal":
 
             if exib_type == "Normal":
 
-                jpnIG.IG_alcance(dados_IG_alcance_ANTERIOR, dados_IG_alcance_FILTRADAS, start_date, end_date, start_date_b4, end_date_b4)
+                jpnIG.IG_alcance(dados_IG_alcance_ANTERIORjpn, dados_IG_alcance_FILTRADASjpn, start_date, end_date, start_date_b4, end_date_b4)
 
             elif exib_type == "Acumulativo":
-                jpnIG.IG_alcance_cumsum(dados_IG_alcance_ANTERIOR, dados_IG_alcance_FILTRADAS, start_date, end_date, start_date_b4, end_date_b4)
+                jpnIG.IG_alcance_cumsum(dados_IG_alcance_ANTERIORjpn, dados_IG_alcance_FILTRADASjpn, start_date, end_date, start_date_b4, end_date_b4)
         
         with tab2:
 
             if exib_type == "Normal":
 
-                jpnIG.IG_visitas(visitasIG_ANTERIOR, visitasIG_FILTRADO, start_date, end_date, start_date_b4, end_date_b4)
+                jpnIG.IG_visitas(visitasIG_ANTERIORjpn, visitasIG_FILTRADOjpn, start_date, end_date, start_date_b4, end_date_b4)
 
             elif exib_type == "Acumulativo":
-                jpnIG.IG_visitas_cumsum(visitasIG_ANTERIOR, visitasIG_FILTRADO, start_date, end_date, start_date_b4, end_date_b4)
+                jpnIG.IG_visitas_cumsum(visitasIG_ANTERIORjpn, visitasIG_FILTRADOjpn, start_date, end_date, start_date_b4, end_date_b4)
         
         with tab3:
 
             if exib_type == "Normal":
 
-                jpnIG.IG_seguidores(seguidoresIG_ANTERIOR, seguidoresIG_FILTRADO, start_date, end_date, start_date_b4, end_date_b4)
+                jpnIG.IG_seguidores(seguidoresIG_ANTERIORjpn, seguidoresIG_FILTRADOjpn, start_date, end_date, start_date_b4, end_date_b4)
 
             elif exib_type == "Acumulativo":
-                jpnIG.IG_seguidores_cumsum(seguidoresIG_ANTERIOR, seguidoresIG_FILTRADO, start_date, end_date, start_date_b4, end_date_b4)
+                jpnIG.IG_seguidores_cumsum(seguidoresIG_ANTERIORjpn, seguidoresIG_FILTRADOjpn, start_date, end_date, start_date_b4, end_date_b4)
         
     elif selected_option2 == "Twitter":
         st.write("Gráficos do twitter")
