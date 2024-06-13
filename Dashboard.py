@@ -400,7 +400,7 @@ elif selected_option1 == "JP News - Natal":
     # Gráficos referentes a cada categoria
     if selected_option2 == "Instagram":
         
-        jpnIG.igMetrics(dados_IG_alcance_ANTERIOR,dados_IG_alcance_FILTRADAS,visitasIG_ANTERIOR,visitasIG_FILTRADO,seguidoresIG_ANTERIOR,seguidoresIG_FILTRADO)
+        jpnIG.igMetrics(dados_IG_alcance_ANTERIORjpn,dados_IG_alcance_FILTRADASjpn,visitasIG_ANTERIORjpn,visitasIG_FILTRADOjpn,seguidoresIG_ANTERIORjpn,seguidoresIG_FILTRADOjpn)
         
         exib_type = st.radio("Selecione o tipo de exibição:", ['Normal', 'Acumulativo'], horizontal=True)
         
