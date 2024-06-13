@@ -96,7 +96,7 @@ def formataNumero(numero):
 def crescimento(atual, antigo):
     taxa = ((atual - antigo) / abs(antigo))
     if taxa > 0:
-        return f'+{str(round((taxa*100),2)).replace('.', ',')}%'
+        return f'+{str(round(taxa*100,2)).replace('.', ',')}%'
     return f'{str(round(taxa*100,2)).replace('.', ',')}%'
 
 def fbMetrics(dados_FB_alcance_ANTERIOR,dados_FB_alcance_FILTRADAS,visitasFB_ANTERIOR,visitasFB_FILTRADO,seguidoresFB_ANTERIOR,seguidoresFB_FILTRADO):
