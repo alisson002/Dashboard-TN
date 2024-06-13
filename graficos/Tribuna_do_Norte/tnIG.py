@@ -96,8 +96,8 @@ def formataNumero(numero):
 def crescimento(atual, antigo):
     taxa = ((atual - antigo) / abs(antigo))
     if taxa > 0:
-        return f'+{str(round(taxa*100,2)).replace('.', ',')}%'
-    return f'{str(round(taxa*100,2)).replace('.', ',')}%'
+        return f"+{str(round(taxa*100,2)).replace('.', ',')}%"
+    return f"{str(round(taxa*100,2)).replace('.', ',')}%"
 
 def igMetrics(dados_IG_alcance_ANTERIOR,dados_IG_alcance_FILTRADAS,visitasIG_ANTERIOR,visitasIG_FILTRADO,seguidoresIG_ANTERIOR,seguidoresIG_FILTRADO):
     
