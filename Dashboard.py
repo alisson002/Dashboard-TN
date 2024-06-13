@@ -6,6 +6,7 @@ from graficos.Tribuna_do_Norte import tnPortal
 from graficos.Tribuna_do_Norte import tnImpresso
 import importlib
 from graficos.Tribuna_do_Norte import tnFB
+from graficos.Tribuna_do_Norte import tnIG
 
 # Cria um espaço reservado vazio onde vai receber as imagens
 image_placeholder = st.empty()
@@ -38,6 +39,7 @@ else:
     st.write(html_text, unsafe_allow_html=True) 
     st.write(" ")
     st.write("**Tribuna do Norte:**")
+    st.write("╰┈➤ Adicionadas métricas de alcance, visitas e seguidores do FB e IG com comparativos em porcentagem em relação ao período anterior. (13/06/2024);")
     st.write("╰┈➤ Adiconados os gráficos do Instagram e suas versões normal e acumulativa (12/06/2024);")
     st.write("╰┈➤ Adiconadas versões normal e acumulativa dos gráficos do Facebook (10/06/2024);")
     st.write("╰┈➤ Adiconado o gráfico de visitas e seguidores do Facebook (10/06/2024);")
@@ -71,7 +73,7 @@ elif selected_option2 == "Impresso":
 elif selected_option2 == "Facebook":
     data_maxima = pd.to_datetime(tnFB.dados_FB_alcance['Data'].max())
 elif selected_option2 == "Instagram":
-    data_maxima = pd.to_datetime(tnFB.alcanceIG['Data'].max()) 
+    data_maxima = pd.to_datetime(tnIG.alcanceIG['Data'].max()) 
 else:
     data_maxima = pd.to_datetime('2024-06-06')
 #data_maxima = pd.to_datetime(tnPortal.df_noticias.iloc[-1]['not_datapub'])
@@ -141,7 +143,7 @@ noticias_edi_somado, df_NOTICIAS_impresso_filtrado, reporteres_impresso, noticia
 
 dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS,visitasFB_ANTERIOR,visitasFB_FILTRADO,seguidoresFB_ANTERIOR,seguidoresFB_FILTRADO = tnFB.filtrosDatasFACEBOOK(start_date, end_date, start_date_b4.strftime('%Y-%m-%d'), end_date_b4.strftime('%Y-%m-%d'))
 
-dados_IG_alcance_ANTERIOR,dados_IG_alcance_FILTRADAS,visitasIG_ANTERIOR,visitasIG_FILTRADO,seguidoresIG_ANTERIOR,seguidoresIG_FILTRADO = tnFB.filtrosDatasINSTAGRAM(start_date, end_date, start_date_b4.strftime('%Y-%m-%d'), end_date_b4.strftime('%Y-%m-%d'))
+dados_IG_alcance_ANTERIOR,dados_IG_alcance_FILTRADAS,visitasIG_ANTERIOR,visitasIG_FILTRADO,seguidoresIG_ANTERIOR,seguidoresIG_FILTRADO = tnIG.filtrosDatasINSTAGRAM(start_date, end_date, start_date_b4.strftime('%Y-%m-%d'), end_date_b4.strftime('%Y-%m-%d'))
 
 # Adicione seus gráficos de acordo com as opções selecionadas
 if selected_option1 == "Tribuna do norte":
@@ -309,6 +311,8 @@ if selected_option1 == "Tribuna do norte":
 
     elif selected_option2 == "Instagram":
         
+        tnIG.igMetrics(dados_IG_alcance_ANTERIOR,dados_IG_alcance_FILTRADAS,visitasIG_ANTERIOR,visitasIG_FILTRADO,seguidoresIG_ANTERIOR,seguidoresIG_FILTRADO)
+        
         exib_type = st.radio("Selecione o tipo de exibição:", ['Normal', 'Acumulativo'], horizontal=True)
         
         # Tabs para separar as áreas analisadas
@@ -319,31 +323,33 @@ if selected_option1 == "Tribuna do norte":
 
             if exib_type == "Normal":
 
-                tnFB.IG_alcance(dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS, start_date, end_date, start_date_b4, end_date_b4)
+                tnIG.IG_alcance(dados_IG_alcance_ANTERIOR, dados_IG_alcance_FILTRADAS, start_date, end_date, start_date_b4, end_date_b4)
 
             elif exib_type == "Acumulativo":
-                tnFB.IG_alcance_cumsum(dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS, start_date, end_date, start_date_b4, end_date_b4)
+                tnIG.IG_alcance_cumsum(dados_IG_alcance_ANTERIOR, dados_IG_alcance_FILTRADAS, start_date, end_date, start_date_b4, end_date_b4)
         
         with tab2:
 
             if exib_type == "Normal":
 
-                tnFB.IG_visitas(visitasFB_ANTERIOR, visitasFB_FILTRADO, start_date, end_date, start_date_b4, end_date_b4)
+                tnIG.IG_visitas(visitasIG_ANTERIOR, visitasIG_FILTRADO, start_date, end_date, start_date_b4, end_date_b4)
 
             elif exib_type == "Acumulativo":
-                tnFB.IG_visitas_cumsum(visitasFB_ANTERIOR, visitasFB_FILTRADO, start_date, end_date, start_date_b4, end_date_b4)
+                tnIG.IG_visitas_cumsum(visitasIG_ANTERIOR, visitasIG_FILTRADO, start_date, end_date, start_date_b4, end_date_b4)
         
         with tab3:
 
             if exib_type == "Normal":
 
-                tnFB.IG_seguidores(seguidoresFB_ANTERIOR, seguidoresFB_FILTRADO, start_date, end_date, start_date_b4, end_date_b4)
+                tnIG.IG_seguidores(seguidoresIG_ANTERIOR, seguidoresIG_FILTRADO, start_date, end_date, start_date_b4, end_date_b4)
 
             elif exib_type == "Acumulativo":
-                tnFB.IG_seguidores_cumsum(seguidoresFB_ANTERIOR, seguidoresFB_FILTRADO, start_date, end_date, start_date_b4, end_date_b4)
+                tnIG.IG_seguidores_cumsum(seguidoresIG_ANTERIOR, seguidoresIG_FILTRADO, start_date, end_date, start_date_b4, end_date_b4)
         
     elif selected_option2 == "Facebook":
 
+        tnFB.fbMetrics(dados_FB_alcance_ANTERIOR,dados_FB_alcance_FILTRADAS,visitasFB_ANTERIOR,visitasFB_FILTRADO,seguidoresFB_ANTERIOR,seguidoresFB_FILTRADO)
+        
         exib_type = st.radio("Selecione o tipo de exibição:", ['Normal', 'Acumulativo'], horizontal=True)
         
         # Tabs para separar as áreas analisadas
