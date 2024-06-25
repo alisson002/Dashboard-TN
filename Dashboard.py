@@ -281,7 +281,7 @@ if selected_option1 == "Tribuna do norte":
             elif exib_type == 'Gráficos de barra':
                 tnImpresso.noticiasPorEditoria_bc(editorias_impresso,df_NOTICIAS_impresso_filtrado)
         with tab2:
-            st.write('Obs: Passe o cursou por cima do gráfico para ter mais informações.')
+            st.write('Obs: Passe o cursor por cima do gráfico para obter mais informações.')
             if exib_type == 'Gráficos de rosca/pizza':
                 # Gráfico de rosca
                 tnImpresso.noticiasPorReporter(reporteres_impresso)
