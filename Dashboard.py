@@ -38,6 +38,7 @@ else:
         <p style='font-size:32px;'><b>•</b> Atualizações:</p>
         """
     st.write(html_text, unsafe_allow_html=True) 
+    st.write("╰┈➤ Novos gráficos do impresso foram adicionados. - (24/06/2024);")
     st.write("╰┈➤ Em breve os **gráficos do impresso** serão alterados, para que fiquem com o visual mais condizente com os novos gráficos do FB e IG e tornem-se mais interativos tanto com os usuários quanto em realação ao tema escolhido (escuro ou claro) - (13/06/2024);")
     st.write(" ")
     st.write("**Tribuna do Norte:**")
@@ -280,6 +281,7 @@ if selected_option1 == "Tribuna do norte":
             elif exib_type == 'Gráficos de barra':
                 tnImpresso.noticiasPorEditoria_bc(editorias_impresso,df_NOTICIAS_impresso_filtrado)
         with tab2:
+            st.write('Obs: Passe o cursou por cima do gráfico para ter mais informações.')
             if exib_type == 'Gráficos de rosca/pizza':
                 # Gráfico de rosca
                 tnImpresso.noticiasPorReporter(reporteres_impresso)
