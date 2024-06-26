@@ -121,7 +121,7 @@ def igMetrics(dados_IG_alcance_ANTERIOR,dados_IG_alcance_FILTRADAS,visitasIG_ANT
 
 def igMedias_alcance(dados_IG_alcance_FILTRADAS):
     
-    st.write("Logo abaixo estão médias relacionada a métrica sendo vista.")
+    st.write("Logo abaixo estão médias relacionadas a métrica sendo vista.")
     alcanceIG_semZeros = (alcanceIG.replace(0, np.nan)).dropna()
     dias = len((alcanceIG.replace(0, np.nan)).dropna())
     semanas = dias/7
@@ -139,7 +139,7 @@ def igMedias_alcance(dados_IG_alcance_FILTRADAS):
 
 def igMedias_visitas(visitasIG_FILTRADO):
     
-    st.write("Logo abaixo estão médias relacionada a métrica sendo vista.")
+    st.write("Logo abaixo estão médias relacionadas a métrica sendo vista.")
     visitasIG_semZeros = (visitasIG.replace(0, np.nan)).dropna()
     dias = len((visitasIG.replace(0, np.nan)).dropna())
     semanas = dias/7
@@ -157,7 +157,7 @@ def igMedias_visitas(visitasIG_FILTRADO):
 
 def igMedias_seguidores(seguidoresIG_FILTRADO):
     
-    st.write("Logo abaixo estão médias relacionada a métrica sendo vista.")
+    st.write("Logo abaixo estão médias relacionadas a métrica sendo vista.")
     seguidoresIG_semZeros = (seguidoresIG.replace(0, np.nan)).dropna()
     dias = len((seguidoresIG.replace(0, np.nan)).dropna())
     semanas = dias/7

@@ -121,7 +121,7 @@ def fbMetrics(dados_FB_alcance_ANTERIOR,dados_FB_alcance_FILTRADAS,visitasFB_ANT
 
 def FBMedias_alcance(dados_FB_alcance_FILTRADAS):
     
-    st.write("Logo abaixo estão médias relacionada a métrica sendo vista.")
+    st.write("Logo abaixo estão médias relacionadas a métrica sendo vista.")
     alcanceFB_semZeros = (dados_FB_alcance.replace(0, np.nan)).dropna()
     dias = len((dados_FB_alcance.replace(0, np.nan)).dropna())
     semanas = dias/7
@@ -139,7 +139,7 @@ def FBMedias_alcance(dados_FB_alcance_FILTRADAS):
 
 def FBMedias_visitas(visitasFB_FILTRADO):
     
-    st.write("Logo abaixo estão médias relacionada a métrica sendo vista.")
+    st.write("Logo abaixo estão médias relacionadas a métrica sendo vista.")
     visitasFB_semZeros = (visitasFB.replace(0, np.nan)).dropna()
     dias = len((visitasFB.replace(0, np.nan)).dropna())
     semanas = dias/7
@@ -157,7 +157,7 @@ def FBMedias_visitas(visitasFB_FILTRADO):
 
 def FBMedias_seguidores(seguidoresFB_FILTRADO):
     
-    st.write("Logo abaixo estão médias relacionada a métrica sendo vista.")
+    st.write("Logo abaixo estão médias relacionadas a métrica sendo vista.")
     seguidoresFB_semZeros = (seguidoresFB.replace(0, np.nan)).dropna()
     dias = len((seguidoresFB.replace(0, np.nan)).dropna())
     semanas = dias/7
