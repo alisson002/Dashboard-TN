@@ -38,18 +38,17 @@ else:
         <p style='font-size:32px;'><b>•</b> Atualizações:</p>
         """
     st.write(html_text, unsafe_allow_html=True) 
+    st.write("╰┈➤ Em breve farei atualizações visuais de alguns elementos da Dashboard. - (26/06/2024);")
     st.write("╰┈➤ Novos gráficos do impresso foram adicionados. - (24/06/2024);")
     st.write("╰┈➤ Em breve os **gráficos do impresso** serão alterados, para que fiquem com o visual mais condizente com os novos gráficos do FB e IG e tornem-se mais interativos tanto com os usuários quanto em realação ao tema escolhido (escuro ou claro) - (13/06/2024);")
     st.write(" ")
     st.write("**Tribuna do Norte:**")
+    st.write("╰┈➤ Adicionadas as médias das métricas do Instagram e Facebook - (26/06/2024);")
     st.write("╰┈➤ Adicionadas métricas de alcance, visitas e seguidores do FB e IG com comparativos em porcentagem em relação ao período anterior - (13/06/2024);")
     st.write("╰┈➤ Adiconados os gráficos do Instagram e suas versões normal e acumulativa - (12/06/2024);")
-    st.write("╰┈➤ Adiconadas versões normal e acumulativa dos gráficos do Facebook - (10/06/2024);")
-    st.write("╰┈➤ Adiconado o gráfico de visitas e seguidores do Facebook - (10/06/2024);")
-    st.write("╰┈➤ Em breve todos os dados do Focebook e Instagram - (06/06/2024);")
-    st.write("╰┈➤ Adiconado o gráfico de alcance do Facebook - (06/06/2024);")
     st.write(" ")
     st.write("**Jovem Pan News - Natal:**")
+    st.write("╰┈➤ Adicionadas as médias das métricas do Instagram - (26/06/2024);")
     st.write("╰┈➤ Adicionadas gráficos e métricas de alcance, visitas e seguidores do IG com comparativos em relação ao período anterior - (13/06/2024);")
     st.write("╰┈➤ Em breve;")
     st.write(" ")
@@ -327,6 +326,7 @@ if selected_option1 == "Tribuna do norte":
         
         # Informações de cada tab
         with tab1:
+            tnIG.igMedias_alcance(dados_IG_alcance_FILTRADAS)
 
             if exib_type == "Normal":
 
@@ -336,7 +336,7 @@ if selected_option1 == "Tribuna do norte":
                 tnIG.IG_alcance_cumsum(dados_IG_alcance_ANTERIOR, dados_IG_alcance_FILTRADAS, start_date, end_date, start_date_b4, end_date_b4)
         
         with tab2:
-
+            tnIG.igMedias_visitas(visitasIG_FILTRADO)
             if exib_type == "Normal":
 
                 tnIG.IG_visitas(visitasIG_ANTERIOR, visitasIG_FILTRADO, start_date, end_date, start_date_b4, end_date_b4)
@@ -345,7 +345,8 @@ if selected_option1 == "Tribuna do norte":
                 tnIG.IG_visitas_cumsum(visitasIG_ANTERIOR, visitasIG_FILTRADO, start_date, end_date, start_date_b4, end_date_b4)
         
         with tab3:
-
+            st.write("Obs.: os números de seguidores são apenas em relação aos ganhos. Os valores de perda não são disponibilizados para download.")
+            tnIG.igMedias_seguidores(seguidoresIG_FILTRADO)
             if exib_type == "Normal":
 
                 tnIG.IG_seguidores(seguidoresIG_ANTERIOR, seguidoresIG_FILTRADO, start_date, end_date, start_date_b4, end_date_b4)
@@ -364,7 +365,7 @@ if selected_option1 == "Tribuna do norte":
         
         # Informações de cada tab
         with tab1:
-
+            tnFB.FBMedias_alcance(dados_FB_alcance_FILTRADAS)
             if exib_type == "Normal":
 
                 tnFB.FB_alcance(dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS, start_date, end_date, start_date_b4, end_date_b4)
@@ -373,7 +374,7 @@ if selected_option1 == "Tribuna do norte":
                 tnFB.FB_alcance_cumsum(dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS, start_date, end_date, start_date_b4, end_date_b4)
         
         with tab2:
-
+            tnFB.FBMedias_visitas(visitasFB_FILTRADO)
             if exib_type == "Normal":
 
                 tnFB.FB_visitas(visitasFB_ANTERIOR, visitasFB_FILTRADO, start_date, end_date, start_date_b4, end_date_b4)
@@ -382,7 +383,7 @@ if selected_option1 == "Tribuna do norte":
                 tnFB.FB_visitas_cumsum(visitasFB_ANTERIOR, visitasFB_FILTRADO, start_date, end_date, start_date_b4, end_date_b4)
         
         with tab3:
-
+            tnFB.FBMedias_seguidores(seguidoresFB_FILTRADO)
             if exib_type == "Normal":
 
                 tnFB.FB_seguidores(seguidoresFB_ANTERIOR, seguidoresFB_FILTRADO, start_date, end_date, start_date_b4, end_date_b4)
@@ -411,7 +412,7 @@ elif selected_option1 == "JP News - Natal":
         
         # Informações de cada tab
         with tab1:
-
+            jpnIG.igMedias_alcance(dados_IG_alcance_FILTRADASjpn)
             if exib_type == "Normal":
 
                 jpnIG.IG_alcance(dados_IG_alcance_ANTERIORjpn, dados_IG_alcance_FILTRADASjpn, start_date, end_date, start_date_b4, end_date_b4)
@@ -420,7 +421,7 @@ elif selected_option1 == "JP News - Natal":
                 jpnIG.IG_alcance_cumsum(dados_IG_alcance_ANTERIORjpn, dados_IG_alcance_FILTRADASjpn, start_date, end_date, start_date_b4, end_date_b4)
         
         with tab2:
-
+            jpnIG.igMedias_visitas(visitasIG_FILTRADOjpn)
             if exib_type == "Normal":
 
                 jpnIG.IG_visitas(visitasIG_ANTERIORjpn, visitasIG_FILTRADOjpn, start_date, end_date, start_date_b4, end_date_b4)
@@ -429,7 +430,8 @@ elif selected_option1 == "JP News - Natal":
                 jpnIG.IG_visitas_cumsum(visitasIG_ANTERIORjpn, visitasIG_FILTRADOjpn, start_date, end_date, start_date_b4, end_date_b4)
         
         with tab3:
-
+            st.write("Obs.: os números de seguidores são apenas em relação aos ganhos. Os valores de perda não são disponibilizados para download.")
+            jpnIG.igMedias_seguidores(seguidoresIG_FILTRADOjpn)
             if exib_type == "Normal":
 
                 jpnIG.IG_seguidores(seguidoresIG_ANTERIORjpn, seguidoresIG_FILTRADOjpn, start_date, end_date, start_date_b4, end_date_b4)

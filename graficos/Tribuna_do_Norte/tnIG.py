@@ -5,6 +5,7 @@ from datetime import datetime
 import csv
 import plotly
 import plotly.graph_objects as go
+import numpy as np
 
 def encontrar_frase_em_csv_meta(nome_arquivo, frase_procurada):
     try:
@@ -117,6 +118,60 @@ def igMetrics(dados_IG_alcance_ANTERIOR,dados_IG_alcance_FILTRADAS,visitasIG_ANT
     st.write("Obs.: Os dados de **Alcance** exibidos aqui são cerca de 65% a 70% maiores que os exibidos diretamente na plataforma do Meta Busines. O motivo dos dados (apenas para a métrica de **Alcance**) serem tão diferentes talvez seja algum filtro que a Meta utiliza em sua exibição na plataforma, com os dados que são fornecidos para download/analises sendo, possívelmente, dados não tratados.")
     st.write("Pesquisei sobre essa diferença nos números, mas não foi informado nenhum motivo pela Meta.")
     st.write("Apesar das diferenças nos número, o gráfico segue um padrão de comportamento praticamente idêntico.")
+
+def igMedias_alcance(dados_IG_alcance_FILTRADAS):
+    
+    st.write("Logo abaixo estão médias relacionada a métrica sendo vista.")
+    alcanceIG_semZeros = (alcanceIG.replace(0, np.nan)).dropna()
+    dias = len((alcanceIG.replace(0, np.nan)).dropna())
+    semanas = dias/7
+    mês = dias/30
+    
+    col1, col2, col3, col4 = st.columns(4)
+    
+    col1.metric("Período selecionado (dia)", formataNumero(int(dados_IG_alcance_FILTRADAS['Primary'].sum()/len(dados_IG_alcance_FILTRADAS['Primary']))), '')
+    
+    col2.metric("Diária", formataNumero(int(alcanceIG_semZeros['Primary'].sum()/dias)), '')
+    
+    col3.metric("Semanal (7 dias)", formataNumero(int(alcanceIG_semZeros['Primary'].sum()/semanas)), '')
+    
+    col4.metric("Mensal (30 dias)", formataNumero(int(alcanceIG_semZeros['Primary'].sum()/mês)), '')
+
+def igMedias_visitas(visitasIG_FILTRADO):
+    
+    st.write("Logo abaixo estão médias relacionada a métrica sendo vista.")
+    visitasIG_semZeros = (visitasIG.replace(0, np.nan)).dropna()
+    dias = len((visitasIG.replace(0, np.nan)).dropna())
+    semanas = dias/7
+    mês = dias/30
+    
+    col1, col2, col3, col4 = st.columns(4)
+    
+    col1.metric("Período selecionado (dia)", formataNumero(int(visitasIG_FILTRADO['Primary'].sum()/len(visitasIG_FILTRADO['Primary']))), '')
+    
+    col2.metric("Diária", formataNumero(int(visitasIG_semZeros['Primary'].sum()/dias)), '')
+    
+    col3.metric("Semanal (7 dias)", formataNumero(int(visitasIG_semZeros['Primary'].sum()/semanas)), '')
+    
+    col4.metric("Mensal (30 dias)", formataNumero(int(visitasIG_semZeros['Primary'].sum()/mês)), '') 
+
+def igMedias_seguidores(seguidoresIG_FILTRADO):
+    
+    st.write("Logo abaixo estão médias relacionada a métrica sendo vista.")
+    seguidoresIG_semZeros = (seguidoresIG.replace(0, np.nan)).dropna()
+    dias = len((seguidoresIG.replace(0, np.nan)).dropna())
+    semanas = dias/7
+    mês = dias/30
+    
+    col1, col2, col3, col4 = st.columns(4)
+    
+    col1.metric("Período selecionado (dia)", formataNumero(int(seguidoresIG_FILTRADO['Primary'].sum()/len(seguidoresIG_FILTRADO['Primary']))), '')
+    
+    col2.metric("Diária", formataNumero(int(seguidoresIG_semZeros['Primary'].sum()/dias)), '')
+    
+    col3.metric("Semanal (7 dias)", formataNumero(int(seguidoresIG_semZeros['Primary'].sum()/semanas)), '')
+    
+    col4.metric("Mensal (30 dias)", formataNumero(int(seguidoresIG_semZeros['Primary'].sum()/mês)), '')
 
 def IG_alcance(dados_IG_alcance_ANTERIOR, dados_IG_alcance_FILTRADAS, start_date, end_date, start_date_b4, end_date_b4):
     
