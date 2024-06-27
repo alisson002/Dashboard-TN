@@ -115,9 +115,20 @@ def igMetrics(dados_IG_alcance_ANTERIOR,dados_IG_alcance_FILTRADAS,visitasIG_ANT
     col1.metric("Alcance", formataNumero(total_igAlcance_selecionado), crescimento(total_igAlcance_selecionado, total_igAlcance_anterior))
     col2.metric("Visitas", formataNumero(total_igVisitas_selecionado), crescimento(total_igVisitas_selecionado, total_igVisitas_anterior))
     col3.metric("Seguidores", formataNumero(total_igSeguidores_selecionado), crescimento(total_igSeguidores_selecionado, total_igSeguidores_anterior))
-    st.write("Obs.: Os dados de **Alcance** exibidos aqui são cerca de 65% a 70% maiores que os exibidos diretamente na plataforma do Meta Busines. O motivo dos dados (apenas para a métrica de **Alcance**) serem tão diferentes talvez seja algum filtro que a Meta utiliza em sua exibição na plataforma, com os dados que são fornecidos para download/analises sendo, possívelmente, dados não tratados.")
-    st.write("Pesquisei sobre essa diferença nos números, mas não foi informado nenhum motivo pela Meta.")
-    st.write("Apesar das diferenças nos número, o gráfico segue um padrão de comportamento praticamente idêntico.")
+    html_text = """
+        <p style='font-size:10px;'>Obs.: Os dados de <b>Alcance</b> exibidos aqui são cerca de 65% a 70% maiores que os exibidos diretamente na plataforma do Meta Busines. O motivo dos dados (apenas para a métrica de <b>Alcance</b>) serem tão diferentes talvez seja algum filtro que a Meta utiliza em sua exibição na plataforma, com os dados que são fornecidos para download/analises sendo, possívelmente, dados não tratados.
+        <br>
+        <br>
+        Pesquisei sobre essa diferença nos números, mas não foi informado nenhum motivo pela Meta.
+        <br>
+        <br>
+        Apesar das diferenças nos número, o gráfico segue um padrão de comportamento praticamente idêntico.
+        </p>
+        """
+    # st.write("Obs.: Os dados de **Alcance** exibidos aqui são cerca de 65% a 70% maiores que os exibidos diretamente na plataforma do Meta Busines. O motivo dos dados (apenas para a métrica de **Alcance**) serem tão diferentes talvez seja algum filtro que a Meta utiliza em sua exibição na plataforma, com os dados que são fornecidos para download/analises sendo, possívelmente, dados não tratados.")
+    # st.write("Pesquisei sobre essa diferença nos números, mas não foi informado nenhum motivo pela Meta.")
+    # st.write("Apesar das diferenças nos número, o gráfico segue um padrão de comportamento praticamente idêntico.")
+    st.write(html_text, unsafe_allow_html=True)
 
 def igMedias_alcance(dados_IG_alcance_FILTRADAS):
     

@@ -115,9 +115,17 @@ def fbMetrics(dados_FB_alcance_ANTERIOR,dados_FB_alcance_FILTRADAS,visitasFB_ANT
     col1.metric("Alcance", formataNumero(total_FBAlcance_selecionado), crescimento(total_FBAlcance_selecionado, total_FBAlcance_anterior))
     col2.metric("Visitas", formataNumero(total_FBVisitas_selecionado), crescimento(total_FBVisitas_selecionado, total_FBVisitas_anterior))
     col3.metric("Seguidores", formataNumero(total_FBSeguidores_selecionado), crescimento(total_FBSeguidores_selecionado, total_FBSeguidores_anterior))
-    st.write("Obs.: Os dados de **Alcance** exibidos aqui são cerca de 35% a 55% maiores que os exibidos diretamente na plataforma do Meta Busines. O motivo dos dados (apenas para a métrica de **Alcance**) serem tão diferentes talvez seja algum filtro que a Meta utiliza em sua exibição na plataforma, com os dados que são fornecidos para download/analises sendo, possívelmente, dados não tratados.")
-    st.write("Pesquisei sobre essa diferença nos números, mas não foi informado nenhum motivo pela Meta.")
-    st.write("Apesar das diferenças nos número, o gráfico segue um padrão de comportamento praticamente idêntico.")
+    html_text = """
+        <p style='font-size:10px;'>Obs.: Os dados de <b>Alcance</b> exibidos aqui são cerca de 35% a 55% maiores que os exibidos diretamente na plataforma do Meta Busines. O motivo dos dados (apenas para a métrica de <b>Alcance</b>) serem tão diferentes talvez seja algum filtro que a Meta utiliza em sua exibição na plataforma, com os dados que são fornecidos para download/analises sendo, possívelmente, dados não tratados.
+        <br>
+        <br>
+        Pesquisei sobre essa diferença nos números, mas não foi informado nenhum motivo pela Meta.
+        <br>
+        <br>
+        Apesar das diferenças nos número, o gráfico segue um padrão de comportamento praticamente idêntico.
+        </p>
+        """
+    st.write(html_text, unsafe_allow_html=True)
 
 def FBMedias_alcance(dados_FB_alcance_FILTRADAS):
     
@@ -193,11 +201,11 @@ def FB_alcance(dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS, start_date
     dados_FB_alcance_FILTRADAS['Dia'] = range(1, len(dados_FB_alcance_FILTRADAS) + 1)
     dados_FB_alcance_ANTERIOR['Dia'] = range(1, len(dados_FB_alcance_ANTERIOR) + 1)
 
-    # Cria a fFBura
-    fFB = go.FFBure()
+    # Cria a figura
+    fig = go.Figure()
 
     # Adiciona a linha do período atual
-    fFB.add_trace(go.Scatter(
+    fig.add_trace(go.Scatter(
     x=dados_FB_alcance_FILTRADAS['Dia'],
     y=dados_FB_alcance_FILTRADAS['Primary'],
     mode='lines+markers',
@@ -208,7 +216,7 @@ def FB_alcance(dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS, start_date
     ))
 
     # Adiciona a linha do período anterior
-    fFB.add_trace(go.Scatter(
+    fig.add_trace(go.Scatter(
     x=dados_FB_alcance_ANTERIOR['Dia'],
     y=dados_FB_alcance_ANTERIOR['Primary'],
     mode='lines+markers',
@@ -218,8 +226,8 @@ def FB_alcance(dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS, start_date
     line=dict(color='#6184D1')
     ))
 
-    # ConfFBura o layout
-    fFB.update_layout(
+    # Configura o layout
+    fig.update_layout(
     title='Alcance do FB - Comparação de Períodos',
     title_x=0.1,
     title_xanchor='left',
@@ -231,7 +239,7 @@ def FB_alcance(dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS, start_date
     legend=dict(x=1, y=1, xanchor='rFBht', yanchor='bottom', font=dict(size=10))
     )
     
-    st.plotly_chart(fFB)
+    st.plotly_chart(fig)
 
 def FB_alcance_cumsum(dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS, start_date, end_date, start_date_b4, end_date_b4):
     
@@ -253,11 +261,11 @@ def FB_alcance_cumsum(dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS, sta
     dados_FB_alcance_FILTRADAS['Dia'] = range(1, len(dados_FB_alcance_FILTRADAS) + 1)
     dados_FB_alcance_ANTERIOR['Dia'] = range(1, len(dados_FB_alcance_ANTERIOR) + 1)
 
-    # Cria a fFBura
-    fFB = go.FFBure()
+    # Cria a figura
+    fig = go.Figure()
 
     # Adiciona a linha do período atual
-    fFB.add_trace(go.Scatter(
+    fig.add_trace(go.Scatter(
     x=dados_FB_alcance_FILTRADAS['Dia'],
     y=dados_FB_alcance_FILTRADAS['Primary'].cumsum(),
     mode='lines+markers',
@@ -268,7 +276,7 @@ def FB_alcance_cumsum(dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS, sta
     ))
 
     # Adiciona a linha do período anterior
-    fFB.add_trace(go.Scatter(
+    fig.add_trace(go.Scatter(
     x=dados_FB_alcance_ANTERIOR['Dia'],
     y=dados_FB_alcance_ANTERIOR['Primary'].cumsum(),
     mode='lines+markers',
@@ -278,8 +286,8 @@ def FB_alcance_cumsum(dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS, sta
     line=dict(color='#6184D1')
     ))
 
-    # ConfFBura o layout
-    fFB.update_layout(
+    # Configura o layout
+    fig.update_layout(
     title='Alcance do FB - Comparação de Períodos',
     title_x=0.1,
     title_xanchor='left',
@@ -291,7 +299,7 @@ def FB_alcance_cumsum(dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS, sta
     legend=dict(x=1, y=1, xanchor='rFBht', yanchor='bottom', font=dict(size=10))
     )
     
-    st.plotly_chart(fFB)
+    st.plotly_chart(fig)
 
 def FB_visitas(visitasFB_ANTERIOR, visitasFB_FILTRADO, start_date, end_date, start_date_b4, end_date_b4):
     
@@ -313,11 +321,11 @@ def FB_visitas(visitasFB_ANTERIOR, visitasFB_FILTRADO, start_date, end_date, sta
     visitasFB_FILTRADO['Dia'] = range(1, len(visitasFB_FILTRADO) + 1)
     visitasFB_ANTERIOR['Dia'] = range(1, len(visitasFB_ANTERIOR) + 1)
 
-    # Cria a fFBura
-    fFB = go.FFBure()
+    # Cria a figura
+    fig = go.Figure()
 
     # Adiciona a linha do período atual
-    fFB.add_trace(go.Scatter(
+    fig.add_trace(go.Scatter(
     x=visitasFB_FILTRADO['Dia'],
     y=visitasFB_FILTRADO['Primary'],
     mode='lines+markers',
@@ -328,7 +336,7 @@ def FB_visitas(visitasFB_ANTERIOR, visitasFB_FILTRADO, start_date, end_date, sta
     ))
 
     # Adiciona a linha do período anterior
-    fFB.add_trace(go.Scatter(
+    fig.add_trace(go.Scatter(
     x=visitasFB_ANTERIOR['Dia'],
     y=visitasFB_ANTERIOR['Primary'],
     mode='lines+markers',
@@ -338,8 +346,8 @@ def FB_visitas(visitasFB_ANTERIOR, visitasFB_FILTRADO, start_date, end_date, sta
     line=dict(color='#7B94CC')
     ))
 
-    # ConfFBura o layout
-    fFB.update_layout(
+    # Configura o layout
+    fig.update_layout(
     title='Visitas do FB - Comparação de Períodos',
     title_x=0.1,
     title_xanchor='left',
@@ -351,7 +359,7 @@ def FB_visitas(visitasFB_ANTERIOR, visitasFB_FILTRADO, start_date, end_date, sta
     legend=dict(x=1, y=1, xanchor='rFBht', yanchor='bottom', font=dict(size=10))
     )
     
-    st.plotly_chart(fFB)
+    st.plotly_chart(fig)
 
 def FB_visitas_cumsum(visitasFB_ANTERIOR, visitasFB_FILTRADO, start_date, end_date, start_date_b4, end_date_b4):
     
@@ -373,11 +381,11 @@ def FB_visitas_cumsum(visitasFB_ANTERIOR, visitasFB_FILTRADO, start_date, end_da
     visitasFB_FILTRADO['Dia'] = range(1, len(visitasFB_FILTRADO) + 1)
     visitasFB_ANTERIOR['Dia'] = range(1, len(visitasFB_ANTERIOR) + 1)
 
-    # Cria a fFBura
-    fFB = go.FFBure()
+    # Cria a figura
+    fig = go.Figure()
 
     # Adiciona a linha do período atual
-    fFB.add_trace(go.Scatter(
+    fig.add_trace(go.Scatter(
     x=visitasFB_FILTRADO['Dia'],
     y=visitasFB_FILTRADO['Primary'].cumsum(),
     mode='lines+markers',
@@ -388,7 +396,7 @@ def FB_visitas_cumsum(visitasFB_ANTERIOR, visitasFB_FILTRADO, start_date, end_da
     ))
 
     # Adiciona a linha do período anterior
-    fFB.add_trace(go.Scatter(
+    fig.add_trace(go.Scatter(
     x=visitasFB_ANTERIOR['Dia'],
     y=visitasFB_ANTERIOR['Primary'].cumsum(),
     mode='lines+markers',
@@ -398,8 +406,8 @@ def FB_visitas_cumsum(visitasFB_ANTERIOR, visitasFB_FILTRADO, start_date, end_da
     line=dict(color='#7B94CC')
     ))
 
-    # ConfFBura o layout
-    fFB.update_layout(
+    # Configura o layout
+    fig.update_layout(
     title='Visitas do FB - Comparação de Períodos',
     title_x=0.1,
     title_xanchor='left',
@@ -411,7 +419,7 @@ def FB_visitas_cumsum(visitasFB_ANTERIOR, visitasFB_FILTRADO, start_date, end_da
     legend=dict(x=1, y=1, xanchor='rFBht', yanchor='bottom', font=dict(size=10))
     )
     
-    st.plotly_chart(fFB)
+    st.plotly_chart(fig)
 
 def FB_seguidores(seguidoresFB_ANTERIOR, seguidoresFB_FILTRADO, start_date, end_date, start_date_b4, end_date_b4):
     
@@ -433,11 +441,11 @@ def FB_seguidores(seguidoresFB_ANTERIOR, seguidoresFB_FILTRADO, start_date, end_
     seguidoresFB_FILTRADO['Dia'] = range(1, len(seguidoresFB_FILTRADO) + 1)
     seguidoresFB_ANTERIOR['Dia'] = range(1, len(seguidoresFB_ANTERIOR) + 1)
 
-    # Cria a fFBura
-    fFB = go.FFBure()
+    # Cria a figura
+    fig = go.Figure()
 
     # Adiciona a linha do período atual
-    fFB.add_trace(go.Scatter(
+    fig.add_trace(go.Scatter(
     x=seguidoresFB_FILTRADO['Dia'],
     y=seguidoresFB_FILTRADO['Primary'],
     mode='lines+markers',
@@ -448,7 +456,7 @@ def FB_seguidores(seguidoresFB_ANTERIOR, seguidoresFB_FILTRADO, start_date, end_
     ))
 
     # Adiciona a linha do período anterior
-    fFB.add_trace(go.Scatter(
+    fig.add_trace(go.Scatter(
     x=seguidoresFB_ANTERIOR['Dia'],
     y=seguidoresFB_ANTERIOR['Primary'],
     mode='lines+markers',
@@ -458,8 +466,8 @@ def FB_seguidores(seguidoresFB_ANTERIOR, seguidoresFB_FILTRADO, start_date, end_
     line=dict(color='#ACB9D7')
     ))
 
-    # ConfFBura o layout
-    fFB.update_layout(
+    # Configura o layout
+    fig.update_layout(
     title='Seguidores do FB - Comparação de Períodos',
     title_x=0.1,
     title_xanchor='left',
@@ -471,7 +479,7 @@ def FB_seguidores(seguidoresFB_ANTERIOR, seguidoresFB_FILTRADO, start_date, end_
     legend=dict(x=1, y=1, xanchor='rFBht', yanchor='bottom', font=dict(size=10))
     )
     
-    st.plotly_chart(fFB)
+    st.plotly_chart(fig)
 
 def FB_seguidores_cumsum(seguidoresFB_ANTERIOR, seguidoresFB_FILTRADO, start_date, end_date, start_date_b4, end_date_b4):
     
@@ -493,11 +501,11 @@ def FB_seguidores_cumsum(seguidoresFB_ANTERIOR, seguidoresFB_FILTRADO, start_dat
     seguidoresFB_FILTRADO['Dia'] = range(1, len(seguidoresFB_FILTRADO) + 1)
     seguidoresFB_ANTERIOR['Dia'] = range(1, len(seguidoresFB_ANTERIOR) + 1)
 
-    # Cria a fFBura
-    fFB = go.FFBure()
+    # Cria a figura
+    fig = go.Figure()
 
     # Adiciona a linha do período atual
-    fFB.add_trace(go.Scatter(
+    fig.add_trace(go.Scatter(
     x=seguidoresFB_FILTRADO['Dia'],
     y=seguidoresFB_FILTRADO['Primary'].cumsum(),
     mode='lines+markers',
@@ -508,7 +516,7 @@ def FB_seguidores_cumsum(seguidoresFB_ANTERIOR, seguidoresFB_FILTRADO, start_dat
     ))
 
     # Adiciona a linha do período anterior
-    fFB.add_trace(go.Scatter(
+    fig.add_trace(go.Scatter(
     x=seguidoresFB_ANTERIOR['Dia'],
     y=seguidoresFB_ANTERIOR['Primary'].cumsum(),
     mode='lines+markers',
@@ -518,8 +526,8 @@ def FB_seguidores_cumsum(seguidoresFB_ANTERIOR, seguidoresFB_FILTRADO, start_dat
     line=dict(color='#ACB9D7')
     ))
 
-    # ConfFBura o layout
-    fFB.update_layout(
+    # Configura o layout
+    fig.update_layout(
     title='Seguidores do FB - Comparação de Períodos',
     title_x=0.1,
     title_xanchor='left',
@@ -531,4 +539,4 @@ def FB_seguidores_cumsum(seguidoresFB_ANTERIOR, seguidoresFB_FILTRADO, start_dat
     legend=dict(x=1, y=1, xanchor='rFBht', yanchor='bottom', font=dict(size=10))
     )
     
-    st.plotly_chart(fFB)
+    st.plotly_chart(fig)

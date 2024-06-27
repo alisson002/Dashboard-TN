@@ -34,24 +34,28 @@ elif selected_option1 == "JP News - Natal":
     options2 = ["Instagram", "Twitter", "YouTube"]
     selected_option2 = st.sidebar.selectbox("Selecione a opção 2:", options2)
 else:
+    
     html_text = """
         <p style='font-size:32px;'><b>•</b> Atualizações:</p>
         """
-    st.write(html_text, unsafe_allow_html=True) 
+    st.write(html_text, unsafe_allow_html=True)
     st.write("╰┈➤ Em breve farei atualizações visuais de alguns elementos da Dashboard. - (26/06/2024);")
     st.write("╰┈➤ Novos gráficos do impresso foram adicionados. - (24/06/2024);")
     st.write("╰┈➤ Em breve os **gráficos do impresso** serão alterados, para que fiquem com o visual mais condizente com os novos gráficos do FB e IG e tornem-se mais interativos tanto com os usuários quanto em realação ao tema escolhido (escuro ou claro) - (13/06/2024);")
-    st.write(" ")
+    # st.write(" ")
+    st.divider()
     st.write("**Tribuna do Norte:**")
     st.write("╰┈➤ Adicionadas as médias das métricas do Instagram e Facebook - (26/06/2024);")
     st.write("╰┈➤ Adicionadas métricas de alcance, visitas e seguidores do FB e IG com comparativos em porcentagem em relação ao período anterior - (13/06/2024);")
     st.write("╰┈➤ Adiconados os gráficos do Instagram e suas versões normal e acumulativa - (12/06/2024);")
-    st.write(" ")
+    # st.write(" ")
+    st.divider()
     st.write("**Jovem Pan News - Natal:**")
     st.write("╰┈➤ Adicionadas as médias das métricas do Instagram - (26/06/2024);")
     st.write("╰┈➤ Adicionadas gráficos e métricas de alcance, visitas e seguidores do IG com comparativos em relação ao período anterior - (13/06/2024);")
     st.write("╰┈➤ Em breve;")
-    st.write(" ")
+    # st.write(" ")
+    st.divider()
     html_text = """
         <p style='font-size:32px;'><b>•</b> Sugestões/Informar erros:</p>
         """
@@ -64,6 +68,7 @@ else:
     st.write("╰┈➤ Título do e-mail: **ERRO - DASHBOARD STREAMLIT TN**;")
     st.write("╰┈➤ Título do e-mail: **ERRO - DASHBOARD STREAMLIT JPN**;")
     st.write("╰┈➤ Se possível envie prints complementando a informação do e-mail;")
+    st.divider()
     options2 = []
     selected_option2 = st.sidebar.selectbox("Selecione a opção 2:", options2)
 
@@ -264,7 +269,7 @@ if selected_option1 == "Tribuna do norte":
         exib_type = st.radio("Selecione o tipo de exibição:", ['Gráficos de rosca/pizza', 'Gráficos de barra', "Tabelas"], horizontal=True)
         
         # Tabs para separar as áreas analisadas
-        st.write('Obs: dados importados do Trello do Tribuna do Norte. Portanto, podem divergir dos dados do impresso mostrado junto dos dados do Portal.')
+        #st.write('Obs: dados importados do Trello do Tribuna do Norte. Portanto, podem divergir dos dados do impresso mostrado junto dos dados do Portal.')
         
         # Informações de cada tab
         tab1, tab2, tab3, tab4, tab5= st.tabs(["Notícias por editoria", "Nóticias por repórter", "Editoria por repórter", "Créditos/origem das fotos", "Editoria por foto"])
