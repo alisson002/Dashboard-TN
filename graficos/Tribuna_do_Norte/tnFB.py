@@ -187,9 +187,9 @@ def FB_alcance(dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS, start_date
     dados_FB_alcance_FILTRADAS['Data'] = pd.to_datetime(dados_FB_alcance_FILTRADAS['Data'])
     dados_FB_alcance_ANTERIOR['Data'] = pd.to_datetime(dados_FB_alcance_ANTERIOR['Data'])
 
-    # Manter as datas orFBinais
-    dados_FB_alcance_FILTRADAS['Data_OrFBinal'] = dados_FB_alcance_FILTRADAS['Data']
-    dados_FB_alcance_ANTERIOR['Data_OrFBinal'] = dados_FB_alcance_ANTERIOR['Data']
+    # Manter as datas originais
+    dados_FB_alcance_FILTRADAS['Data_Original'] = dados_FB_alcance_FILTRADAS['Data']
+    dados_FB_alcance_ANTERIOR['Data_Original'] = dados_FB_alcance_ANTERIOR['Data']
 
     # Calcular a diferença de dias entre o início dos dois períodos
     delta = dados_FB_alcance_FILTRADAS['Data'].min() - dados_FB_alcance_ANTERIOR['Data'].min()
@@ -210,8 +210,8 @@ def FB_alcance(dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS, start_date
     y=dados_FB_alcance_FILTRADAS['Primary'],
     mode='lines+markers',
     name=f'Selecionado: {transformaData_inicio(start_date)} a {transformaData_final(end_date)}',
-    text=dados_FB_alcance_FILTRADAS['Data_OrFBinal'].dt.strftime('%Y-%m-%d'),
-    hovertemplate='<br>Data OrFBinal: %{text}<br>Valor: %{y}',
+    text=dados_FB_alcance_FILTRADAS['Data_Original'].dt.strftime('%Y-%m-%d'),
+    hovertemplate='<br>Data Original: %{text}<br>Valor: %{y}',
     line=dict(color='#2f55a4')
     ))
 
@@ -221,8 +221,8 @@ def FB_alcance(dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS, start_date
     y=dados_FB_alcance_ANTERIOR['Primary'],
     mode='lines+markers',
     name=f"Anterior: {start_date_b4.strftime('%d-%m-%Y')} a {(end_date_b4 - pd.DateOffset(days=1)).strftime('%d-%m-%Y')}",
-    text=dados_FB_alcance_ANTERIOR['Data_OrFBinal'].dt.strftime('%d-%m-%Y'),
-    hovertemplate='<br>Data OrFBinal: %{text}<br>Valor: %{y}',
+    text=dados_FB_alcance_ANTERIOR['Data_Original'].dt.strftime('%d-%m-%Y'),
+    hovertemplate='<br>Data Original: %{text}<br>Valor: %{y}',
     line=dict(color='#6184D1')
     ))
 
@@ -236,7 +236,7 @@ def FB_alcance(dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS, start_date
     yaxis_title='Alcance',
     hovermode='x unified',
     yaxis=dict(tickformat='.'),
-    legend=dict(x=1, y=1, xanchor='rFBht', yanchor='bottom', font=dict(size=10))
+    legend=dict(x=1, y=1, xanchor='right', yanchor='bottom', font=dict(size=10))
     )
     
     st.plotly_chart(fig)
@@ -247,9 +247,9 @@ def FB_alcance_cumsum(dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS, sta
     dados_FB_alcance_FILTRADAS['Data'] = pd.to_datetime(dados_FB_alcance_FILTRADAS['Data'])
     dados_FB_alcance_ANTERIOR['Data'] = pd.to_datetime(dados_FB_alcance_ANTERIOR['Data'])
 
-    # Manter as datas orFBinais
-    dados_FB_alcance_FILTRADAS['Data_OrFBinal'] = dados_FB_alcance_FILTRADAS['Data']
-    dados_FB_alcance_ANTERIOR['Data_OrFBinal'] = dados_FB_alcance_ANTERIOR['Data']
+    # Manter as datas originais
+    dados_FB_alcance_FILTRADAS['Data_Original'] = dados_FB_alcance_FILTRADAS['Data']
+    dados_FB_alcance_ANTERIOR['Data_Original'] = dados_FB_alcance_ANTERIOR['Data']
 
     # Calcular a diferença de dias entre o início dos dois períodos
     delta = dados_FB_alcance_FILTRADAS['Data'].min() - dados_FB_alcance_ANTERIOR['Data'].min()
@@ -270,8 +270,8 @@ def FB_alcance_cumsum(dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS, sta
     y=dados_FB_alcance_FILTRADAS['Primary'].cumsum(),
     mode='lines+markers',
     name=f'Selecionado: {transformaData_inicio(start_date)} a {transformaData_final(end_date)}',
-    text=dados_FB_alcance_FILTRADAS['Data_OrFBinal'].dt.strftime('%Y-%m-%d'),
-    hovertemplate='<br>Data OrFBinal: %{text}<br>Valor: %{y}',
+    text=dados_FB_alcance_FILTRADAS['Data_Original'].dt.strftime('%Y-%m-%d'),
+    hovertemplate='<br>Data Original: %{text}<br>Valor: %{y}',
     line=dict(color='#2f55a4')
     ))
 
@@ -281,8 +281,8 @@ def FB_alcance_cumsum(dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS, sta
     y=dados_FB_alcance_ANTERIOR['Primary'].cumsum(),
     mode='lines+markers',
     name=f"Anterior: {start_date_b4.strftime('%d-%m-%Y')} a {(end_date_b4 - pd.DateOffset(days=1)).strftime('%d-%m-%Y')}",
-    text=dados_FB_alcance_ANTERIOR['Data_OrFBinal'].dt.strftime('%d-%m-%Y'),
-    hovertemplate='<br>Data OrFBinal: %{text}<br>Valor: %{y}',
+    text=dados_FB_alcance_ANTERIOR['Data_Original'].dt.strftime('%d-%m-%Y'),
+    hovertemplate='<br>Data Original: %{text}<br>Valor: %{y}',
     line=dict(color='#6184D1')
     ))
 
@@ -296,7 +296,7 @@ def FB_alcance_cumsum(dados_FB_alcance_ANTERIOR, dados_FB_alcance_FILTRADAS, sta
     yaxis_title='Alcance',
     hovermode='x unified',
     yaxis=dict(tickformat='.'),
-    legend=dict(x=1, y=1, xanchor='rFBht', yanchor='bottom', font=dict(size=10))
+    legend=dict(x=1, y=1, xanchor='right', yanchor='bottom', font=dict(size=10))
     )
     
     st.plotly_chart(fig)
@@ -307,9 +307,9 @@ def FB_visitas(visitasFB_ANTERIOR, visitasFB_FILTRADO, start_date, end_date, sta
     visitasFB_FILTRADO['Data'] = pd.to_datetime(visitasFB_FILTRADO['Data'])
     visitasFB_ANTERIOR['Data'] = pd.to_datetime(visitasFB_ANTERIOR['Data'])
 
-    # Manter as datas orFBinais
-    visitasFB_FILTRADO['Data_OrFBinal'] = visitasFB_FILTRADO['Data']
-    visitasFB_ANTERIOR['Data_OrFBinal'] = visitasFB_ANTERIOR['Data']
+    # Manter as datas originais
+    visitasFB_FILTRADO['Data_Original'] = visitasFB_FILTRADO['Data']
+    visitasFB_ANTERIOR['Data_Original'] = visitasFB_ANTERIOR['Data']
 
     # Calcular a diferença de dias entre o início dos dois períodos
     delta = visitasFB_FILTRADO['Data'].min() - visitasFB_ANTERIOR['Data'].min()
@@ -330,8 +330,8 @@ def FB_visitas(visitasFB_ANTERIOR, visitasFB_FILTRADO, start_date, end_date, sta
     y=visitasFB_FILTRADO['Primary'],
     mode='lines+markers',
     name=f'Selecionado: {transformaData_inicio(start_date)} a {transformaData_final(end_date)}',
-    text=visitasFB_FILTRADO['Data_OrFBinal'].dt.strftime('%Y-%m-%d'),
-    hovertemplate='<br>Data OrFBinal: %{text}<br>Valor: %{y}',
+    text=visitasFB_FILTRADO['Data_Original'].dt.strftime('%Y-%m-%d'),
+    hovertemplate='<br>Data Original: %{text}<br>Valor: %{y}',
     line=dict(color='#3b5998')
     ))
 
@@ -341,8 +341,8 @@ def FB_visitas(visitasFB_ANTERIOR, visitasFB_FILTRADO, start_date, end_date, sta
     y=visitasFB_ANTERIOR['Primary'],
     mode='lines+markers',
     name=f"Anterior: {start_date_b4.strftime('%d-%m-%Y')} a {(end_date_b4 - pd.DateOffset(days=1)).strftime('%d-%m-%Y')}",
-    text=visitasFB_ANTERIOR['Data_OrFBinal'].dt.strftime('%d-%m-%Y'),
-    hovertemplate='<br>Data OrFBinal: %{text}<br>Valor: %{y}',
+    text=visitasFB_ANTERIOR['Data_Original'].dt.strftime('%d-%m-%Y'),
+    hovertemplate='<br>Data Original: %{text}<br>Valor: %{y}',
     line=dict(color='#7B94CC')
     ))
 
@@ -356,7 +356,7 @@ def FB_visitas(visitasFB_ANTERIOR, visitasFB_FILTRADO, start_date, end_date, sta
     yaxis_title='Alcance',
     hovermode='x unified',
     yaxis=dict(tickformat='.'),
-    legend=dict(x=1, y=1, xanchor='rFBht', yanchor='bottom', font=dict(size=10))
+    legend=dict(x=1, y=1, xanchor='right', yanchor='bottom', font=dict(size=10))
     )
     
     st.plotly_chart(fig)
@@ -367,9 +367,9 @@ def FB_visitas_cumsum(visitasFB_ANTERIOR, visitasFB_FILTRADO, start_date, end_da
     visitasFB_FILTRADO['Data'] = pd.to_datetime(visitasFB_FILTRADO['Data'])
     visitasFB_ANTERIOR['Data'] = pd.to_datetime(visitasFB_ANTERIOR['Data'])
 
-    # Manter as datas orFBinais
-    visitasFB_FILTRADO['Data_OrFBinal'] = visitasFB_FILTRADO['Data']
-    visitasFB_ANTERIOR['Data_OrFBinal'] = visitasFB_ANTERIOR['Data']
+    # Manter as datas originais
+    visitasFB_FILTRADO['Data_Original'] = visitasFB_FILTRADO['Data']
+    visitasFB_ANTERIOR['Data_Original'] = visitasFB_ANTERIOR['Data']
 
     # Calcular a diferença de dias entre o início dos dois períodos
     delta = visitasFB_FILTRADO['Data'].min() - visitasFB_ANTERIOR['Data'].min()
@@ -390,8 +390,8 @@ def FB_visitas_cumsum(visitasFB_ANTERIOR, visitasFB_FILTRADO, start_date, end_da
     y=visitasFB_FILTRADO['Primary'].cumsum(),
     mode='lines+markers',
     name=f'Selecionado: {transformaData_inicio(start_date)} a {transformaData_final(end_date)}',
-    text=visitasFB_FILTRADO['Data_OrFBinal'].dt.strftime('%Y-%m-%d'),
-    hovertemplate='<br>Data OrFBinal: %{text}<br>Valor: %{y}',
+    text=visitasFB_FILTRADO['Data_Original'].dt.strftime('%Y-%m-%d'),
+    hovertemplate='<br>Data Original: %{text}<br>Valor: %{y}',
     line=dict(color='#3b5998')
     ))
 
@@ -401,8 +401,8 @@ def FB_visitas_cumsum(visitasFB_ANTERIOR, visitasFB_FILTRADO, start_date, end_da
     y=visitasFB_ANTERIOR['Primary'].cumsum(),
     mode='lines+markers',
     name=f"Anterior: {start_date_b4.strftime('%d-%m-%Y')} a {(end_date_b4 - pd.DateOffset(days=1)).strftime('%d-%m-%Y')}",
-    text=visitasFB_ANTERIOR['Data_OrFBinal'].dt.strftime('%d-%m-%Y'),
-    hovertemplate='<br>Data OrFBinal: %{text}<br>Valor: %{y}',
+    text=visitasFB_ANTERIOR['Data_Original'].dt.strftime('%d-%m-%Y'),
+    hovertemplate='<br>Data Original: %{text}<br>Valor: %{y}',
     line=dict(color='#7B94CC')
     ))
 
@@ -416,7 +416,7 @@ def FB_visitas_cumsum(visitasFB_ANTERIOR, visitasFB_FILTRADO, start_date, end_da
     yaxis_title='Alcance',
     hovermode='x unified',
     yaxis=dict(tickformat='.'),
-    legend=dict(x=1, y=1, xanchor='rFBht', yanchor='bottom', font=dict(size=10))
+    legend=dict(x=1, y=1, xanchor='right', yanchor='bottom', font=dict(size=10))
     )
     
     st.plotly_chart(fig)
@@ -427,9 +427,9 @@ def FB_seguidores(seguidoresFB_ANTERIOR, seguidoresFB_FILTRADO, start_date, end_
     seguidoresFB_FILTRADO['Data'] = pd.to_datetime(seguidoresFB_FILTRADO['Data'])
     seguidoresFB_ANTERIOR['Data'] = pd.to_datetime(seguidoresFB_ANTERIOR['Data'])
 
-    # Manter as datas orFBinais
-    seguidoresFB_FILTRADO['Data_OrFBinal'] = seguidoresFB_FILTRADO['Data']
-    seguidoresFB_ANTERIOR['Data_OrFBinal'] = seguidoresFB_ANTERIOR['Data']
+    # Manter as datas originais
+    seguidoresFB_FILTRADO['Data_Original'] = seguidoresFB_FILTRADO['Data']
+    seguidoresFB_ANTERIOR['Data_Original'] = seguidoresFB_ANTERIOR['Data']
 
     # Calcular a diferença de dias entre o início dos dois períodos
     delta = seguidoresFB_FILTRADO['Data'].min() - seguidoresFB_ANTERIOR['Data'].min()
@@ -450,8 +450,8 @@ def FB_seguidores(seguidoresFB_ANTERIOR, seguidoresFB_FILTRADO, start_date, end_
     y=seguidoresFB_FILTRADO['Primary'],
     mode='lines+markers',
     name=f'Selecionado: {transformaData_inicio(start_date)} a {transformaData_final(end_date)}',
-    text=seguidoresFB_FILTRADO['Data_OrFBinal'].dt.strftime('%Y-%m-%d'),
-    hovertemplate='<br>Data OrFBinal: %{text}<br>Valor: %{y}',
+    text=seguidoresFB_FILTRADO['Data_Original'].dt.strftime('%Y-%m-%d'),
+    hovertemplate='<br>Data Original: %{text}<br>Valor: %{y}',
     line=dict(color='#5874af')
     ))
 
@@ -461,8 +461,8 @@ def FB_seguidores(seguidoresFB_ANTERIOR, seguidoresFB_FILTRADO, start_date, end_
     y=seguidoresFB_ANTERIOR['Primary'],
     mode='lines+markers',
     name=f"Anterior: {start_date_b4.strftime('%d-%m-%Y')} a {(end_date_b4 - pd.DateOffset(days=1)).strftime('%d-%m-%Y')}",
-    text=seguidoresFB_ANTERIOR['Data_OrFBinal'].dt.strftime('%d-%m-%Y'),
-    hovertemplate='<br>Data OrFBinal: %{text}<br>Valor: %{y}',
+    text=seguidoresFB_ANTERIOR['Data_Original'].dt.strftime('%d-%m-%Y'),
+    hovertemplate='<br>Data Original: %{text}<br>Valor: %{y}',
     line=dict(color='#ACB9D7')
     ))
 
@@ -476,7 +476,7 @@ def FB_seguidores(seguidoresFB_ANTERIOR, seguidoresFB_FILTRADO, start_date, end_
     yaxis_title='Alcance',
     hovermode='x unified',
     yaxis=dict(tickformat='.'),
-    legend=dict(x=1, y=1, xanchor='rFBht', yanchor='bottom', font=dict(size=10))
+    legend=dict(x=1, y=1, xanchor='right', yanchor='bottom', font=dict(size=10))
     )
     
     st.plotly_chart(fig)
@@ -487,9 +487,9 @@ def FB_seguidores_cumsum(seguidoresFB_ANTERIOR, seguidoresFB_FILTRADO, start_dat
     seguidoresFB_FILTRADO['Data'] = pd.to_datetime(seguidoresFB_FILTRADO['Data'])
     seguidoresFB_ANTERIOR['Data'] = pd.to_datetime(seguidoresFB_ANTERIOR['Data'])
 
-    # Manter as datas orFBinais
-    seguidoresFB_FILTRADO['Data_OrFBinal'] = seguidoresFB_FILTRADO['Data']
-    seguidoresFB_ANTERIOR['Data_OrFBinal'] = seguidoresFB_ANTERIOR['Data']
+    # Manter as datas originais
+    seguidoresFB_FILTRADO['Data_Original'] = seguidoresFB_FILTRADO['Data']
+    seguidoresFB_ANTERIOR['Data_Original'] = seguidoresFB_ANTERIOR['Data']
 
     # Calcular a diferença de dias entre o início dos dois períodos
     delta = seguidoresFB_FILTRADO['Data'].min() - seguidoresFB_ANTERIOR['Data'].min()
@@ -510,8 +510,8 @@ def FB_seguidores_cumsum(seguidoresFB_ANTERIOR, seguidoresFB_FILTRADO, start_dat
     y=seguidoresFB_FILTRADO['Primary'].cumsum(),
     mode='lines+markers',
     name=f'Selecionado: {transformaData_inicio(start_date)} a {transformaData_final(end_date)}',
-    text=seguidoresFB_FILTRADO['Data_OrFBinal'].dt.strftime('%Y-%m-%d'),
-    hovertemplate='<br>Data OrFBinal: %{text}<br>Valor: %{y}',
+    text=seguidoresFB_FILTRADO['Data_Original'].dt.strftime('%Y-%m-%d'),
+    hovertemplate='<br>Data Original: %{text}<br>Valor: %{y}',
     line=dict(color='#5874af')
     ))
 
@@ -521,8 +521,8 @@ def FB_seguidores_cumsum(seguidoresFB_ANTERIOR, seguidoresFB_FILTRADO, start_dat
     y=seguidoresFB_ANTERIOR['Primary'].cumsum(),
     mode='lines+markers',
     name=f"Anterior: {start_date_b4.strftime('%d-%m-%Y')} a {(end_date_b4 - pd.DateOffset(days=1)).strftime('%d-%m-%Y')}",
-    text=seguidoresFB_ANTERIOR['Data_OrFBinal'].dt.strftime('%d-%m-%Y'),
-    hovertemplate='<br>Data OrFBinal: %{text}<br>Valor: %{y}',
+    text=seguidoresFB_ANTERIOR['Data_Original'].dt.strftime('%d-%m-%Y'),
+    hovertemplate='<br>Data Original: %{text}<br>Valor: %{y}',
     line=dict(color='#ACB9D7')
     ))
 
@@ -536,7 +536,7 @@ def FB_seguidores_cumsum(seguidoresFB_ANTERIOR, seguidoresFB_FILTRADO, start_dat
     yaxis_title='Alcance',
     hovermode='x unified',
     yaxis=dict(tickformat='.'),
-    legend=dict(x=1, y=1, xanchor='rFBht', yanchor='bottom', font=dict(size=10))
+    legend=dict(x=1, y=1, xanchor='right', yanchor='bottom', font=dict(size=10))
     )
     
     st.plotly_chart(fig)
