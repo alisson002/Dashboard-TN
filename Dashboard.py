@@ -39,15 +39,13 @@ else:
         <p style='font-size:32px;'><b>•</b> Atualizações:</p>
         """
     st.write(html_text, unsafe_allow_html=True)
+    st.write("╰┈➤ Mais gráficos do impresso alterados. Também foi adicionado novamente o gráfico dos fotografos. - (18/07/2024);")
     st.write("╰┈➤ Em breve farei atualizações visuais de alguns elementos da Dashboard. - (26/06/2024);")
-    st.write("╰┈➤ Novos gráficos do impresso foram adicionados. - (24/06/2024);")
-    st.write("╰┈➤ Em breve os **gráficos do impresso** serão alterados, para que fiquem com o visual mais condizente com os novos gráficos do FB e IG e tornem-se mais interativos tanto com os usuários quanto em realação ao tema escolhido (escuro ou claro) - (13/06/2024);")
     # st.write(" ")
     st.divider()
     st.write("**Tribuna do Norte:**")
+    st.write("╰┈➤ Mais gráficos do impresso alterados. Também foi adicionado novamente o gráfico dos fotografos. - (18/07/2024);")
     st.write("╰┈➤ Adicionadas as médias das métricas do Instagram e Facebook - (26/06/2024);")
-    st.write("╰┈➤ Adicionadas métricas de alcance, visitas e seguidores do FB e IG com comparativos em porcentagem em relação ao período anterior - (13/06/2024);")
-    st.write("╰┈➤ Adiconados os gráficos do Instagram e suas versões normal e acumulativa - (12/06/2024);")
     # st.write(" ")
     st.divider()
     st.write("**Jovem Pan News - Natal:**")
@@ -285,15 +283,16 @@ if selected_option1 == "Tribuna do norte":
             <p style='font-size:12px;'><b>•</b> Dê <b>clique duplo</b> em uma das informações da legenda para que somente ela seja exibida. Dessa forma, outras podem ser adicionadas uma a uma para uma melhor comparação entre determinadas editorias. Para remover ou adicionar apenas uma, basta <b>1 clique</b>.</p>
             """
             st.write(html_text, unsafe_allow_html=True) 
-            st.write(html_text2, unsafe_allow_html=True) 
-            st.write(html_text3, unsafe_allow_html=True) 
             if exib_type == 'Gráficos de rosca/pizza':
+                st.write(html_text2, unsafe_allow_html=True) 
+                st.write(html_text3, unsafe_allow_html=True) 
                 # Gráfico de rosca
                 tnImpresso.noticiasPorEditoria(editorias_impresso,df_NOTICIAS_impresso_filtrado)
             elif exib_type == 'Tabelas':
                 # Exibindo df com o width maximo
                 st.dataframe(tnImpresso.tableEdiImpresso(editorias_impresso), use_container_width = True, hide_index=True)
             elif exib_type == 'Gráficos de barra':
+                st.write(html_text2, unsafe_allow_html=True)  
                 tnImpresso.noticiasPorEditoria_bc(editorias_impresso,df_NOTICIAS_impresso_filtrado)
         with tab2:
             st.write('Obs: Passe o cursor por cima do gráfico para obter mais informações.')
