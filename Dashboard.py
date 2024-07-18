@@ -40,11 +40,13 @@ else:
         """
     st.write(html_text, unsafe_allow_html=True)
     st.write("╰┈➤ Mais gráficos do impresso alterados. Também foi adicionado novamente o gráfico dos fotografos. - (18/07/2024);")
+    st.write("╰┈➤ **Impressões e cliques em anúncios (PORTAL TN):** novas tabelas adicionadas à dashboard do Google Looker. - (17/07/2024);")
     st.write("╰┈➤ Em breve farei atualizações visuais de alguns elementos da Dashboard. - (26/06/2024);")
     # st.write(" ")
     st.divider()
     st.write("**Tribuna do Norte:**")
     st.write("╰┈➤ Mais gráficos do impresso alterados. Também foi adicionado novamente o gráfico dos fotografos. - (18/07/2024);")
+    st.write("╰┈➤ **Impressões e cliques em anúncios (PORTAL TN):** novas tabelas adicionadas à dashboard do Google Looker. - (17/07/2024);")
     st.write("╰┈➤ Adicionadas as médias das métricas do Instagram e Facebook - (26/06/2024);")
     # st.write(" ")
     st.divider()
