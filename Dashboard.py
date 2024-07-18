@@ -275,7 +275,18 @@ if selected_option1 == "Tribuna do norte":
         tab1, tab2, tab3, tab4, tab5= st.tabs(["Notícias por editoria", "Nóticias por repórter", "Editoria por repórter", "Créditos/origem das fotos", "Editoria por foto"])
         
         with tab1:
-            st.write('Obs2: A maioria das notícias possuem duas editorias cadastradas, portanto, a soma total é referente as notícias sem levar em consideração as editorias. Editorias com nomes de reporteres foram removidas da contagem')
+            html_text = """
+            <p style='font-size:12px;'><b>•</b> A maioria das notícias possuem duas editorias cadastradas, portanto, a soma total é referente as notícias sem levar em consideração as editorias. Editorias com nomes de reporteres foram removidas da contagem.</p>
+            """
+            html_text2 = """
+            <p style='font-size:12px;'><b>•</b> Passe o cursor por cima do gráfico para obter mais informações.</p>
+            """
+            html_text3 = """
+            <p style='font-size:12px;'><b>•</b> Dê <b>clique duplo</b> em uma das informações da legenda para que somente ela seja exibida. Dessa forma, outras podem ser adicionadas uma a uma para uma melhor comparação entre determinadas editorias. Para remover ou adicionar apenas uma, basta <b>1 clique</b>.</p>
+            """
+            st.write(html_text, unsafe_allow_html=True) 
+            st.write(html_text2, unsafe_allow_html=True) 
+            st.write(html_text3, unsafe_allow_html=True) 
             if exib_type == 'Gráficos de rosca/pizza':
                 # Gráfico de rosca
                 tnImpresso.noticiasPorEditoria(editorias_impresso,df_NOTICIAS_impresso_filtrado)
@@ -297,15 +308,26 @@ if selected_option1 == "Tribuna do norte":
         with tab3:
             st.write('')
         with tab4:
-            st.write("Obs: os números são referentes a quantidade de notícias associadas ao fotógrafo. É importante observar que várias fotos podem ter sido tiradas.")
+            html_text = """
+            <p style='font-size:12px;'><b>•</b> Os números são referentes a quantidade de notícias associadas ao fotógrafo.</p>
+            """
+            html_text2 = """
+            <p style='font-size:12px;'><b>•</b> Após o <b>Trello</b> se tornar pago e o número de pessoas com acessor ser limitado alguns dados não se manteram, já que o algoritmo utiliza sua API para trazer os dados para esta dashboard de acordo com quem atualmente tem acesso aos quadros.</p>
+            """
+            html_text3 = """
+            <p style='font-size:14px;'><b>• Dados a partir de 08/05/2024.</b> Dados a partir dessa data pois estão sendo adquiridos de outra forma, por conta do motivo citado acima.</p>
+            """
+            st.write(html_text, unsafe_allow_html=True) 
+            st.write(html_text2, unsafe_allow_html=True) 
+            st.write(html_text3, unsafe_allow_html=True) 
             if exib_type == 'Gráficos de rosca/pizza':
                 # Gráfico de rosca
-                tnImpresso.credfotografos(reporteres_impresso)
+                tnImpresso.credfotografos(reporteres_impresso,editorias_impresso)
             elif exib_type == 'Tabelas':
                 # Exibindo df com o width maximo
-                st.dataframe(tnImpresso.tableFotografosImpresso(reporteres_impresso), use_container_width = True, hide_index=True)
+                st.dataframe(tnImpresso.tableFotografosImpresso(reporteres_impresso,editorias_impresso), use_container_width = True, hide_index=True)
             elif exib_type == 'Gráficos de barra':
-                tnImpresso.credfotografos_bc(reporteres_impresso)
+                tnImpresso.credfotografos_bc(reporteres_impresso,editorias_impresso)
     
     elif selected_option2 == "Google Analytics (portal)":
         html_text = """

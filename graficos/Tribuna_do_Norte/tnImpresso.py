@@ -108,28 +108,56 @@ GRÁFICOS DE ROSCA/PIZZA/MEIA PIZZA
 '''NOTÍCIAS POR EDITORIA: contagem de noticias por editoria (organizado do maior para o menor)'''
 def noticiasPorEditoria(editorias_impresso,df_NOTICIAS_impresso_filtrado):
     
-    # Cria o gráfico de rosca
-    pie_chart = pygal.Pie(inner_radius = raio_interno)
+    # # Cria o gráfico de rosca
+    # pie_chart = pygal.Pie(inner_radius = raio_interno)
     
-    # Adiciona as informações ao gráfico
-    for edi, freq in zip(editorias_impresso['editorias'],editorias_impresso['freq']):
+    # # Adiciona as informações ao gráfico
+    # for edi, freq in zip(editorias_impresso['editorias'],editorias_impresso['freq']):
         
-        # Filtra as informações para que nomes de reporteres não sejam adicionados as editorias
-        if edi not in ['Bruno Vital', 'Líria Paz', 'Ícaro Carvalho', 'Felipe Salustino', 'Matteus Fernandes', 'Cláudio Oliveira', 'P.H.']:
+    #     # Filtra as informações para que nomes de reporteres não sejam adicionados as editorias
+    #     if edi not in ['Bruno Vital', 'Líria Paz', 'Ícaro Carvalho', 'Felipe Salustino', 'Matteus Fernandes', 'Cláudio Oliveira', 'P.H.']:
             
-            pie_chart.add(edi, freq)
+    #         pie_chart.add(edi, freq)
             
-    # pie_chart.add(f"Total: {df_NOTICIAS_impresso_filtrado['pauta'].drop_duplicates().count()}", 0)
+    # # pie_chart.add(f"Total: {df_NOTICIAS_impresso_filtrado['pauta'].drop_duplicates().count()}", 0)
     
         
-    # Renderizaçãodo gráfico em formato SVG
-    # .render_data_uri() gera a representação do gráfico em formato SVG e retorna um URI de dados (data URI)
-    svg = pie_chart.render_data_uri()
+    # # Renderizaçãodo gráfico em formato SVG
+    # # .render_data_uri() gera a representação do gráfico em formato SVG e retorna um URI de dados (data URI)
+    # svg = pie_chart.render_data_uri()
     
-    # Formatando uma string HTML usando f-strings
-    # A string resultante contém uma tag <embed> que está sendo usada para incorporar um conteúdo SVG na página.
-    # unsafe_allow_html=True: permite que o Streamlit interprete e exiba o conteúdo HTML fornecido como seguro. 
-    st.markdown(f'<embed type="image/svg+xml" src="{svg}" />', unsafe_allow_html=True)
+    # # Formatando uma string HTML usando f-strings
+    # # A string resultante contém uma tag <embed> que está sendo usada para incorporar um conteúdo SVG na página.
+    # # unsafe_allow_html=True: permite que o Streamlit interprete e exiba o conteúdo HTML fornecido como seguro. 
+    # st.markdown(f'<embed type="image/svg+xml" src="{svg}" />', unsafe_allow_html=True)
+    
+    filtro = ['Bruno Vital', 'Líria Paz', 'Ícaro Carvalho', 'Felipe Salustino', 'Matteus Fernandes', 'Cláudio Oliveira', 'P.H.','MAGNUS NASCIMENTO', 'ALEX RÉGIS', 'ADRIANO ABREU']
+    
+    # Filtrando os dados
+    # editorias_filtradas = [ed for ed in editorias_impresso['editorias'] if ed not in filtro]
+    # frequencias_filtradas = [freq for ed, freq in zip(editorias_impresso['editorias'], editorias_impresso['freq']) if ed not in filtro]
+    
+    editorias_filtradas = editorias_impresso[~editorias_impresso['editorias'].isin(filtro)]
+    
+    fig = go.Figure(data=[go.Pie(labels=editorias_filtradas['editorias'], values=editorias_filtradas['freq'])])
+    fig.update_traces(hole=0.3,textinfo='value+label', hoverinfo='percent+label',marker=dict(colors=px.colors.sequential.Blues, line=dict(color='#66533D', width=1.5)))
+    
+    # Atualizando o layout do gráfico
+    fig.update_layout(
+        margin=dict(t=0, b=0, l=0, r=0),  # Remover margens desnecessárias
+        height=800,  # Aumentar a altura do gráfico
+        width=800,  # Aumentar a largura do gráfico
+        legend=dict(
+            orientation="v",  # Legenda horizontal
+            yanchor="top",  # Ancorar ao fundo
+            y=0,  # Posição vertical da legenda
+            xanchor="left",  # Ancorar ao centro
+            x=1  # Posição horizontal da legenda
+        )
+    )
+    
+    st.plotly_chart(fig)
+    
 
 '''NOTÍCIAS POR REPORTER: contagem de noticias por reporter (organizado do maior para o menor)'''
 def noticiasPorReporter(reporteres_impresso):
@@ -162,27 +190,45 @@ def noticiasPorReporter(reporteres_impresso):
     st.plotly_chart(fig)
 
 '''FOTÓGRAFOS: contagem de noticias por fotógrafo (organizado do maior para o menor)'''
-def credfotografos(reporteres_impresso):
-    # Cria o gráfico de rosca
-    pie_chart = pygal.Pie(inner_radius = raio_interno)
+def credfotografos(reporteres_impresso,editorias_impresso):
+    # # Cria o gráfico de rosca
+    # pie_chart = pygal.Pie(inner_radius = raio_interno)
     
-    # Adiciona as informações ao gráfico
-    for rep_fot,freq in zip(reporteres_impresso['reporter_fotografo'], reporteres_impresso['freq']):
+    # # Adiciona as informações ao gráfico
+    # for rep_fot,freq in zip(reporteres_impresso['reporter_fotografo'], reporteres_impresso['freq']):
         
-        # Filtra as informações para deixar somente os fotógrafos
-        if rep_fot in ['Magnus Nascimento📷', 'adriano abreu📷', 'Alex Regis📷']:
-            pie_chart.add(rep_fot.title(), freq)
-        else:
-            continue # Vai para a próxima iteração do loop
+    #     # Filtra as informações para deixar somente os fotógrafos
+    #     if rep_fot in ['Magnus Nascimento📷', 'adriano abreu📷', 'Alex Regis📷']:
+    #         pie_chart.add(rep_fot.title(), freq)
+    #     else:
+    #         continue # Vai para a próxima iteração do loop
     
-    # Renderizaçãodo gráfico em formato SVG
-    # .render_data_uri() gera a representação do gráfico em formato SVG e retorna um URI de dados (data URI)
-    svg = pie_chart.render_data_uri()
+    # # Renderizaçãodo gráfico em formato SVG
+    # # .render_data_uri() gera a representação do gráfico em formato SVG e retorna um URI de dados (data URI)
+    # svg = pie_chart.render_data_uri()
     
-    # Formatando uma string HTML usando f-strings
-    # A string resultante contém uma tag <embed> que está sendo usada para incorporar um conteúdo SVG na página.
-    # unsafe_allow_html=True: permite que o Streamlit interprete e exiba o conteúdo HTML fornecido como seguro.
-    st.markdown(f'<embed type="image/svg+xml" src="{svg}" />', unsafe_allow_html=True)
+    # # Formatando uma string HTML usando f-strings
+    # # A string resultante contém uma tag <embed> que está sendo usada para incorporar um conteúdo SVG na página.
+    # # unsafe_allow_html=True: permite que o Streamlit interprete e exiba o conteúdo HTML fornecido como seguro.
+    # st.markdown(f'<embed type="image/svg+xml" src="{svg}" />', unsafe_allow_html=True)
+    filtro = ['MAGNUS NASCIMENTO', 'ALEX RÉGIS', 'ADRIANO ABREU']
+    
+    # Filtrando os dados
+    # editorias_filtradas = [ed for ed in editorias_impresso['editorias'] if ed not in filtro]
+    # frequencias_filtradas = [freq for ed, freq in zip(editorias_impresso['editorias'], editorias_impresso['freq']) if ed not in filtro]
+    
+    editorias_filtradas = editorias_impresso[editorias_impresso['editorias'].isin(filtro)]
+    
+    # Definindo as cores
+    # As cores no gráfico de barras iniciam de baixo para cima, portando, quando o gráfico é colocado na ordem decrescente as cores não correspondem. A intenção do trecho abaixo é inverter a ordem das cores.
+    num_barras = len(editorias_filtradas)
+    cores = px.colors.sequential.Greens[::-1]  # Reverter a paleta de cores
+    cores_personalizadas = [cores[i % len(cores)] for i in range(num_barras)]
+    
+    fig = go.Figure(data=[go.Pie(labels=editorias_filtradas['editorias'], values=editorias_filtradas['freq'])])
+    fig.update_traces(hole=0.3,textinfo='value+label', hoverinfo='percent+label',marker=dict(colors=cores_personalizadas, line=dict(color='#66533D', width=1.5)))
+    
+    st.plotly_chart(fig)
 
 '''
 DFs PARA O STREAMLIT
@@ -215,46 +261,73 @@ def tableRepImpresso(reporteres_impresso):
     
     return table_reporteres_impresso
 
-def tableFotografosImpresso(reporteres_impresso):
+def tableFotografosImpresso(reporteres_impresso,editorias_impresso):
     '''FOTÓGRAFOS: contagem de noticias por fotógrafo (organizado do maior para o menor)'''
     # Recebe um cópia de reporteres_impresso
-    table_fotografos = reporteres_impresso.copy()
-
-    # Filtra as informações para receber apenas os nomes dos fotógrafos
-    # Mesma coisa do caso acima, mas sem ~
-    table_fotografos = table_fotografos.loc[table_fotografos['reporter_fotografo'].isin(['Magnus Nascimento📷', 'adriano abreu📷', 'Alex Regis📷'])]
-
-    # Deixa as primeiras letras maiusculas
-    table_fotografos['reporter_fotografo'] = table_fotografos['reporter_fotografo'].str.title()
+    filtro = ['MAGNUS NASCIMENTO', 'ALEX RÉGIS', 'ADRIANO ABREU']
     
-    return table_fotografos
+    # Filtrando os dados
+    # editorias_filtradas = [ed for ed in editorias_impresso['editorias'] if ed not in filtro]
+    # frequencias_filtradas = [freq for ed, freq in zip(editorias_impresso['editorias'], editorias_impresso['freq']) if ed not in filtro]
+    
+    editorias_filtradas = editorias_impresso[editorias_impresso['editorias'].isin(filtro)]
+    
+    return editorias_filtradas
 
 '''GRÁFICOS DE BARRA'''
 
 '''NOTÍCIAS POR EDITORIA: contagem de noticias por editoria (organizado do maior para o menor)'''
 def noticiasPorEditoria_bc(editorias_impresso,df_NOTICIAS_impresso_filtrado):
     
-    # Cria o gráfico de rosca
-    bar_chart = pygal.HorizontalBar()
+    # # Cria o gráfico de rosca
+    # bar_chart = pygal.HorizontalBar()
     
-    # Adiciona as informações ao gráfico
-    for edi, freq in zip(editorias_impresso['editorias'],editorias_impresso['freq']):
+    # # Adiciona as informações ao gráfico
+    # for edi, freq in zip(editorias_impresso['editorias'],editorias_impresso['freq']):
         
-        # Filtra as informações para que nomes de reporteres não sejam adicionados as editorias
-        if edi not in ['Bruno Vital', 'Líria Paz', 'Ícaro Carvalho', 'Felipe Salustino', 'Matteus Fernandes', 'Cláudio Oliveira', 'P.H.']:
+    #     # Filtra as informações para que nomes de reporteres não sejam adicionados as editorias
+    #     if edi not in ['Bruno Vital', 'Líria Paz', 'Ícaro Carvalho', 'Felipe Salustino', 'Matteus Fernandes', 'Cláudio Oliveira', 'P.H.']:
             
-            bar_chart.add(edi, freq)
+    #         bar_chart.add(edi, freq)
             
-    bar_chart.add(f"Total: {df_NOTICIAS_impresso_filtrado['pauta'].drop_duplicates().count()}", 0)
+    # bar_chart.add(f"Total: {df_NOTICIAS_impresso_filtrado['pauta'].drop_duplicates().count()}", 0)
         
-    # Renderizaçãodo gráfico em formato SVG
-    # .render_data_uri() gera a representação do gráfico em formato SVG e retorna um URI de dados (data URI)
-    svg = bar_chart.render_data_uri()
+    # # Renderizaçãodo gráfico em formato SVG
+    # # .render_data_uri() gera a representação do gráfico em formato SVG e retorna um URI de dados (data URI)
+    # svg = bar_chart.render_data_uri()
     
-    # Formatando uma string HTML usando f-strings
-    # A string resultante contém uma tag <embed> que está sendo usada para incorporar um conteúdo SVG na página.
-    # unsafe_allow_html=True: permite que o Streamlit interprete e exiba o conteúdo HTML fornecido como seguro. 
-    st.markdown(f'<embed type="image/svg+xml" src="{svg}" />', unsafe_allow_html=True)
+    # # Formatando uma string HTML usando f-strings
+    # # A string resultante contém uma tag <embed> que está sendo usada para incorporar um conteúdo SVG na página.
+    # # unsafe_allow_html=True: permite que o Streamlit interprete e exiba o conteúdo HTML fornecido como seguro. 
+    # st.markdown(f'<embed type="image/svg+xml" src="{svg}" />', unsafe_allow_html=True)
+    
+    filtro = ['Bruno Vital', 'Líria Paz', 'Ícaro Carvalho', 'Felipe Salustino', 'Matteus Fernandes', 'Cláudio Oliveira', 'P.H.', 'MAGNUS NASCIMENTO', 'ALEX RÉGIS', 'ADRIANO ABREU']
+    
+    # Filtrando os dados
+    # editorias_filtradas = [ed for ed in editorias_impresso['editorias'] if ed not in filtro]
+    # frequencias_filtradas = [freq for ed, freq in zip(editorias_impresso['editorias'], editorias_impresso['freq']) if ed not in filtro]
+    
+    editorias_filtradas = editorias_impresso[~editorias_impresso['editorias'].isin(filtro)]
+    
+    edit_impresso = editorias_filtradas.sort_values(by='freq', ascending=True)
+    
+    # Definindo as cores
+    # As cores no gráfico de barras iniciam de baixo para cima, portando, quando o gráfico é colocado na ordem decrescente as cores não correspondem. A intenção do trecho abaixo é inverter a ordem das cores.
+    num_barras = len(edit_impresso)
+    cores = px.colors.sequential.Blues[::-1]  # Reverter a paleta de cores
+    cores_personalizadas = [cores[i % len(cores)] for i in range(num_barras)]
+    
+    fig = go.Figure(data=[go.Bar(x=edit_impresso['freq'], y=edit_impresso['editorias'], orientation='h')])
+    
+    fig.update_traces(marker_color=cores_personalizadas, marker_line_color='#66533D', marker_line_width=1.5)
+    
+    # Atualizando o layout do gráfico
+    fig.update_layout(
+        # margin=dict(t=0, b=0, l=0, r=0),  # Remover margens desnecessárias
+        height=800,  # Aumentar a altura do gráfico
+        width=800  # Aumentar a largura do gráfico
+    )
+    st.plotly_chart(fig)
 
 '''NOTÍCIAS POR REPORTER: contagem de noticias por reporter (organizado do maior para o menor)'''
 def noticiasPorReporter_bc(reporteres_impresso):
@@ -285,24 +358,52 @@ def noticiasPorReporter_bc(reporteres_impresso):
     st.plotly_chart(fig)
 
 '''FOTÓGRAFOS: contagem de noticias por fotógrafo (organizado do maior para o menor)'''
-def credfotografos_bc(reporteres_impresso):
-    # Cria o gráfico de rosca
-    bar_chart = pygal.HorizontalBar()
+def credfotografos_bc(reporteres_impresso,editorias_impresso):
+    # # Cria o gráfico de rosca
+    # bar_chart = pygal.HorizontalBar()
     
-    # Adiciona as informações ao gráfico
-    for rep_fot,freq in zip(reporteres_impresso['reporter_fotografo'], reporteres_impresso['freq']):
+    # # Adiciona as informações ao gráfico
+    # for rep_fot,freq in zip(reporteres_impresso['reporter_fotografo'], reporteres_impresso['freq']):
         
-        # Filtra as informações para deixar somente os fotógrafos
-        if rep_fot in ['Magnus Nascimento📷', 'adriano abreu📷', 'Alex Regis📷']:
-            bar_chart.add(rep_fot.title(), freq)
-        else:
-            continue # Vai para a próxima iteração do loop
+    #     # Filtra as informações para deixar somente os fotógrafos
+    #     if rep_fot in ['Magnus Nascimento📷', 'adriano abreu📷', 'Alex Regis📷']:
+    #         bar_chart.add(rep_fot.title(), freq)
+    #     else:
+    #         continue # Vai para a próxima iteração do loop
     
-    # Renderizaçãodo gráfico em formato SVG
-    # .render_data_uri() gera a representação do gráfico em formato SVG e retorna um URI de dados (data URI)
-    svg = bar_chart.render_data_uri()
+    # # Renderizaçãodo gráfico em formato SVG
+    # # .render_data_uri() gera a representação do gráfico em formato SVG e retorna um URI de dados (data URI)
+    # svg = bar_chart.render_data_uri()
     
-    # Formatando uma string HTML usando f-strings
-    # A string resultante contém uma tag <embed> que está sendo usada para incorporar um conteúdo SVG na página.
-    # unsafe_allow_html=True: permite que o Streamlit interprete e exiba o conteúdo HTML fornecido como seguro.
-    st.markdown(f'<embed type="image/svg+xml" src="{svg}" />', unsafe_allow_html=True)
+    # # Formatando uma string HTML usando f-strings
+    # # A string resultante contém uma tag <embed> que está sendo usada para incorporar um conteúdo SVG na página.
+    # # unsafe_allow_html=True: permite que o Streamlit interprete e exiba o conteúdo HTML fornecido como seguro.
+    # st.markdown(f'<embed type="image/svg+xml" src="{svg}" />', unsafe_allow_html=True)
+    
+    filtro = ['MAGNUS NASCIMENTO', 'ALEX RÉGIS', 'ADRIANO ABREU']
+    
+    # Filtrando os dados
+    # editorias_filtradas = [ed for ed in editorias_impresso['editorias'] if ed not in filtro]
+    # frequencias_filtradas = [freq for ed, freq in zip(editorias_impresso['editorias'], editorias_impresso['freq']) if ed not in filtro]
+    
+    editorias_filtradas = editorias_impresso[editorias_impresso['editorias'].isin(filtro)]
+    
+    edit_impresso = editorias_filtradas.sort_values(by='freq', ascending=True)
+    
+    # Definindo as cores
+    # As cores no gráfico de barras iniciam de baixo para cima, portando, quando o gráfico é colocado na ordem decrescente as cores não correspondem. A intenção do trecho abaixo é inverter a ordem das cores.
+    num_barras = len(edit_impresso)
+    cores = px.colors.sequential.Greens[::-1]  # Reverter a paleta de cores
+    cores_personalizadas = [cores[i % len(cores)] for i in range(num_barras)]
+    
+    fig = go.Figure(data=[go.Bar(x=edit_impresso['freq'], y=edit_impresso['editorias'], orientation='h')])
+    
+    fig.update_traces(marker_color=cores_personalizadas, marker_line_color='#66533D', marker_line_width=1.5)
+    
+    # # Atualizando o layout do gráfico
+    # fig.update_layout(
+    #     # margin=dict(t=0, b=0, l=0, r=0),  # Remover margens desnecessárias
+    #     height=800,  # Aumentar a altura do gráfico
+    #     width=800  # Aumentar a largura do gráfico
+    # )
+    st.plotly_chart(fig)
