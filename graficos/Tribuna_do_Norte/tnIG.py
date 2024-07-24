@@ -45,8 +45,6 @@ def try_parsing_date(text):
 # visitas IG: 28/05/2022
 # seguidores FB: 01/01/2022
 # seguidores IG: 31/08/2023
-
-
 inicio_alcanceIG = encontrar_frase_em_csv_meta('tabelas/meta/Alcance.csv', 'Alcance do Instagram')
 
 alcanceIG = pd.read_csv('tabelas/meta/Alcance.csv', skiprows=inicio_alcanceIG, encoding='utf-16',skip_blank_lines=True)
@@ -60,6 +58,7 @@ inicio_seguidoresIG = encontrar_frase_em_csv_meta('tabelas/meta/Seguidores.csv',
 seguidoresIG = pd.read_csv('tabelas/meta/Seguidores.csv', skiprows=inicio_seguidoresIG, encoding='utf-16',skip_blank_lines=True)
 
 def filtrosDatasINSTAGRAM(start_date, end_date, start_date_b4, end_date_b4):
+    
     #FILTRO ALCANCE
     dados_IG_alcance_FILTRADAS = alcanceIG.copy()
     
@@ -87,7 +86,6 @@ def filtrosDatasINSTAGRAM(start_date, end_date, start_date_b4, end_date_b4):
 
     seguidoresIG_ANTERIOR = seguidoresIG_ANTERIOR.loc[(seguidoresIG_ANTERIOR['Data']>start_date_b4) & (seguidoresIG_ANTERIOR['Data']<end_date_b4)]
 
-    
     return dados_IG_alcance_ANTERIOR,dados_IG_alcance_FILTRADAS,visitasIG_ANTERIOR,visitasIG_FILTRADO,seguidoresIG_ANTERIOR,seguidoresIG_FILTRADO
 
 def formataNumero(numero):
@@ -125,9 +123,6 @@ def igMetrics(dados_IG_alcance_ANTERIOR,dados_IG_alcance_FILTRADAS,visitasIG_ANT
         Apesar das diferenças nos número, o gráfico segue um padrão de comportamento praticamente idêntico.
         </p>
         """
-    # st.write("Obs.: Os dados de **Alcance** exibidos aqui são cerca de 65% a 70% maiores que os exibidos diretamente na plataforma do Meta Busines. O motivo dos dados (apenas para a métrica de **Alcance**) serem tão diferentes talvez seja algum filtro que a Meta utiliza em sua exibição na plataforma, com os dados que são fornecidos para download/analises sendo, possívelmente, dados não tratados.")
-    # st.write("Pesquisei sobre essa diferença nos números, mas não foi informado nenhum motivo pela Meta.")
-    # st.write("Apesar das diferenças nos número, o gráfico segue um padrão de comportamento praticamente idêntico.")
     st.write(html_text, unsafe_allow_html=True)
 
 def igMedias_alcance(dados_IG_alcance_FILTRADAS):

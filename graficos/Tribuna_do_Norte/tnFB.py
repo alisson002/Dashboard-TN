@@ -101,7 +101,7 @@ def crescimento(atual, antFBo):
     return f"{str(round(taxa*100,2)).replace('.', ',')}%"
 
 def fbMetrics(dados_FB_alcance_ANTERIOR,dados_FB_alcance_FILTRADAS,visitasFB_ANTERIOR,visitasFB_FILTRADO,seguidoresFB_ANTERIOR,seguidoresFB_FILTRADO):
-    
+    # Soma de todos os valores
     total_FBAlcance_selecionado = dados_FB_alcance_FILTRADAS['Primary'].sum()
     total_FBAlcance_anterior = dados_FB_alcance_ANTERIOR['Primary'].sum()
     
@@ -111,6 +111,7 @@ def fbMetrics(dados_FB_alcance_ANTERIOR,dados_FB_alcance_FILTRADAS,visitasFB_ANT
     total_FBSeguidores_selecionado = seguidoresFB_FILTRADO['Primary'].sum()
     total_FBSeguidores_anterior = seguidoresFB_ANTERIOR['Primary'].sum()
     
+    # Exibição das métricas
     col1, col2, col3 = st.columns(3)
     col1.metric("Alcance", formataNumero(total_FBAlcance_selecionado), crescimento(total_FBAlcance_selecionado, total_FBAlcance_anterior))
     col2.metric("Visitas", formataNumero(total_FBVisitas_selecionado), crescimento(total_FBVisitas_selecionado, total_FBVisitas_anterior))
