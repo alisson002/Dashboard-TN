@@ -197,27 +197,34 @@ def dataCard_Publicados(cardID):
     
     return data_Publicados
 
-def andamento(lista,count):
-    if count >= len(lista)*0.1 and count < len(lista)*0.2:
-        print("[•",end=" ")
-    elif count >= len(lista)*0.2 and count < len(lista)*0.3:
-        print("•",end=" ")
-    elif count >= len(lista)*0.3 and count < len(lista)*0.4:
-        print("•",end=" ")
-    elif count >= len(lista)*0.4 and count < len(lista)*0.5:
-        print("•",end=" ")
-    elif count >= len(lista)*0.5 and count < len(lista)*0.6:
-        print("•",end=" ")
-    elif count >= len(lista)*0.6 and count < len(lista)*0.7:
-        print("•",end=" ")
-    elif count >= len(lista)*0.7 and count < len(lista)*0.8:
-        print("•",end=" ")
-    elif count >= len(lista)*0.8 and count < len(lista)*0.9:
-        print("•",end=" ")
-    elif count >= len(lista)*0.9 and count < len(lista):
-        print("•",end=" ")
-    elif count >= len(lista):
-        print("•] - 100%",end=" ")
+# def andamento(lista,count):
+#     if count >= len(lista)*0.1 and count < len(lista)*0.2:
+#         print("[•",end=" ")
+#     elif count >= len(lista)*0.2 and count < len(lista)*0.3:
+#         print("•",end=" ")
+#     elif count >= len(lista)*0.3 and count < len(lista)*0.4:
+#         print("•",end=" ")
+#     elif count >= len(lista)*0.4 and count < len(lista)*0.5:
+#         print("•",end=" ")
+#     elif count >= len(lista)*0.5 and count < len(lista)*0.6:
+#         print("•",end=" ")
+#     elif count >= len(lista)*0.6 and count < len(lista)*0.7:
+#         print("•",end=" ")
+#     elif count >= len(lista)*0.7 and count < len(lista)*0.8:
+#         print("•",end=" ")
+#     elif count >= len(lista)*0.8 and count < len(lista)*0.9:
+#         print("•",end=" ")
+#     elif count >= len(lista)*0.9 and count < len(lista):
+#         print("•",end=" ")
+#     elif count >= len(lista):
+#         print("•] - 100%",end=" ")
+
+def andamento(count, total):
+    progress = (count / total) * 100
+    steps = 10
+    current_step = int(progress // steps)
+
+    print(f"\rProgress: [{'•' * current_step}{' ' * (steps - current_step)}] - {progress:.2f}%", end="")
 
 '''CHAMADAS DE FUNÇÕES: recebendo as informações que serão utilizadas''' 
 # Chamada de função que pega todas as IDs de membros
@@ -258,7 +265,7 @@ with open(caminho, 'w', newline='', encoding='utf-8') as csvfile:
         csvwriter.writerow(['pauta', 'link', 'data', 'editoria', 'freq_edi'])
         count = 0
         # escreve os dados de PAUTAS FEITAS
-        print("Atualizando dados de Pautas Feitas:")
+        print("Atualizando dados de Pautas Feitas [1/3]:")
         for card in pautas_feitas_cards_data:
             
             # Cada card possui uma key contendo uma lista(value) com os ids dos jornalistas que estão envolvidos com aquela pauta
@@ -286,10 +293,11 @@ with open(caminho, 'w', newline='', encoding='utf-8') as csvfile:
                         # freq_edi.get(lbl): frequencia de determinada editoria de acordo com o id da label
                         csvwriter.writerow([card['name'], card['shortUrl'], dataCard_PautasFeitas(card['id']), editoria.get(lbl), int(freq_edi.get(lbl))])
                 count += 1
-                andamento(pautas_feitas_cards_data,count)
+                andamento(count, len(pautas_feitas_cards_data))
         
         # escreve os dados de ✅PUBLICADOS
-        print("Atualizando dados de Publicados:")
+        print("\nAtualizando dados de Publicados [2/3]:")
+        count = 0
         for card in publicados_cards_data:
             
             if card['idLabels'] == []:
@@ -302,10 +310,11 @@ with open(caminho, 'w', newline='', encoding='utf-8') as csvfile:
                     
                     csvwriter.writerow([card['name'], card['shortUrl'], dataCard_Publicados(card['id']), editoria.get(lbl), int(freq_edi.get(lbl))])
             count += 1
-            andamento(publicados_cards_data,count)
+            andamento(count, len(publicados_cards_data))
         
         # escreve os dados de FLASHES DO DIA
-        print("Atualizando dados de Flashes do Dia:")
+        print("\nAtualizando dados de Flashes do Dia [3/3]:")
+        count = 0
         for card in flashes_do_dia_cards_data:
             
             if card['idLabels'] == []:
@@ -318,6 +327,6 @@ with open(caminho, 'w', newline='', encoding='utf-8') as csvfile:
                     
                     csvwriter.writerow([card['name'], card['shortUrl'], dataCard_PautasFeitas(card['id']), editoria.get(lbl), int(freq_edi.get(lbl))])
             count += 1
-            andamento(flashes_do_dia_cards_data,count)
+            andamento(count, len(flashes_do_dia_cards_data))
 
-print('Arquivo EDI_impresso.csv criado.')
+print('\nArquivo EDI_impresso.csv criado.')

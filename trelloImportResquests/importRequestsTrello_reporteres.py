@@ -168,27 +168,34 @@ def dataCard_Publicados(cardID):
     
     return data_Publicados
 
-def andamento(lista,count):
-    if count >= len(lista)*0.1 and count < len(lista)*0.2:
-        print("[•",end=" ")
-    elif count >= len(lista)*0.2 and count < len(lista)*0.3:
-        print("•",end=" ")
-    elif count >= len(lista)*0.3 and count < len(lista)*0.4:
-        print("•",end=" ")
-    elif count >= len(lista)*0.4 and count < len(lista)*0.5:
-        print("•",end=" ")
-    elif count >= len(lista)*0.5 and count < len(lista)*0.6:
-        print("•",end=" ")
-    elif count >= len(lista)*0.6 and count < len(lista)*0.7:
-        print("•",end=" ")
-    elif count >= len(lista)*0.7 and count < len(lista)*0.8:
-        print("•",end=" ")
-    elif count >= len(lista)*0.8 and count < len(lista)*0.9:
-        print("•",end=" ")
-    elif count >= len(lista)*0.9 and count < len(lista):
-        print("•",end=" ")
-    elif count >= len(lista):
-        print("•] - 100%",end=" ")
+# def andamento(lista,count):
+#     if count >= len(lista)*0.1 and count < len(lista)*0.2:
+#         print("[•",end=" ")
+#     elif count >= len(lista)*0.2 and count < len(lista)*0.3:
+#         print("•",end=" ")
+#     elif count >= len(lista)*0.3 and count < len(lista)*0.4:
+#         print("•",end=" ")
+#     elif count >= len(lista)*0.4 and count < len(lista)*0.5:
+#         print("•",end=" ")
+#     elif count >= len(lista)*0.5 and count < len(lista)*0.6:
+#         print("•",end=" ")
+#     elif count >= len(lista)*0.6 and count < len(lista)*0.7:
+#         print("•",end=" ")
+#     elif count >= len(lista)*0.7 and count < len(lista)*0.8:
+#         print("•",end=" ")
+#     elif count >= len(lista)*0.8 and count < len(lista)*0.9:
+#         print("•",end=" ")
+#     elif count >= len(lista)*0.9 and count < len(lista):
+#         print("•",end=" ")
+#     elif count >= len(lista):
+#         print("•] - 100%",end=" ")
+
+def andamento(count, total):
+    progress = (count / total) * 100
+    steps = 10
+    current_step = int(progress // steps)
+
+    print(f"\rProgress: [{'•' * current_step}{' ' * (steps - current_step)}] - {progress:.2f}%", end="")
 
 '''CHAMADAS DE FUNÇÕES: recebendo as informações que serão utilizadas''' 
 # Chamada de função que pega todas as IDs
@@ -206,6 +213,8 @@ membros_nomes = membersName(id_members)
 
 '''ESCREVENDO NO CSV'''
 caminho = 'tabelas/impresso/dados_impresso.csv'
+#total_cards = len(pautas_feitas_cards_data) + len(publicados_cards_data) + len(flashes_do_dia_cards_data)
+
 # Escreve as informações selecionadas no arquivo dados_impresso.csv
 with open(caminho, 'w', newline='', encoding='utf-8') as csvfile:
     
@@ -215,7 +224,7 @@ with open(caminho, 'w', newline='', encoding='utf-8') as csvfile:
         csvwriter.writerow(['IDmembers', 'reporter_fotografo', 'pauta', 'link', 'data'])
         count = 0
         # escreve os dados de PAUTAS FEITAS
-        print("Atualizando dados de Pautas Feitas:")
+        print("Atualizando dados de Pautas Feitas [1/3]:")
         for card in pautas_feitas_cards_data:
             '''
             -> Esse trecho com o if só vale a pena quando a maioria card['idMembers'] tem mananho 1 e a escrita do arquivo fica ligeiramente mais rápida sem ele.
@@ -244,9 +253,10 @@ with open(caminho, 'w', newline='', encoding='utf-8') as csvfile:
                 # data_pautasFeitas: recebe a data de quando foi para o quadro de PAUTAS FEITAS, caso essa data não esteja registrada recebe a data de criação do card.
                 csvwriter.writerow([membros, membros_nomes.get(membros), card['name'], card['shortUrl'], dataCard_PautasFeitas(card['id'])])
             count += 1
-            andamento(lista,count)
+            andamento(count, len(pautas_feitas_cards_data))
         
-        print("Atualizando dados de Publicados:")
+        print("\nAtualizando dados de Publicados [2/3]:")
+        count = 0
         # escreve os dados de ✅PUBLICADOS
         for card in publicados_cards_data:
             
@@ -254,10 +264,11 @@ with open(caminho, 'w', newline='', encoding='utf-8') as csvfile:
                 
                 csvwriter.writerow([membros, membros_nomes.get(membros), card['name'], card['shortUrl'], dataCard_Publicados(card['id'])])
             count += 1
-            andamento(lista,count)
+            andamento(count, len(publicados_cards_data))
         
         # escreve os dados de FLASHES DO DIA
-        print("Atualizando dados de Flashes do Dia:")
+        print("\nAtualizando dados de Flashes do Dia [3/3]:")
+        count = 0
         for card in flashes_do_dia_cards_data:
             
             # # retorna as ações de movimentação de cada card entre os quadros
@@ -274,6 +285,6 @@ with open(caminho, 'w', newline='', encoding='utf-8') as csvfile:
                 # datas_Flashes[-1]: recebe a ultima data do vetor que representa a data da ultima movmentação no quadro de FLASHES DO DIA
                 csvwriter.writerow([membros, membros_nomes.get(membros), card['name'], card['shortUrl'], dataCard_PautasFeitas(card['id'])])
             count += 1
-            andamento(lista,count)
+            andamento(count, len(flashes_do_dia_cards_data))
 
-print('Arquivo dados_impresso.csv criado.')
+print('\nArquivo dados_impresso.csv criado.')
