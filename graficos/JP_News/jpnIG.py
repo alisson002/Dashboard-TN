@@ -39,23 +39,23 @@ def try_parsing_date(text):
     return pd.NaT
 
 # Recebendo dados de 01/01/2022 até o momento
-# alcance FB: 28/05/2022
-# alcance IG: 28/05/2022
-# visitas FB: 28/05/2022
-# visitas IG: 28/05/2022
-# seguidores FB: 01/01/2022
-# seguidores IG: 31/08/2023
+# alcance IG: 05/09/2022
+# visitas IG: 05/09/2022
+# seguidores IG: 09/12/2023
 inicio_alcanceIG = encontrar_frase_em_csv_meta('tabelas/meta/jpn/Alcance.csv', 'Alcance do Instagram')
 
-alcanceIG = pd.read_csv('tabelas/meta/jpn/Alcance.csv', skiprows=inicio_alcanceIG, encoding='utf-16',skip_blank_lines=True)
+# alcanceIG = pd.read_csv('tabelas/meta/jpn/Alcance.csv', skiprows=inicio_alcanceIG, encoding='utf-16',skip_blank_lines=True)
+alcanceIG = pd.read_csv('tabelas/meta/jpn/Alcance.csv', skiprows=2, encoding='utf-16',skip_blank_lines=True)
 
 inicio_visitasIG = encontrar_frase_em_csv_meta('tabelas/meta/jpn/Visitas.csv', 'Visitas ao perfil do Instagram')
 
-visitasIG = pd.read_csv('tabelas/meta/jpn/Visitas.csv', skiprows=inicio_visitasIG, encoding='utf-16',skip_blank_lines=True)
+# visitasIG = pd.read_csv('tabelas/meta/jpn/Visitas.csv', skiprows=inicio_visitasIG, encoding='utf-16',skip_blank_lines=True)
+visitasIG = pd.read_csv('tabelas/meta/jpn/Visitas.csv', skiprows=2, encoding='utf-16',skip_blank_lines=True)
 
 inicio_seguidoresIG = encontrar_frase_em_csv_meta('tabelas/meta/jpn/Seguidores.csv', 'Seguidores no Instagram')
 
-seguidoresIG = pd.read_csv('tabelas/meta/jpn/Seguidores.csv', skiprows=inicio_seguidoresIG, encoding='utf-16',skip_blank_lines=True)
+# seguidoresIG = pd.read_csv('tabelas/meta/jpn/Seguidores.csv', skiprows=inicio_seguidoresIG, encoding='utf-16',skip_blank_lines=True)
+seguidoresIG = pd.read_csv('tabelas/meta/jpn/Seguidores.csv', skiprows=2, encoding='utf-16',skip_blank_lines=True)
 
 def filtrosDatasINSTAGRAMjpn(start_date, end_date, start_date_b4, end_date_b4):
     
