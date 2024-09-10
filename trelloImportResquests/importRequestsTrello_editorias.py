@@ -33,8 +33,8 @@ for lista in lists_data:
         pautas_feitas_list = lista
     elif lista['name'] == '✅ PUBLICADOS':
         publicados_list = lista
-    elif lista['name'] == 'FLASHES  DO DIA':
-        flashes_do_dia_list = lista
+    # elif lista['name'] == 'FLASHES  DO DIA':
+    #     flashes_do_dia_list = lista
 
 '''PEGANDO CADA UM DOS CARTÕES DO RESPECTIVO QUADRO'''
 # Pautas_feitas_list['id'] pega o id do quadro PAUTAS FEITAS
@@ -49,20 +49,21 @@ response = requests.get(f'https://api.trello.com/1/lists/{publicados_list['id']}
 # Dados dos cartões dentro do quadro ✅PUBLICADOS
 publicados_cards_data = response.json()
 
-# flashes_do_dia_list['id'] pega o id do quadro FLASHES DO DIA
-# Usa esse id pra conseguir os dados de cada um dos cartões dentro desse quadro
-response = requests.get(f'https://api.trello.com/1/lists/{flashes_do_dia_list['id']}/cards?key={API_KEY}&token={TOKEN}')
-# Dados dos cartões dentro do quadro FLASHES DO DIA
-flashes_do_dia_cards_data = response.json()
+# # flashes_do_dia_list['id'] pega o id do quadro FLASHES DO DIA
+# # Usa esse id pra conseguir os dados de cada um dos cartões dentro desse quadro
+# response = requests.get(f'https://api.trello.com/1/lists/{flashes_do_dia_list['id']}/cards?key={API_KEY}&token={TOKEN}')
+# # Dados dos cartões dentro do quadro FLASHES DO DIA
+# flashes_do_dia_cards_data = response.json()
 
 '''FUNÇÕES'''
 # Pega todos os 'idMembers' de cada quadro e coloca em sua respectiva lista
 # Recebe os dados de cada um dos cartões e a key para acessar determinada informação de um dict
-def getIds(pautas_feitas_cards_data, publicados_cards_data,flashes_do_dia_cards_data, key):
+def getIds(pautas_feitas_cards_data, publicados_cards_data, key):
+# def getIds(pautas_feitas_cards_data, publicados_cards_data,flashes_do_dia_cards_data, key):
     # Listas para receber os ids dos jornalistas e fotógrafos no trello
     ID_members_pautas_feitas =[]
     ID_members_publicados = []
-    ID_members_flashes = []
+    # ID_members_flashes = []
     
     for item_pf in pautas_feitas_cards_data:
         ID_members_pautas_feitas.append(item_pf[key])
@@ -70,15 +71,17 @@ def getIds(pautas_feitas_cards_data, publicados_cards_data,flashes_do_dia_cards_
     for item_pub in publicados_cards_data:
         ID_members_publicados.append(item_pub[key])
     
-    for item_pub in flashes_do_dia_cards_data:
-        ID_members_flashes.append(item_pub[key])
+    # for item_pub in flashes_do_dia_cards_data:
+    #     ID_members_flashes.append(item_pub[key])
     
-    return ID_members_pautas_feitas, ID_members_publicados, ID_members_flashes
+    return ID_members_pautas_feitas, ID_members_publicados
+    # return ID_members_pautas_feitas, ID_members_publicados, ID_members_flashes
 
 
 # Recebe uma lista de listas, remove as listas dentro da lista e unifica todas as informações na lista de "fora", juntando as listas em uma só     
 def simplificar_listas(*args):
-    lista_de_listas = args[0]+args[1]+args[2]
+    lista_de_listas = args[0]+args[1]git 
+    # lista_de_listas = args[0]+args[1]+args[2]
     lista_simplificada = []
     for lista in lista_de_listas:
         lista_simplificada.extend(lista)
@@ -229,23 +232,28 @@ def andamento(count, total):
 '''CHAMADAS DE FUNÇÕES: recebendo as informações que serão utilizadas''' 
 # Chamada de função que pega todas as IDs de membros
 # Guarda os ids dos membros de cada card em sua repectiva lisa
-ID_members_pautas_feitas, ID_members_publicados, ID_members_flashes = getIds(pautas_feitas_cards_data, publicados_cards_data,flashes_do_dia_cards_data, 'idMembers')
+ID_members_pautas_feitas, ID_members_publicados = getIds(pautas_feitas_cards_data, publicados_cards_data, 'idMembers')
+# ID_members_pautas_feitas, ID_members_publicados, ID_members_flashes = getIds(pautas_feitas_cards_data, publicados_cards_data,flashes_do_dia_cards_data, 'idMembers')
 
 # Recebe a lista "limpa", ou seja, sem listas dentro da lista e sem ID repetidos
-id_members = removePalavrasRepetidas(simplificar_listas(ID_members_pautas_feitas, ID_members_publicados, ID_members_flashes))
+id_members = removePalavrasRepetidas(simplificar_listas(ID_members_pautas_feitas, ID_members_publicados))
+# id_members = removePalavrasRepetidas(simplificar_listas(ID_members_pautas_feitas, ID_members_publicados, ID_members_flashes))
 
 # Recebe um dict com id : nome completo
 membros_nomes = membersName(id_members)
 
 # Junta todas as informações das duas listas em uma única lista para que tudo seja escrito em um único CSV
-todas_as_pautas = pautas_feitas_cards_data + publicados_cards_data + flashes_do_dia_cards_data
+todas_as_pautas = pautas_feitas_cards_data + publicados_cards_data
+# todas_as_pautas = pautas_feitas_cards_data + publicados_cards_data + flashes_do_dia_cards_data
 
 # Chamada de função que pega todas as IDs de labels
 # Guarda os ids das labels de cada card em sua repectiva lisa
-ID_labels_pautas_feitas, ID_labels_publicados, ID_labels_flashes = getIds(pautas_feitas_cards_data, publicados_cards_data, flashes_do_dia_cards_data, 'idLabels')
+ID_labels_pautas_feitas, ID_labels_publicados = getIds(pautas_feitas_cards_data, publicados_cards_data, 'idLabels')
+# ID_labels_pautas_feitas, ID_labels_publicados, ID_labels_flashes = getIds(pautas_feitas_cards_data, publicados_cards_data, flashes_do_dia_cards_data, 'idLabels')
 
 # Recebe a lista "limpa", ou seja, sem listas dentro da lista e sem IDs repetidos
-id_labels = removePalavrasRepetidas(simplificar_listas(ID_labels_pautas_feitas, ID_labels_publicados, ID_labels_flashes))
+id_labels = removePalavrasRepetidas(simplificar_listas(ID_labels_pautas_feitas, ID_labels_publicados))
+# id_labels = removePalavrasRepetidas(simplificar_listas(ID_labels_pautas_feitas, ID_labels_publicados, ID_labels_flashes))
 
 # Recebem dicionarios com as editorias e frequencias de cada editoria para cada id de label
 editoria, freq_edi = editoriasById(id_labels)
@@ -312,21 +320,21 @@ with open(caminho, 'w', newline='', encoding='utf-8') as csvfile:
             count += 1
             andamento(count, len(publicados_cards_data))
         
-        # escreve os dados de FLASHES DO DIA
-        print("\nAtualizando dados de Flashes do Dia [3/3]:")
-        count = 0
-        for card in flashes_do_dia_cards_data:
+        # # escreve os dados de FLASHES DO DIA
+        # print("\nAtualizando dados de Flashes do Dia [3/3]:")
+        # count = 0
+        # for card in flashes_do_dia_cards_data:
             
-            if card['idLabels'] == []:
+        #     if card['idLabels'] == []:
                 
-                csvwriter.writerow([card['name'], card['shortUrl'], dataCard_PautasFeitas(card['id']), 'Pauta sem editoria', 0])
+        #         csvwriter.writerow([card['name'], card['shortUrl'], dataCard_PautasFeitas(card['id']), 'Pauta sem editoria', 0])
             
-            else:
+        #     else:
                 
-                for lbl in card['idLabels']:
+        #         for lbl in card['idLabels']:
                     
-                    csvwriter.writerow([card['name'], card['shortUrl'], dataCard_PautasFeitas(card['id']), editoria.get(lbl), int(freq_edi.get(lbl))])
-            count += 1
-            andamento(count, len(flashes_do_dia_cards_data))
+        #             csvwriter.writerow([card['name'], card['shortUrl'], dataCard_PautasFeitas(card['id']), editoria.get(lbl), int(freq_edi.get(lbl))])
+        #     count += 1
+        #     andamento(count, len(flashes_do_dia_cards_data))
 
 print('\nArquivo EDI_impresso.csv criado.')
