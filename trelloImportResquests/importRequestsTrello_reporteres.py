@@ -207,7 +207,7 @@ with open(caminho, 'w', newline='', encoding='utf-8') as csvfile:
         csvwriter.writerow(['IDmembers', 'reporter_fotografo', 'pauta', 'link', 'data'])
         count = 0
         # escreve os dados de PAUTAS FEITAS
-        print("Atualizando dados de Pautas Feitas [1/3]:")
+        print("Atualizando dados de Pautas Feitas [1/2]:")
         for card in pautas_feitas_cards_data:
             '''
             -> Esse trecho com o if só vale a pena quando a maioria card['idMembers'] tem mananho 1 e a escrita do arquivo fica ligeiramente mais rápida sem ele.
@@ -238,7 +238,7 @@ with open(caminho, 'w', newline='', encoding='utf-8') as csvfile:
             count += 1
             andamento(count, len(pautas_feitas_cards_data))
         
-        print("\nAtualizando dados de Publicados [2/3]:")
+        print("\nAtualizando dados de Publicados [2/2]:")
         count = 0
         # escreve os dados de ✅PUBLICADOS
         for card in publicados_cards_data:

@@ -80,7 +80,7 @@ def getIds(pautas_feitas_cards_data, publicados_cards_data, key):
 
 # Recebe uma lista de listas, remove as listas dentro da lista e unifica todas as informações na lista de "fora", juntando as listas em uma só     
 def simplificar_listas(*args):
-    lista_de_listas = args[0]+args[1]git 
+    lista_de_listas = args[0]+args[1]
     # lista_de_listas = args[0]+args[1]+args[2]
     lista_simplificada = []
     for lista in lista_de_listas:
@@ -200,28 +200,6 @@ def dataCard_Publicados(cardID):
     
     return data_Publicados
 
-# def andamento(lista,count):
-#     if count >= len(lista)*0.1 and count < len(lista)*0.2:
-#         print("[•",end=" ")
-#     elif count >= len(lista)*0.2 and count < len(lista)*0.3:
-#         print("•",end=" ")
-#     elif count >= len(lista)*0.3 and count < len(lista)*0.4:
-#         print("•",end=" ")
-#     elif count >= len(lista)*0.4 and count < len(lista)*0.5:
-#         print("•",end=" ")
-#     elif count >= len(lista)*0.5 and count < len(lista)*0.6:
-#         print("•",end=" ")
-#     elif count >= len(lista)*0.6 and count < len(lista)*0.7:
-#         print("•",end=" ")
-#     elif count >= len(lista)*0.7 and count < len(lista)*0.8:
-#         print("•",end=" ")
-#     elif count >= len(lista)*0.8 and count < len(lista)*0.9:
-#         print("•",end=" ")
-#     elif count >= len(lista)*0.9 and count < len(lista):
-#         print("•",end=" ")
-#     elif count >= len(lista):
-#         print("•] - 100%",end=" ")
-
 def andamento(count, total):
     progress = (count / total) * 100
     steps = 10
@@ -273,7 +251,7 @@ with open(caminho, 'w', newline='', encoding='utf-8') as csvfile:
         csvwriter.writerow(['pauta', 'link', 'data', 'editoria', 'freq_edi'])
         count = 0
         # escreve os dados de PAUTAS FEITAS
-        print("Atualizando dados de Pautas Feitas [1/3]:")
+        print("Atualizando dados de Pautas Feitas [1/2]:")
         for card in pautas_feitas_cards_data:
             
             # Cada card possui uma key contendo uma lista(value) com os ids dos jornalistas que estão envolvidos com aquela pauta
@@ -304,7 +282,7 @@ with open(caminho, 'w', newline='', encoding='utf-8') as csvfile:
                 andamento(count, len(pautas_feitas_cards_data))
         
         # escreve os dados de ✅PUBLICADOS
-        print("\nAtualizando dados de Publicados [2/3]:")
+        print("\nAtualizando dados de Publicados [2/2]:")
         count = 0
         for card in publicados_cards_data:
             
