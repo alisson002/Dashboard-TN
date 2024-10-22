@@ -31,16 +31,19 @@ def transformaData_inicio(data):
 
 final_alcanceFB = encontrar_frase_em_csv_meta('tabelas/meta/Alcance.csv', 'Alcance do Instagram')
 
-dados_FB_alcance = pd.read_csv('tabelas/meta/Alcance.csv',skiprows=2,encoding='utf-16',nrows=final_alcanceFB-5)
+dados_FB_alcance = pd.read_csv('tabelas/meta/Alcance.csv',skiprows=2,encoding='utf-16')
+# dados_FB_alcance = pd.read_csv('tabelas/meta/Alcance.csv',skiprows=2,encoding='utf-16',nrows=final_alcanceFB-5)
 #dados_FB_alcance = pd.read_csv('tabelas/meta/AlcanceFB.csv',encoding='utf-16')
 
 final_visitasFB = encontrar_frase_em_csv_meta('tabelas/meta/Visitas.csv', 'Visitas ao perfil do Instagram')
 
-visitasFB = pd.read_csv('tabelas/meta/Visitas.csv', skiprows=2, encoding='utf-16', nrows=final_visitasFB-5)
+visitasFB = pd.read_csv('tabelas/meta/Visitas.csv', skiprows=2, encoding='utf-16')
+# visitasFB = pd.read_csv('tabelas/meta/Visitas.csv', skiprows=2, encoding='utf-16', nrows=final_visitasFB-5)
 
 final_seguidoresFB = encontrar_frase_em_csv_meta('tabelas/meta/Seguidores.csv', 'Seguidores no Instagram')
 
-seguidoresFB = pd.read_csv('tabelas/meta/Seguidores.csv', skiprows=2, encoding='utf-16', nrows=final_seguidoresFB-5)
+seguidoresFB = pd.read_csv('tabelas/meta/Seguidores.csv', skiprows=2, encoding='utf-16')
+# seguidoresFB = pd.read_csv('tabelas/meta/Seguidores.csv', skiprows=2, encoding='utf-16', nrows=final_seguidoresFB-5)
 
 
 # Função para tentar múltiplos formatos
