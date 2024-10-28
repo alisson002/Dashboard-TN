@@ -105,27 +105,27 @@ end_date_b4 = end_date_ - pd.DateOffset(days = periodo.days+1) + pd.DateOffset(d
 
 
 # st.sidebar.write("AVISO (impresso): O dia 31/12/2023 não está sendo reconhecido corretamente. Não o selecionem, por favor.")
-html_text_data = """
-        <p style='font-size:12px;'><b>FORMATO DA DATA:</b> A data está sendo exibida no formato <b>AAAA-MM-DD</b> para que os dados sejam selecionados/comparados corretamente. A forma de selecionar continua a mesma.</p>
-        """
-st.sidebar.write(html_text_data, unsafe_allow_html=True)
+# html_text_data = """
+#         <p style='font-size:12px;'><b>FORMATO DA DATA:</b> A data está sendo exibida no formato <b>AAAA-MM-DD</b> para que os dados sejam selecionados/comparados corretamente. A forma de selecionar continua a mesma.</p>
+#         """
+# st.sidebar.write(html_text_data, unsafe_allow_html=True)
 
-html_text_avisoPortal = """
-        <p style='font-size:12px;'><b>AVISO (TN - Site/Portal):</b> No momento, por conta da mudança para o novo site, os dados disponíveis vão somente até 16/10/2023. Em breve os dados serão atualizados. Quaisquer dados do portal que estiverem sendo exibidos em períodos após essa data não devem ser levados em consideração por enquanto.</p>
-        """
-st.sidebar.write(html_text_avisoPortal, unsafe_allow_html=True)
+# html_text_avisoPortal = """
+#         <p style='font-size:12px;'><b>AVISO (TN - Site/Portal):</b> No momento, por conta da mudança para o novo site, os dados disponíveis vão somente até 16/10/2023. Em breve os dados serão atualizados. Quaisquer dados do portal que estiverem sendo exibidos em períodos após essa data não devem ser levados em consideração por enquanto.</p>
+#         """
+# st.sidebar.write(html_text_avisoPortal, unsafe_allow_html=True)
 
-html_text_orientacao = """
-        <p style='font-size:12px;'><b>ORIENTAÇÃO (tema/ cor de fundo):</b> caso no seu computador esteja iniciando com o tema escuro e você, usuário deste sistema, não goste de como está por conta do fundo do gráfico continuar branco, basta fazer o seguinte: 3 pontos verticais (canto superior direito) >> Settings >> Seletor (Choose app theme, colors and fonts) >> Light.</p>
-        """
-st.sidebar.write(html_text_orientacao, unsafe_allow_html=True)
+# html_text_orientacao = """
+#         <p style='font-size:12px;'><b>ORIENTAÇÃO (tema/ cor de fundo):</b> caso no seu computador esteja iniciando com o tema escuro e você, usuário deste sistema, não goste de como está por conta do fundo do gráfico continuar branco, basta fazer o seguinte: 3 pontos verticais (canto superior direito) >> Settings >> Seletor (Choose app theme, colors and fonts) >> Light.</p>
+#         """
+# st.sidebar.write(html_text_orientacao, unsafe_allow_html=True)
 
-html_text_criador = """
-        <div style='text-align: right;'>
-        <p style='font-size:14px;'><b>Criado por:</b> Alisson Moreira.</p>
-        </div>
-        """
-st.sidebar.write(html_text_criador, unsafe_allow_html=True)
+# html_text_criador = """
+#         <div style='text-align: right;'>
+#         <p style='font-size:14px;'><b>Criado por:</b> Alisson Moreira.</p>
+#         </div>
+#         """
+# st.sidebar.write(html_text_criador, unsafe_allow_html=True)
 
 start_date = start_date_.strftime('%Y-%m-%d')
 end_date = (end_date_+ pd.DateOffset(days=1)).strftime('%Y-%m-%d')
@@ -276,8 +276,8 @@ if selected_option1 == "Tribuna do norte":
             st.write(html_text, unsafe_allow_html=True) 
             if exib_type == 'Gráficos de rosca/pizza':
                 
-                st.write(html_text2, unsafe_allow_html=True) 
-                st.write(html_text3, unsafe_allow_html=True) 
+                # st.write(html_text2, unsafe_allow_html=True) 
+                # st.write(html_text3, unsafe_allow_html=True) 
                 
                 tnImpresso.noticiasPorEditoria(editorias_impresso,df_NOTICIAS_impresso_filtrado)
                 
@@ -293,7 +293,7 @@ if selected_option1 == "Tribuna do norte":
                 
         with tab2:
             
-            st.write('Obs: Passe o cursor por cima do gráfico para obter mais informações.')
+            # st.write('Obs: Passe o cursor por cima do gráfico para obter mais informações.')
             if exib_type == 'Gráficos de rosca/pizza':
                 
                 tnImpresso.noticiasPorReporter(reporteres_impresso)

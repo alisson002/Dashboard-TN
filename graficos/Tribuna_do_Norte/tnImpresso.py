@@ -215,7 +215,7 @@ def noticiasPorEditoria_bc(editorias_impresso,df_NOTICIAS_impresso_filtrado):
     cores = px.colors.sequential.Blues[::-1]  # Reverter a paleta de cores
     cores_personalizadas = [cores[i % len(cores)] for i in range(num_barras)]
     
-    fig = go.Figure(data=[go.Bar(x=edit_impresso['freq'], y=edit_impresso['editorias'], orientation='h')])
+    fig = go.Figure(data=[go.Bar(x=edit_impresso['freq'], y=edit_impresso['editorias'], orientation='h',text=edit_impresso['freq'])])
     
     fig.update_traces(marker_color=cores_personalizadas, marker_line_color='#66533D', marker_line_width=1.5)
     
@@ -232,7 +232,7 @@ def noticiasPorReporter_bc(reporteres_impresso):
     
     reporteres_impresso = reporteres_impresso.sort_values(by='freq', ascending=True)
     
-    fig = go.Figure(data=[go.Bar(x=reporteres_impresso['freq'], y=reporteres_impresso['reporter_fotografo'], orientation='h')])
+    fig = go.Figure(data=[go.Bar(x=reporteres_impresso['freq'], y=reporteres_impresso['reporter_fotografo'], orientation='h',text=reporteres_impresso['freq'])])
     
     fig.update_traces(marker_color=px.colors.sequential.Oranges, marker_line_color='#66533D', marker_line_width=1.5)
     
@@ -257,7 +257,7 @@ def credfotografos_bc(reporteres_impresso,editorias_impresso):
     cores = px.colors.sequential.Greens[::-1]  # Reverter a paleta de cores
     cores_personalizadas = [cores[i % len(cores)] for i in range(num_barras)]
     
-    fig = go.Figure(data=[go.Bar(x=edit_impresso['freq'], y=edit_impresso['editorias'], orientation='h')])
+    fig = go.Figure(data=[go.Bar(x=edit_impresso['freq'], y=edit_impresso['editorias'], orientation='h',text=edit_impresso['freq'])])
     
     fig.update_traces(marker_color=cores_personalizadas, marker_line_color='#66533D', marker_line_width=1.5)
     
